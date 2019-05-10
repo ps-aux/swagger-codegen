@@ -1,5 +1,5 @@
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
 const { genModelCode } = require('./swaggerModelGen')
 
 
@@ -10,12 +10,6 @@ export const generateModelFiles = (sourcePath, targetDir) => {
     const apiSpec = JSON.parse(fs.readFileSync(sourcePath).toString())
 
     const definitions = Object.values(apiSpec.definitions)
-
-    if (!fs.existsSync(targetDir)) {
-        fs.mkdirSync(targetDir)
-    }
-
-    fs.copyFileSync(path.resolve(__dirname, 'types.d.ts'), path.resolve(targetDir, 'types.d.ts'))
 
     definitions
         .filter((p) => !p.title.startsWith('Page'))

@@ -1,41 +1,7 @@
-const { clone } = require('ramda')
-const prettier = require('prettier')
+import { clone } from 'ramda'
+import { arrayToObject } from 'src/modelgen/util'
+import prettier from 'prettier'
 
-const printPropVal = (val) => {
-
-    if (typeof val === 'string')
-        val = `'${val}'`
-    else if (typeof val === 'number') {
-    } else if (Array.isArray(val)) {
-        return `[${val.map(printPropVal).join(',')}]`
-    } else if (typeof val === 'object') {
-        val = printObject(val)
-    }
-
-    return val
-}
-
-const printAttr = (key, val) =>
-    `${key}:${printPropVal(val)}`
-
-const printObject = obj => {
-
-    return `{
-        ${Object.entries(obj)
-        .map(e => printAttr(e[0], e[1]))
-        .join(',\n')}
-    }`
-}
-
-const toObject = (nameAttr, props) => {
-    const res = {}
-
-    props.forEach(p => {
-        res[p[nameAttr]] = p
-    })
-
-    return res
-}
 
 const detectType = val => {
     if (val.enum)
@@ -82,7 +48,7 @@ const genModel = def => {
         delete p.$ref
     })
 
-    const attr = toObject('name', properties)
+    const attr = arrayToObject('name', properties)
 
     const model = {
         entityName,

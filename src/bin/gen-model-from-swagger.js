@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 import { generateModelFiles } from 'src/modelgen/generateModelFiles'
+import path from 'path'
+import fs from 'fs'
 
 const args = process.argv
 
@@ -13,4 +15,9 @@ if (!targetDir)
     throw new Error('Missing target dir')
 
 
+if (!fs.existsSync(targetDir)) {
+    fs.mkdirSync(targetDir)
+}
 generateModelFiles(sourcePath, targetDir)
+
+fs.copyFileSync(path.resolve(__dirname, '../..', 'types.d.ts'), path.resolve(targetDir, 'types.d.ts'))
