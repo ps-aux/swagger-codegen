@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const { genModelCode } = require('./swaggerModelGen')
+const { genModelCode } = require('../modelgen/swaggerModelGen')
 
 const args = process.argv
 

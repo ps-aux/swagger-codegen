@@ -1,10 +1,10 @@
-import {  genModelCode } from 'swagger/modelgen/swaggerModelGen'
+import { genModelCode } from 'src/modelgen/swaggerModelGen'
 
 const Foo = {
     type: 'object',
     required: [
         'bar',
-        'baz',
+        'baz'
     ],
     properties: {
         id: {
@@ -25,7 +25,7 @@ const Foo = {
         status: {
             type: 'string',
             enum: ['a', 'b', 'c']
-        },
+        }
     },
     title: 'Foo'
 }

@@ -25,6 +25,8 @@ jobs:
       - run:
           name: Publish
           command: |
+            git config user.email "ps-aux@ci.com"
+            git config user.name "ps-aux-ci"
             version=$(npm run -s get-version)
             build_no=${CIRCLE_BUILD_NUM}
             npm version ${version}-${build_no}

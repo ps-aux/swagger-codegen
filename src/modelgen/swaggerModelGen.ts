@@ -73,7 +73,7 @@ const genModel = def => {
             required: required.includes(name)
         }))
 
-    properties.forEach((p) => {
+    properties.forEach((p: any) => {
         if (p.type === 'enum') {
             p.values = p.enum
         }
@@ -93,7 +93,7 @@ const genModel = def => {
     return model
 }
 
-const genModelCode = (def, version, { semicolons = false } = {}) => {
+export const genModelCode = (def, version, { semicolons = false } = {}) => {
     const model = { version, ...genModel(def) }
     const code = `export const ${model.entityName} = ${printObject(model)}`
 
@@ -102,4 +102,3 @@ const genModelCode = (def, version, { semicolons = false } = {}) => {
     return prettified
 }
 
-module.exports.genModelCode = genModelCode
