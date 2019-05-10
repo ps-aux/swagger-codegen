@@ -18,6 +18,8 @@ if (!targetDir)
 if (!fs.existsSync(targetDir)) {
     fs.mkdirSync(targetDir)
 }
-generateModelFiles(sourcePath, targetDir)
+generateModelFiles(sourcePath, targetDir, {
+    log: console.log
+})
 
 fs.copyFileSync(path.resolve(__dirname, '../..', 'types.d.ts'), path.resolve(targetDir, 'types.d.ts'))

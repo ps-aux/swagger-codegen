@@ -23,6 +23,7 @@ node_modules
 /out/
 
 build
+test/build
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
