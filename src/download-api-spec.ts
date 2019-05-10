@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import axios from 'axios'
 import { purifySpec } from 'src/purifySpec'
 
@@ -14,6 +13,6 @@ export const downloadApiSpec = async url => {
     return axios.get(url)
         .then(r => {
             const spec = purifySpec(r.data)
-            return JSON.stringify(spec, null, 4)
+            return spec
         })
 }
