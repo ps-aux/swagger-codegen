@@ -5,7 +5,7 @@ const url = process.argv[2]
 
 downloadApiSpec(url)
     .then(spec => {
-            JSON.stringify(spec, null, 4)
+            console.log(JSON.stringify(spec, null, 4))
         }
     )
 
