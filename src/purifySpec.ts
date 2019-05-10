@@ -1,4 +1,4 @@
-const crypto = require('crypto')
+import crypto from 'crypto'
 
 const { clone } = require('ramda')
 
@@ -8,7 +8,7 @@ const calcHash = str =>
         .update(str)
         .digest('hex')
 
-const purifySpec = spec => {
+export const purifySpec = spec => {
     const res = {
         swagger: clone(spec.swagger),
         info: clone(spec.info),
@@ -16,6 +16,7 @@ const purifySpec = spec => {
         tags: clone(spec.tags),
         paths: clone(spec.paths),
         definitions: clone(spec.definitions),
+        checksum: ''
     }
 
     // Remove default param value as it is per env
@@ -34,4 +35,3 @@ const purifySpec = spec => {
 
 }
 
-module.exports = purifySpec
