@@ -1,7 +1,5 @@
 import { clone } from 'ramda'
 import { arrayToObject } from 'src/modelgen/util'
-import prettier from 'prettier'
-
 
 const detectType = val => {
     if (val.enum)
@@ -23,7 +21,7 @@ const detectType = val => {
     throw new Error('Could not determine type for property ' + JSON.stringify(val))
 }
 
-const genModel = def => {
+export const createModel = def => {
     def = clone(def)
 
     const entityName = def.title
@@ -55,16 +53,7 @@ const genModel = def => {
         attr
     }
 
-    // console.log(code)
     return model
 }
 
-export const genModelCode = (def, version, { semicolons = false } = {}) => {
-    const model = { version, ...genModel(def) }
-    const code = `export const ${model.entityName} = ${printObject(model)}`
-
-    const prettified = prettier.format(code,
-        { semi: semicolons, parser: 'babel', singleQuote: true })
-    return prettified
-}
 

@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
-const { genModelCode } = require('./swaggerModelGen')
+import { createModel } from 'src/modelgen/createModel'
+import { modelToCode } from 'src/modelgen/modelToCode'
 
 
 export const generateModelFiles = (sourcePath, targetDir) => {
@@ -11,16 +12,22 @@ export const generateModelFiles = (sourcePath, targetDir) => {
 
     const definitions = Object.values(apiSpec.definitions)
 
+    console.log('fef', definitions)
     definitions
-        .filter((p) => !p.title.startsWith('Page'))
-        .forEach((def) => {
+        .filter((p: any) => !p.title.startsWith('Page'))
+        .forEach((def: any) => {
             const name = def.title
             const fileName = name + '.ts'
             console.log('Generating model for', name)
             const filePath = path.join(targetDir, fileName)
-            const code = genModelCode(def, apiSpec.info.version, {
+
+            const model = { version: apiSpec.info.version,
+                ...createModel(def) }
+
+            const code = modelToCode(model, {
                 semicolons: true
             })
+
             fs.writeFileSync(filePath, code)
         })
 }

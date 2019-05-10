@@ -1,35 +1,7 @@
-import { genModelCode } from 'src/modelgen/swaggerModelGen'
+import { generateModelFiles } from 'src/modelgen/generateModelFiles'
 
-const Foo = {
-    type: 'object',
-    required: [
-        'bar',
-        'baz'
-    ],
-    properties: {
-        id: {
-            type: 'integer',
-            format: 'int64'
-        },
-        bar: {
-            type: 'string'
-        },
-        baz: {
-            type: 'integer',
-            format: 'int64'
-        },
-        aDate: {
-            type: 'string',
-            format: 'date-time'
-        },
-        status: {
-            type: 'string',
-            enum: ['a', 'b', 'c']
-        }
-    },
-    title: 'Foo'
-}
+const schemaDir = __dirname + '/../../test/testSchema.json'
 
 it('works', () => {
-    genModelCode(Foo, 'abc')
+    generateModelFiles(schemaDir, './build')
 })
