@@ -14,7 +14,8 @@
     "build"
   ],
   "bin": {
-    "download-api-spec": "./build/bin/download-api-spec.js"
+    "download-api-spec": "./build/bin/download-api-spec.js",
+    "gen-model-from-swagger.js": "./build/bin/gen-model-from-swagger.js"
   },
   "author": "",
   "license": "ISC",
