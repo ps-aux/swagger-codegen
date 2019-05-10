@@ -1,0 +1,51 @@
+{
+  "name": "@ps-aux/swagger-codegen",
+  "version": "0.0.3-5",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf build && babel --extensions '.ts,.js' src -d build src/index.ts",
+    "pub": "npm publish --access public"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "files": [
+    "build"
+  ],
+  "bin": {
+    "bar": "./build/bin/bar.sh",
+    "foo": "./build/bin/foo.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.3",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-stage-2": "^7.0.0",
+    "@babel/preset-typescript": "^7.1.0",
+    "@types/axios": "^0.14.0",
+    "@types/jest": "^24.0.11",
+    "@types/joi": "^14.3.3",
+    "@types/node": "^11.12.2",
+    "@types/ramda": "^0.26.8",
+    "axios": "^0.18.0",
+    "babel-jest": "^24.5.0",
+    "babel-plugin-module-resolver": "^3.1.1",
+    "deep-diff": "^1.0.2",
+    "dotenv": "^7.0.0",
+    "jest": "^24.5.0",
+    "jest-expect-message": "^1.0.2",
+    "jest-extended": "^0.11.1",
+    "prettier": "^1.16.4",
+    "ramda": "^0.26.1",
+    "shelljs": "^0.8.3",
+    "ts-jest": "^24.0.1",
+    "typescript": "^3.4.1"
+  },
+  "devDependencies": {},
+  "description": ""
+}
