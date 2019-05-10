@@ -1,9 +1,9 @@
 {
   "name": "@ps-aux/swagger-codegen",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf build && babel --extensions '.ts,.js' src -d build src/index.ts",
+    "build": "rm -rf build && babel --extensions '.ts,.js' src -d build src/**",
     "pub": "npm publish --access public",
     "get-version": "echo $npm_package_version"
   },
@@ -14,8 +14,7 @@
     "build"
   ],
   "bin": {
-    "bar": "./build/bin/bar.sh",
-    "foo": "./build/bin/foo.js"
+    "download-api-spec": "./build/bin/download-api-spec.js"
   },
   "author": "",
   "license": "ISC",

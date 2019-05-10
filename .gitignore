@@ -22,6 +22,7 @@ node_modules
 *.ipr
 /out/
 
+build
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
