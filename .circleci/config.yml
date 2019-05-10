@@ -23,7 +23,7 @@ jobs:
           name: Publish
           command: |
             version=$(npm run -s get-version)
-            build_no=CIRCLE_BUILD_NUM
+            build_no=${CIRCLE_BUILD_NUM}
             npm version ${version}-${build_no}
             npm run pub
 
