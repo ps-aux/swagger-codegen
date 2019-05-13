@@ -13,6 +13,10 @@ const printPropVal = val => {
 const printAttr = (key, val) => `${key}:${printPropVal(val)}`
 
 export const printObject = obj => {
+    if (obj === null)
+        return 'null'
+    if (obj === undefined)
+        return 'undefined'
     return `{
         ${Object.entries(obj)
             .map(e => printAttr(e[0], e[1]))

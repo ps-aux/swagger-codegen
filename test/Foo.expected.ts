@@ -33,5 +33,20 @@ export const Foo = {
       required: false,
       values: ['a', 'b', 'c']
     }
+  },
+  filter: {
+    bar: {
+      id: 'Foo.filter.bar',
+      name: 'bar',
+      type: 'string',
+      required: false
+    },
+    status: {
+      id: 'Foo.filter.status',
+      name: 'status',
+      type: 'enum',
+      required: false,
+      values: ['a', 'b', 'c']
+    }
   }
 };

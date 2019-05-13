@@ -14,5 +14,6 @@ export const Bar = {
       id: 'Bar.name',
       required: true
     }
-  }
+  },
+  filter: null
 };

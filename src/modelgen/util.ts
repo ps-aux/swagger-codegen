@@ -7,3 +7,9 @@ export const arrayToObject = (nameAttr, props) => {
 
     return res
 }
+
+export const objectToArray = (nameAttr, obj):any[] =>
+    Object.entries(obj).map(([k, v]) => ({
+        [nameAttr]: k,
+        ...v
+    }))
