@@ -47,6 +47,12 @@ export const Foo = {
       type: 'enum',
       required: false,
       values: ['a', 'b', 'c']
+    },
+    sort: {
+      id: 'Foo.filter.sort',
+      name: 'sort',
+      type: 'array',
+      required: false
     }
   }
 };

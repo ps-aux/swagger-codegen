@@ -10,6 +10,8 @@ export const detectType = val => {
         return 'double'
     if (val.type === 'boolean')
         return 'boolean'
+    if (val.type === 'array')
+        return 'array'
     if (val.type === 'integer')
         return 'integer'
     if (val.type === 'string')
