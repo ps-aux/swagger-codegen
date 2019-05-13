@@ -48,9 +48,9 @@ export const Foo = {
       required: false,
       values: ['a', 'b', 'c']
     },
-    sort: {
-      id: 'Foo.filter.sort',
-      name: 'sort',
+    arr: {
+      id: 'Foo.filter.arr',
+      name: 'arr',
       type: 'array',
       required: false
     }

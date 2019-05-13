@@ -38,7 +38,7 @@
             ]
           },
           {
-            "name": "sort",
+            "name": "arr",
             "in": "query",
             "required": false,
             "type": "array",
@@ -46,6 +46,15 @@
               "type": "string"
             },
             "collectionFormat": "multi"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "default": 0,
+            "format": "int32",
+            "x-example": 1
           }
         ]
       }

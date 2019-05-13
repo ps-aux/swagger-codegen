@@ -54,8 +54,9 @@ export const generateModelFiles = (sourcePath, targetDir, opts: Opts = {}) => {
             const endpoint = findEndpoint(entityName, endpoints)
 
             let filter: any = null
+            const ignoredParams = ['sort', 'page', 'size']
             if (endpoint) {
-                filter = calcFilterModel(entityName, endpoint)
+                filter = calcFilterModel(entityName, endpoint, ignoredParams)
             }
 
 
@@ -73,10 +74,11 @@ export const generateModelFiles = (sourcePath, targetDir, opts: Opts = {}) => {
 }
 
 
-const calcFilterModel = (entityName, endpoint: Endpoint): any => {
+const calcFilterModel = (entityName, endpoint: Endpoint, ignoredParams: string[] = []): any => {
     const getOp = endpoint.operations.find(o => o.method === 'get')
 
-    const params: FilterParam[] = getOp.parameters.filter(p => p.in === 'query')
+    const params: FilterParam[] = getOp.parameters
+        .filter(p => p.in === 'query')
         .map(p => {
 
             const type = detectType(p)
@@ -86,7 +88,7 @@ const calcFilterModel = (entityName, endpoint: Endpoint): any => {
                 id: `${entityName}.filter.${name}`,
                 name,
                 type,
-                required: p.required,
+                required: p.required
             }
 
             if (type === 'enum')
@@ -94,6 +96,7 @@ const calcFilterModel = (entityName, endpoint: Endpoint): any => {
 
             return res
         })
+        .filter(p => !ignoredParams.includes(p.name))
 
     return arrayToObject('name', params)
 
