@@ -69,6 +69,12 @@ export const Foo = {
       name: 'arr',
       type: 'array',
       required: false
+    },
+    anInterval: {
+      id: 'Foo.filter.anInterval',
+      name: 'anInterval',
+      type: 'date-interval',
+      required: false
     }
   }
 };

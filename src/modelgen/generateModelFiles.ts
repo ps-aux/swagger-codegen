@@ -1,33 +1,14 @@
 import fs from 'fs'
 import path from 'path'
-import { createModel } from 'src/modelgen/createModel'
 import { modelToCode } from 'src/modelgen/modelToCode'
-import { objectToArray, arrayToObject } from 'src/modelgen/util'
-import { FilterParam } from 'types'
-import { detectType } from 'src/modelgen/detectType'
+import { createFilterModel } from 'src/modelgen/FilterModel'
+import { findEntityOperations, getEntityOperation } from 'src/modelgen/EntityOperationsGroup'
+import { createEntityModel } from 'src/modelgen/EntityModel'
+
 
 type Opts = {
     log?: (...a: any) => void
 }
-
-const findEndpoint = (name, endpoints: Endpoint[]) => {
-    return endpoints.find(e =>
-        e.operations.find(o => o.tags.includes(name))
-    )
-}
-
-type Endpoint = {
-    path: string,
-    operations: any[]
-}
-
-
-const getEndpoints = (apiSpec: any): Endpoint[] =>
-    objectToArray('path', apiSpec.paths)
-        .map(({ path, ...ops }) => ({
-            path,
-            operations: objectToArray('method', ops)
-        }))
 
 export const generateModelFiles = (sourcePath, targetDir, opts: Opts = {}) => {
     const { log = () => null } = opts
@@ -37,7 +18,7 @@ export const generateModelFiles = (sourcePath, targetDir, opts: Opts = {}) => {
     const apiSpec = JSON.parse(fs.readFileSync(sourcePath).toString())
 
     const definitions = Object.values(apiSpec.definitions)
-    const endpoints = getEndpoints(apiSpec)
+    const allEntityOps = getEntityOperation(apiSpec)
 
 
     definitions
@@ -49,14 +30,14 @@ export const generateModelFiles = (sourcePath, targetDir, opts: Opts = {}) => {
             const filePath = path.join(targetDir, fileName)
 
 
-            const model = createModel(def)
+            const model = createEntityModel(def)
 
-            const endpoint = findEndpoint(entityName, endpoints)
+            const endpoint = findEntityOperations(entityName, allEntityOps)
 
             let filter: any = null
             const ignoredParams = ['sort', 'page', 'size']
             if (endpoint) {
-                filter = calcFilterModel(entityName, endpoint, ignoredParams)
+                filter = createFilterModel(entityName, endpoint, ignoredParams)
             }
 
 
@@ -74,30 +55,4 @@ export const generateModelFiles = (sourcePath, targetDir, opts: Opts = {}) => {
 }
 
 
-const calcFilterModel = (entityName, endpoint: Endpoint, ignoredParams: string[] = []): any => {
-    const getOp = endpoint.operations.find(o => o.method === 'get')
 
-    const params: FilterParam[] = getOp.parameters
-        .filter(p => p.in === 'query')
-        .map(p => {
-
-            const type = detectType(p)
-            const name = p.name
-
-            const res: FilterParam = {
-                id: `${entityName}.filter.${name}`,
-                name,
-                type,
-                required: p.required
-            }
-
-            if (type === 'enum')
-                res.values = p.enum
-
-            return res
-        })
-        .filter(p => !ignoredParams.includes(p.name))
-
-    return arrayToObject('name', params)
-
-}

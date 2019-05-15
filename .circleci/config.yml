@@ -31,9 +31,9 @@ jobs:
           command: |
             git config user.email "ps-aux@ci.com"
             git config user.name "ps-aux-ci"
+            export BUILD_NO=${CIRCLE_BUILD_NUM}
             version=$(npm run -s get-version)
-            build_no=${CIRCLE_BUILD_NUM}
-            npm version ${version}-${build_no}
+            npm version ${version}
             npm run pub
 
 workflows:

@@ -35,4 +35,6 @@ test/build
 .vscode/
 
 
-create.sql
+
+test/apiSchema.json
+

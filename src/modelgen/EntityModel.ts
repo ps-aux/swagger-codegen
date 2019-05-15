@@ -28,8 +28,7 @@ const attributeModel = (p, entityName, requiredProps) => {
     return {...res, ...extractExtraProps(p)}
 }
 
-
-export const createModel = def => {
+export const createEntityModel = def => {
     def = clone(def)
 
     const entityName = def.title
@@ -37,6 +36,8 @@ export const createModel = def => {
 
     const properties = objectToArray('name', def.properties)
         .map(p => attributeModel(p, entityName, required))
+
+
 
     const attr = arrayToObject('name', properties)
 

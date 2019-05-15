@@ -6,7 +6,7 @@
     "build": "rm -rf build && babel --extensions '.ts,.js' src -d build src",
     "pub": "npm publish --access public",
     "test": "jest src",
-    "get-version": "echo $npm_package_version",
+    "get-version": "scripts/get-version.js",
     "run-on-api": "node ./build/bin/gen-model-from-swagger.js test/apiSchema.json test/build/run-on-api"
   },
   "repository": {

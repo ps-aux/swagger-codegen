@@ -55,6 +55,20 @@
             "default": 0,
             "format": "int32",
             "x-example": 1
+          },
+          {
+            "name": "anInterval.from",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "anInterval.to",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
           }
         ]
       }
