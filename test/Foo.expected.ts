@@ -32,6 +32,22 @@ export const Foo = {
       id: 'Foo.status',
       required: false,
       values: ['a', 'b', 'c']
+    },
+    withPattern: {
+      type: 'string',
+      name: 'withPattern',
+      id: 'Foo.withPattern',
+      required: false,
+      pattern: /^abc.*$/
+    },
+    withExtra: {
+      type: 'string',
+      name: 'withExtra',
+      id: 'Foo.withExtra',
+      required: false,
+      foo: 'extra',
+      bar: true,
+      baz: 123
     }
   },
   filter: {

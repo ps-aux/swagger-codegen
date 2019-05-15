@@ -1,26 +1,32 @@
 import { clone } from 'ramda'
-import { arrayToObject } from 'src/modelgen/util'
+import { arrayToObject, objectToArray } from 'src/modelgen/util'
 import { detectType } from './detectType'
+import { Attribute } from 'types'
+import { extractExtraProps } from 'src/modelgen/extractExtraProps'
+
+const attributeModel = (p, entityName, requiredProps) => {
+
+    const type = detectType(p)
+    const { name } = p
 
 
-const removeUnwantedProps = p => {
-    delete p.enum
-    delete p.format
-    delete p.$ref
+    const res = {
+        type,
+        name,
+        id: `${entityName}.${name}`,
+        required: requiredProps.includes(name)
+    } as Attribute
+
+    if (type === 'string' && p.pattern) {
+        res.pattern = RegExp(p.pattern)
+    }
+
+    if (type === 'enum') {
+        res.values = p.enum
+    }
+
+    return {...res, ...extractExtraProps(p)}
 }
-
-const addEnumValues = p => {
-    p.values = p.enum
-}
-
-
-const transformKeyVal = (name, val, entityName, required) => ({
-    ...val,
-    type: detectType(val),
-    name,
-    id: `${entityName}.${name}`,
-    required: required.includes(name)
-})
 
 
 export const createModel = def => {
@@ -29,17 +35,8 @@ export const createModel = def => {
     const entityName = def.title
     const required = def.required || []
 
-    const properties = Object.entries(def.properties)
-        .map(([name, val]) =>
-            transformKeyVal(name, val, entityName, required))
-
-
-    properties.forEach((p: any) => {
-        if (p.type === 'enum') {
-            addEnumValues(p)
-        }
-        removeUnwantedProps(p)
-    })
+    const properties = objectToArray('name', def.properties)
+        .map(p => attributeModel(p, entityName, required))
 
     const attr = arrayToObject('name', properties)
 

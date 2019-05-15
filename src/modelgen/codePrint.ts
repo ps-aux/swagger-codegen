@@ -3,6 +3,8 @@ const printPropVal = val => {
     else if (typeof val === 'number') {
     } else if (Array.isArray(val)) {
         return `[${val.map(printPropVal).join(',')}]`
+    } else if (val instanceof RegExp) {
+        return `/${val.source}/`
     } else if (typeof val === 'object') {
         val = printObject(val)
     }

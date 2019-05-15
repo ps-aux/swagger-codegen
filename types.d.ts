@@ -3,7 +3,8 @@ export type Attribute = {
     id: string,
     type: string,
     required: boolean,
-    values?: string[]
+    values?: string[],
+    pattern?: RegExp
 }
 
 export type Model = {
