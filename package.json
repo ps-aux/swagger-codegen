@@ -1,12 +1,13 @@
 {
   "name": "@ps-aux/swagger-codegen",
-  "version": "1.5.0",
+  "version": "1.6.0-rc",
   "main": "index.js",
   "scripts": {
     "build": "rm -rf build && babel --extensions '.ts,.js' src -d build src",
     "pub": "npm publish --access public",
     "test": "jest src",
-    "get-version": "echo $npm_package_version"
+    "get-version": "echo $npm_package_version",
+    "run-on-api": "node ./build/bin/gen-model-from-swagger.js test/apiSchema.json test/build/run-on-api"
   },
   "repository": {
     "type": "git"
@@ -40,6 +41,7 @@
     "@types/joi": "^14.3.3",
     "@types/node": "^11.12.2",
     "@types/ramda": "^0.26.8",
+    "babel-cli": "^6.26.0",
     "babel-jest": "^24.5.0",
     "babel-plugin-module-resolver": "^3.1.1",
     "deep-diff": "^1.0.2",
