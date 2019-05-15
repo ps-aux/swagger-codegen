@@ -33,7 +33,7 @@ jobs:
             git config user.name "ps-aux-ci"
             export BUILD_NO=${CIRCLE_BUILD_NUM}
             version=$(npm run -s get-version)
-            npm version ${version}
+            npm version ${version} --allow-same-version
             npm run pub
 
 workflows:
