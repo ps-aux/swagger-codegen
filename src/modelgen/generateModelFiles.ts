@@ -32,18 +32,20 @@ export const generateModelFiles = (sourcePath, targetDir, opts: Opts = {}) => {
 
             const model = createEntityModel(def)
 
-            const endpoint = findEntityOperations(entityName, allEntityOps)
+            const opsGroup = findEntityOperations(entityName, allEntityOps)
 
             let filter: any = null
             const ignoredParams = ['sort', 'page', 'size']
-            if (endpoint) {
-                filter = createFilterModel(entityName, endpoint, ignoredParams)
+            if (opsGroup) {
+                filter = createFilterModel(entityName, opsGroup, ignoredParams)
             }
+
 
 
             const version = apiSpec.info.version
             const code = modelToCode({
                 version,
+                path: opsGroup ? opsGroup.path : null,
                 ...model,
                 filter: filter
             }, {

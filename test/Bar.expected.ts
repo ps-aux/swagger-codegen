@@ -1,5 +1,6 @@
 export const Bar = {
   version: '1.2.3',
+  path: null,
   entityName: 'Bar',
   attr: {
     number: {

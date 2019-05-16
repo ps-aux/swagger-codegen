@@ -1,5 +1,6 @@
 export const Foo = {
   version: '1.2.3',
+  path: '/api/foo-path',
   entityName: 'Foo',
   attr: {
     id: {

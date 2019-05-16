@@ -7,7 +7,7 @@
   "basePath": "/",
   "tags": [],
   "paths": {
-    "/api/branche": {
+    "/api/foo-path": {
       "get": {
         "tags": [
           "Foo"
