@@ -1,6 +1,6 @@
 {
   "name": "@ps-aux/swagger-codegen",
-  "version": "1.8.2",
+  "version": "1.8.3-rc",
   "main": "index.js",
   "scripts": {
     "build": "rm -rf build && babel --extensions '.ts,.js' src -d build src",
