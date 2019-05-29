@@ -3,6 +3,11 @@ export const detectType = val => {
         return 'enum'
     if (val.$ref)
         return 'object'
+    if (val['x-ref'])
+        return 'ref'
+
+    if (val.$ref)
+        return 'object'
 
     if (val.format === 'date-time')
         return 'date'

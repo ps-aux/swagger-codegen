@@ -3,11 +3,12 @@ export const Foo = {
   path: '/api/foo-path',
   entityName: 'Foo',
   attr: {
-    id: {
-      type: 'integer',
-      name: 'id',
-      id: 'Foo.id',
-      required: false
+    anId: {
+      type: 'ref',
+      name: 'anId',
+      id: 'Foo.anId',
+      required: false,
+      ref: 'Bar'
     },
     bar: {
       type: 'string',

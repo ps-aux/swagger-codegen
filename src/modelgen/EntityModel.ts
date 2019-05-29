@@ -1,6 +1,6 @@
 import { clone } from 'ramda'
 import { arrayToObject, objectToArray } from 'src/modelgen/util'
-import { detectType } from './detectType'
+import { detectType } from 'src/modelgen/detectType'
 import { Attribute } from 'types'
 import { extractExtraProps } from 'src/modelgen/extractExtraProps'
 
