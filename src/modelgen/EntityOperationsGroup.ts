@@ -8,11 +8,10 @@ export const getEntityOperation = (apiSpec: any): EntityOperationsGroup[] =>
         }))
 
 
-export const findEntityOperations = (name, endpoints: EntityOperationsGroup[]) => {
-    return endpoints.find(e =>
-        e.operations.find(o => o.tags.includes(name))
-    )
-}
+export const findEntityOperations = (name, endpoints: EntityOperationsGroup[]):
+    EntityOperationsGroup | undefined =>
+    endpoints.find(e =>
+        e.operations.find(o => o.tags.includes(name)) )
 
 export type EntityOperationsGroup = {
     path: string,

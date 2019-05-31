@@ -1,16 +1,20 @@
 export const Bar = {
+  entityName: 'Bar',
   version: '1.2.3',
   path: null,
-  entityName: 'Bar',
   attr: {
     number: {
-      type: 'integer',
+      type: {
+        name: 'integer'
+      },
       name: 'number',
       id: 'Bar.number',
       required: true
     },
     name: {
-      type: 'string',
+      type: {
+        name: 'string'
+      },
       name: 'name',
       id: 'Bar.name',
       required: true

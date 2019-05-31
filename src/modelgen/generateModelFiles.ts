@@ -1,60 +1,113 @@
-import fs from 'fs'
+import fs, { PathLike } from 'fs'
 import path from 'path'
 import { modelToCode } from 'src/modelgen/modelToCode'
 import { createFilterModel } from 'src/modelgen/FilterModel'
-import { findEntityOperations, getEntityOperation } from 'src/modelgen/EntityOperationsGroup'
-import { createEntityModel } from 'src/modelgen/EntityModel'
-
+import {
+    EntityOperationsGroup,
+    findEntityOperations,
+    getEntityOperation
+} from 'src/modelgen/EntityOperationsGroup'
+import { createAttributesModel } from 'src/modelgen/EntityModel'
+import { CodeFormatter, FormatCode } from 'src/modelgen/FormatCode'
+import { Api, Model, SwaggerApiSpec, SwaggerDefinition } from 'types'
+import { printObject } from 'src/modelgen/codePrint'
 
 type Opts = {
     log?: (...a: any) => void
 }
+
+const filterModel = (opsGroup: EntityOperationsGroup, entityName: string) => {
+    const ignoredParams = ['sort', 'page', 'size']
+    return createFilterModel(entityName, opsGroup, ignoredParams)
+}
+
+const createModel = (
+    entityName: string,
+    def: SwaggerDefinition,
+    version: string,
+    opsGroup?: EntityOperationsGroup
+): Model => ({
+    entityName,
+    version,
+    path: opsGroup ? opsGroup.path : null,
+    attr: createAttributesModel(def, entityName),
+    filter: opsGroup ? filterModel(opsGroup, entityName) : null
+})
 
 export const generateModelFiles = (sourcePath, targetDir, opts: Opts = {}) => {
     const { log = () => null } = opts
 
     log('Generating model from ', sourcePath, 'to', targetDir)
 
-    const apiSpec = JSON.parse(fs.readFileSync(sourcePath).toString())
+    const apiSpec = JSON.parse(
+        fs.readFileSync(sourcePath).toString()
+    ) as SwaggerApiSpec
 
     const definitions = Object.values(apiSpec.definitions)
     const allEntityOps = getEntityOperation(apiSpec)
 
+    const formatCode = CodeFormatter({
+        semicolons: true
+    })
+
+    const apiInfo: Api = {
+        version: apiSpec.info.version
+    }
+
+    const allModels: Model[] = []
 
     definitions
-        .filter((p: any) => !p.title.startsWith('Page'))
-        .forEach((def: any) => {
+        .filter(p => !p.title.startsWith('Page') || p.title === 'Sort')
+        .forEach(def => {
             const entityName = def.title
             log(`Generating ${entityName} model`)
             const fileName = entityName + '.ts'
             const filePath = path.join(targetDir, fileName)
-
-
-            const model = createEntityModel(def)
-
             const opsGroup = findEntityOperations(entityName, allEntityOps)
 
-            let filter: any = null
-            const ignoredParams = ['sort', 'page', 'size']
-            if (opsGroup) {
-                filter = createFilterModel(entityName, opsGroup, ignoredParams)
-            }
+            const model = createModel(
+                entityName,
+                def,
+                apiInfo.version,
+                opsGroup
+            )
 
-
-
-            const version = apiSpec.info.version
-            const code = modelToCode({
-                version,
-                path: opsGroup ? opsGroup.path : null,
-                ...model,
-                filter: filter
-            }, {
-                semicolons: true
-            })
+            const code = modelToCode(model, { formatCode })
 
             fs.writeFileSync(filePath, code)
+
+            allModels.push(model)
         })
+
+    log('Generating index file')
+    createIndex(
+        allModels,
+        path.join(targetDir, 'index.ts'),
+        apiInfo,
+        formatCode
+    )
 }
 
+const createIndex = (
+    models: Model[],
+    path: PathLike,
+    apiInfo: Api,
+    formatCode: FormatCode
+) => {
+    const importStatement = name => `import {${name}} from './${name}'`
 
+    const imports = models.map(m => importStatement(m.entityName)).join('\n')
 
+    const exports = `export {${models.map(m => m.entityName).join(',')}}`
+
+    const all = `[${models.map(m => m.entityName).join(',')}]`
+
+    const code = `
+        ${imports}
+        ${exports}
+        export const api = ${printObject(apiInfo)}
+        export const allModels = ${all}
+    `
+
+    fs.writeFileSync(path, formatCode(code))
+}

@@ -1,6 +1,10 @@
 const regex = /(x-)(.*)/
 
-export const extractExtraProps = p => {
+
+export type ExtraProp = 'readOnly' | 'detailOnly' | 'ref'
+
+// TODO add ExtraProp to type system
+export const extractExtraProps = (p: any): { [key: string]: any } => {
     const res = {}
     Object.keys(p)
         .map(k => k.match(regex))

@@ -1,14 +1,13 @@
-export const detectType = val => {
+import { BasicType } from 'types'
+
+
+export const detectType = (val: any): BasicType => {
     if (val.enum)
         return 'enum'
     if (val.$ref)
         return 'object'
     if (val['x-ref'])
         return 'ref'
-
-    if (val.$ref)
-        return 'object'
-
     if (val.format === 'date-time')
         return 'date'
     if (val.format === 'double')

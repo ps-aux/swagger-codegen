@@ -1,11 +1,9 @@
-import prettier from 'prettier'
-import {printObject} from 'src/modelgen/codePrint'
+import { printObject } from 'src/modelgen/codePrint'
+import { FormatCode } from 'src/modelgen/FormatCode'
 
-export const modelToCode = (model, { semicolons = false } = {}) => {
+export const modelToCode = (model, { formatCode }:{formatCode:FormatCode}) => {
     const objStr = printObject(model)
     const code = `export const ${model.entityName} = ${objStr}`
 
-    const prettified = prettier.format(code,
-        { semi: semicolons, parser: 'babel', singleQuote: true })
-    return prettified
+    return formatCode(code)
 }

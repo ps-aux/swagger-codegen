@@ -1,0 +1,7 @@
+import { Foo } from './Foo';
+import { Bar } from './Bar';
+export { Foo, Bar };
+export const api = {
+  version: '1.2.3'
+};
+export const allModels = [Foo, Bar];

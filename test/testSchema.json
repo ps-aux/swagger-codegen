@@ -87,8 +87,8 @@
           "format": "int64",
           "x-ref": "Bar"
         },
-        "bar": {
-          "type": "string"
+        "barVal": {
+          "$ref": "#/definitions/Bar"
         },
         "baz": {
           "type": "integer",
