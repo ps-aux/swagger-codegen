@@ -18,4 +18,5 @@ it('model code generated properly', () => {
     generateModelFiles(schemaDir, outputDir)
     expectSameContent(outputDir + '/Foo.ts', testDir + '/Foo.expected.ts')
     expectSameContent(outputDir + '/Bar.ts', testDir + '/Bar.expected.ts')
+    expectSameContent(outputDir + '/index.ts', testDir + '/index.expected.ts_')
 })

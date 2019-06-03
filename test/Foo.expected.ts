@@ -1,81 +1,95 @@
 export const Foo = {
+  entityName: 'Foo',
   version: '1.2.3',
   path: '/api/foo-path',
-  entityName: 'Foo',
   attr: {
-    id: {
-      type: 'integer',
-      name: 'id',
-      id: 'Foo.id',
-      required: false
+    anId: {
+      type: {
+        name: 'ref',
+        type: 'Bar'
+      },
+      name: 'anId',
+      id: 'Foo.anId'
     },
-    bar: {
-      type: 'string',
-      name: 'bar',
-      id: 'Foo.bar',
-      required: true
+    barVal: {
+      type: {
+        name: 'object',
+        type: 'Bar'
+      },
+      name: 'barVal',
+      id: 'Foo.barVal'
     },
     baz: {
-      type: 'integer',
+      type: {
+        name: 'integer'
+      },
       name: 'baz',
       id: 'Foo.baz',
       required: true
     },
     aDate: {
-      type: 'date',
+      type: {
+        name: 'date'
+      },
       name: 'aDate',
-      id: 'Foo.aDate',
-      required: false
+      id: 'Foo.aDate'
     },
     status: {
-      type: 'enum',
+      type: {
+        name: 'enum'
+      },
       name: 'status',
       id: 'Foo.status',
-      required: false,
       values: ['a', 'b', 'c']
     },
     withPattern: {
-      type: 'string',
+      type: {
+        name: 'string'
+      },
       name: 'withPattern',
       id: 'Foo.withPattern',
-      required: false,
       pattern: /^abc.*$/
     },
     withExtra: {
-      type: 'string',
+      type: {
+        name: 'string'
+      },
       name: 'withExtra',
-      id: 'Foo.withExtra',
-      required: false,
-      foo: 'extra',
-      bar: true,
-      baz: 123
+      id: 'Foo.withExtra'
     }
   },
   filter: {
     bar: {
       id: 'Foo.filter.bar',
       name: 'bar',
-      type: 'string',
-      required: false
+      type: {
+        name: 'string'
+      }
     },
     status: {
       id: 'Foo.filter.status',
       name: 'status',
-      type: 'enum',
-      required: false,
+      type: {
+        name: 'enum'
+      },
       values: ['a', 'b', 'c']
     },
     arr: {
       id: 'Foo.filter.arr',
       name: 'arr',
-      type: 'array',
-      required: false
+      type: {
+        name: 'array'
+      }
     },
     anInterval: {
       id: 'Foo.filter.anInterval',
       name: 'anInterval',
-      type: 'date-interval',
-      required: false
+      type: {
+        name: 'interval',
+        type: {
+          name: 'date'
+        }
+      }
     }
   }
 };

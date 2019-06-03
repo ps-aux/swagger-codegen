@@ -82,12 +82,13 @@
         "baz"
       ],
       "properties": {
-        "id": {
+        "anId": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "x-ref": "Bar"
         },
-        "bar": {
-          "type": "string"
+        "barVal": {
+          "$ref": "#/definitions/Bar"
         },
         "baz": {
           "type": "integer",

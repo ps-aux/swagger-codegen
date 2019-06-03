@@ -1,11 +1,11 @@
 import { FilterParam } from 'types'
 import { detectType } from 'src/modelgen/detectType'
-import { arrayToObject, groupBy, objectToArray } from 'src/modelgen/util'
+import { arrayToObject, groupBy } from 'src/modelgen/util'
 import { EntityOperationsGroup } from 'src/modelgen/EntityOperationsGroup'
 
 const isCompositeParam = p => p.name.includes('.')
 
-const paramGroupToParam = (name, params, entityName) => {
+const paramGroupToParam = (name, params, entityName): FilterParam => {
     // for now we support only intervals
 
     const handleError = reason => {
@@ -25,17 +25,23 @@ const paramGroupToParam = (name, params, entityName) => {
         handleError('Missing either from or to')
     }
 
-    if (from.type !== to.type) handleError('Type of from and to does not match')
+    if (from.type.name !== to.type.name) handleError('Type of from and to does not match')
 
     if (from.required !== to.required)
         handleError('Required value of from and to does not match')
 
-    return {
+    const res: FilterParam = {
         id: `${entityName}.filter.${name}`,
         name,
-        type: from.type + '-interval',
-        required: from.required
+        type: {
+            name: 'interval',
+            type: from.type
+        }
     }
+    if (from.required)
+        res.required = from.required
+
+    return res
 }
 
 export const createFilterModel = (
@@ -51,16 +57,19 @@ export const createFilterModel = (
             const type = detectType(p)
             const name = p.name
 
-            const res: FilterParam = {
+            const param: FilterParam = {
                 id: `${entityName}.filter.${name}`,
                 name,
-                type,
-                required: p.required
+                type: {
+                    name: type
+                }
             }
+            if (p.required)
+                param.required = true
 
-            if (type === 'enum') res.values = p.enum
+            if (type === 'enum') param.values = p.enum
 
-            return res
+            return param
         })
         .filter(p => !ignoredParams.includes(p.name))
 
