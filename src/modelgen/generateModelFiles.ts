@@ -7,7 +7,7 @@ import {
     findEntityOperations,
     getEntityOperation
 } from 'src/modelgen/EntityOperationsGroup'
-import { createAttributesModel } from 'src/modelgen/EntityModel'
+import { createAttributesModel } from 'src/modelgen/AttributeModel'
 import { CodeFormatter, FormatCode } from 'src/modelgen/FormatCode'
 import { Api, Model, SwaggerApiSpec, SwaggerDefinition } from 'types'
 import { printObject } from 'src/modelgen/codePrint'

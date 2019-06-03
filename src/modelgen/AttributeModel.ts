@@ -6,7 +6,12 @@ import { extractExtraProps } from 'src/modelgen/extractExtraProps'
 
 const defFromRef = ref => ref.split('/')[2]
 
-const attributeModel = (p, entityName, requiredProps) => {
+// Some extra props - superset of Attribute
+type MyAttribute = Attribute & {
+    refDataFor?: string
+}
+
+const attributeModel = (p, entityName, requiredProps): MyAttribute => {
 
     const type = detectType(p)
     const { name } = p
@@ -16,8 +21,8 @@ const attributeModel = (p, entityName, requiredProps) => {
             name: type
         },
         name,
-        id: `${entityName}.${name}`,
-    } as Attribute
+        id: `${entityName}.${name}`
+    } as MyAttribute
 
     if (requiredProps.includes(name))
         attr.required = true
@@ -32,14 +37,17 @@ const attributeModel = (p, entityName, requiredProps) => {
         attr.values = p.enum
     }
 
-    if (basicType ===  'object') {
+    if (basicType === 'object') {
         attr.type.type = defFromRef(p.$ref)
     }
 
-    const extra =  extractExtraProps(p)
+    const extra = extractExtraProps(p)
 
     if (basicType === 'ref') {
         attr.type.type = extra.ref
+
+        if (extra.refDataPath)
+            attr.refDataPath = extra.refDataPath
     }
 
     if (extra.readOnly) {
@@ -50,19 +58,25 @@ const attributeModel = (p, entityName, requiredProps) => {
         attr.detailOnly = true
     }
 
+    if (extra.refDataFor) {
+        attr.refDataFor = extra.refDataFor
+    }
+
     return attr
 }
 
-export const createAttributesModel = (def:SwaggerDefinition, entityName: string) => {
+export const createAttributesModel = (def: SwaggerDefinition,
+                                      entityName: string):  { [key: string]: Attribute }  => {
     def = clone(def)
     const required = def.required || []
 
     const properties = objectToArray('name', def.properties)
         .map(p => attributeModel(p, entityName, required))
+        // Remove ref data - they are duplicate attributes. The logical attribute is the one with id.
+        .filter(attr => !attr.refDataFor)
 
 
-    const attr: {[key:string]: Attribute} = arrayToObject('name', properties)
-    return attr
+    return arrayToObject('name', properties)
 }
 
 

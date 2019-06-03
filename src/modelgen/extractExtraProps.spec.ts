@@ -6,13 +6,15 @@ it('works', () => {
         'x-foo': 'a',
         'x-bar': 123,
         'x-baz': true,
+        'x-refDataFor': 'bar',
         'v-other': 'nope'
     })
 
     expect(res).toEqual({
         foo: 'a',
         bar: 123,
-        baz: true
+        baz: true,
+        refDataFor: 'bar'
     })
 
 })

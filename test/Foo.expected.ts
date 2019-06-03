@@ -3,21 +3,22 @@ export const Foo = {
   version: '1.2.3',
   path: '/api/foo-path',
   attr: {
-    anId: {
+    barId: {
       type: {
         name: 'ref',
         type: 'Bar'
       },
-      name: 'anId',
-      id: 'Foo.anId'
+      name: 'barId',
+      id: 'Foo.barId',
+      refDataPath: 'bar'
     },
-    barVal: {
+    barNonRef: {
       type: {
         name: 'object',
         type: 'Bar'
       },
-      name: 'barVal',
-      id: 'Foo.barVal'
+      name: 'barNonRef',
+      id: 'Foo.barNonRef'
     },
     baz: {
       type: {

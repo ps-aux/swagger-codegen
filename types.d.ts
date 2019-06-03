@@ -24,7 +24,7 @@ export type Attribute = {
     readOnly?: boolean
     detailOnly?: boolean
     pattern?: RegExp
-    dataPath?: string
+    refDataPath?: string
 }
 
 export interface Model {
