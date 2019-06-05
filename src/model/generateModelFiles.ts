@@ -1,12 +1,12 @@
 import fs, { PathLike } from 'fs'
 import path from 'path'
-import { modelToCode } from 'src/modelgen/modelToCode'
-import { createFilterModel } from 'src/modelgen/FilterModel'
-import { EntityOperationsGroup, findEntityOperations, getEntityOperation } from 'src/modelgen/EntityOperationsGroup'
-import { createAttributesModel } from 'src/modelgen/AttributeModel'
-import { CodeFormatter, FormatCode } from 'src/modelgen/FormatCode'
+import { modelToCode } from 'src/model/modelToCode'
+import { createFilterModel } from 'src/filter/FilterModel'
+import { EntityOperationsGroup, findEntityOperations, getEntityOperation } from 'src/model/EntityOperationsGroup'
+import { createAttributesModel } from 'src/attribute/AttributeModel'
+import { CodeFormatter, FormatCode } from 'src/model/FormatCode'
 import { Api, Model, SwaggerApiSpec, SwaggerDefinition } from 'types'
-import { printObject } from 'src/modelgen/codePrint'
+import { printObject } from 'src/code/codePrint'
 import { calcChecksumFromObj } from 'src/checksum'
 
 type Opts = {

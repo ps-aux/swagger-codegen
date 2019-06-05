@@ -1,8 +1,8 @@
 import { clone } from 'ramda'
-import { arrayToObject, objectToArray } from 'src/modelgen/util'
-import { detectType } from 'src/modelgen/detectType'
+import { arrayToObject, objectToArray } from 'src/util'
+import { detectType } from 'src/attribute/detectType'
 import { Attribute, SwaggerDefinition } from 'types'
-import { extractExtraProps } from 'src/modelgen/extractExtraProps'
+import { extractExtraProps } from 'src/model/extractExtraProps'
 
 const defFromRef = ref => ref.split('/')[2]
 

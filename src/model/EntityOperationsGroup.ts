@@ -1,4 +1,4 @@
-import { objectToArray } from 'src/modelgen/util'
+import { objectToArray } from 'src/util'
 
 export const getEntityOperation = (apiSpec: any): EntityOperationsGroup[] =>
     objectToArray('path', apiSpec.paths)

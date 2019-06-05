@@ -1,4 +1,4 @@
-import { generateModelFiles } from 'src/modelgen/generateModelFiles'
+import { generateModelFiles } from 'src/model/generateModelFiles'
 import fs from 'fs'
 
 const schemaDir = __dirname + '/../../test/testSchema.json'
