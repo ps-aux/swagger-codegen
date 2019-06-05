@@ -111,9 +111,13 @@
             "c"
           ]
         },
-        "withPattern": {
+        "withValidations": {
           "type": "string",
-          "pattern": "^abc.*$"
+          "pattern": "^abc.*$",
+          "minimum": 123,
+          "maximum": 456,
+          "minLength": 2,
+          "maxLength": 5
         },
         "withExtra": {
           "type": "string",

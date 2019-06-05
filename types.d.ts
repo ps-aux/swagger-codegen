@@ -23,8 +23,23 @@ export type Attribute = {
     values?: string[]
     readOnly?: boolean
     detailOnly?: boolean
-    pattern?: RegExp
     refDataPath?: string
+    validations?: ValidationRule[]
+}
+
+export type ValidationRuleType =
+    | 'pattern'
+    | 'length'
+    | 'minMax'
+
+export type MinMax = {
+    min?: number,
+    max?: number
+}
+
+export type ValidationRule = {
+    type: ValidationRuleType | string,
+    value: RegExp | MinMax
 }
 
 export interface Model {
@@ -47,7 +62,6 @@ export type Api = {
     version: string
 }
 
-
 // Swagger spec types
 export type SwaggerApiSpec = {
     info: {
@@ -60,17 +74,21 @@ export type SwaggerApiSpec = {
     definitions: { [key: string]: SwaggerDefinition }
 }
 
-export type SwaggerProperty = {
-    type: string
+export type SwaggerDefinitionProperty = {
+    type: string,
+    pattern: string,
+    required: string
+    $ref: string,
+    enum: string[],
+    minimum: number,
+    maximum: number,
+    minLength: number,
+    maxLength: number
 }
 
 export type SwaggerDefinition = {
-    type: string,
-    title: string,
-    required: string[],
-    properties: { [key: string]: SwaggerProperty }
-
+    type: string
+    title: string
+    required: string[]
+    properties: { [key: string]: SwaggerDefinitionProperty }
 }
-
-
-
