@@ -40,6 +40,6 @@ workflows:
   version: 2
   all:
     jobs:
-      - build
-        context: NPM
+      - build:
+          context: NPM
 
