@@ -41,3 +41,5 @@ workflows:
   all:
     jobs:
       - build
+        context: NPM
+
