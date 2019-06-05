@@ -1,12 +1,7 @@
-import crypto from 'crypto'
+import { calcChecksumFromObj } from 'src/checksum'
 
 const { clone } = require('ramda')
 
-const calcHash = str =>
-    crypto
-        .createHash('md5')
-        .update(str)
-        .digest('hex')
 
 export const purifySpec = spec => {
     const res = {
@@ -29,7 +24,7 @@ export const purifySpec = spec => {
         })
     })
 
-    res.checksum = calcHash(JSON.stringify(res))
+    res.checksum = calcChecksumFromObj(res)
 
     return res
 

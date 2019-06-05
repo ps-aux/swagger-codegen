@@ -2,15 +2,12 @@ import fs, { PathLike } from 'fs'
 import path from 'path'
 import { modelToCode } from 'src/modelgen/modelToCode'
 import { createFilterModel } from 'src/modelgen/FilterModel'
-import {
-    EntityOperationsGroup,
-    findEntityOperations,
-    getEntityOperation
-} from 'src/modelgen/EntityOperationsGroup'
+import { EntityOperationsGroup, findEntityOperations, getEntityOperation } from 'src/modelgen/EntityOperationsGroup'
 import { createAttributesModel } from 'src/modelgen/AttributeModel'
 import { CodeFormatter, FormatCode } from 'src/modelgen/FormatCode'
 import { Api, Model, SwaggerApiSpec, SwaggerDefinition } from 'types'
 import { printObject } from 'src/modelgen/codePrint'
+import { calcChecksumFromObj } from 'src/checksum'
 
 type Opts = {
     log?: (...a: any) => void
@@ -24,15 +21,22 @@ const filterModel = (opsGroup: EntityOperationsGroup, entityName: string) => {
 const createModel = (
     entityName: string,
     def: SwaggerDefinition,
-    version: string,
     opsGroup?: EntityOperationsGroup
-): Model => ({
-    entityName,
-    version,
-    path: opsGroup ? opsGroup.path : null,
-    attr: createAttributesModel(def, entityName),
-    filter: opsGroup ? filterModel(opsGroup, entityName) : null
-})
+): Model => {
+    const data = {
+        entityName,
+        path: opsGroup ? opsGroup.path : null,
+        attr: createAttributesModel(def, entityName),
+        filter: opsGroup ? filterModel(opsGroup, entityName) : null
+    }
+
+    const checksum = calcChecksumFromObj(data)
+
+    return {
+        ...data,
+        checksum
+    }
+}
 
 export const generateModelFiles = (sourcePath, targetDir, opts: Opts = {}) => {
     const { log = () => null } = opts
@@ -68,7 +72,6 @@ export const generateModelFiles = (sourcePath, targetDir, opts: Opts = {}) => {
             const model = createModel(
                 entityName,
                 def,
-                apiInfo.version,
                 opsGroup
             )
 

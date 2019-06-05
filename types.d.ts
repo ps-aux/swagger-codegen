@@ -28,11 +28,11 @@ export type Attribute = {
 }
 
 export interface Model {
-    version: string
     entityName: string
     path: string | null
     attr: { [key: string]: Attribute }
     filter: any // TODO
+    checksum: string
 }
 
 export type FilterParam = {

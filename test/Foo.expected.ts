@@ -1,6 +1,5 @@
 export const Foo = {
   entityName: 'Foo',
-  version: '1.2.3',
   path: '/api/foo-path',
   attr: {
     barId: {
@@ -92,5 +91,6 @@ export const Foo = {
         }
       }
     }
-  }
+  },
+  checksum: '8a263847ae0eb44b50088164e273892f'
 };

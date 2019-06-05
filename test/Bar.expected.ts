@@ -1,6 +1,5 @@
 export const Bar = {
   entityName: 'Bar',
-  version: '1.2.3',
   path: null,
   attr: {
     number: {
@@ -20,5 +19,6 @@ export const Bar = {
       required: true
     }
   },
-  filter: null
+  filter: null,
+  checksum: '4eeffbff00a14dc3ebd5ebb6fd697591'
 };
