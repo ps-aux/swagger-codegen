@@ -22,7 +22,7 @@ jobs:
       - run:
           name: Typecheck
           command: |
-            npm run typcheck
+            npm run typecheck
       - run:
           name: Build
           command: |
