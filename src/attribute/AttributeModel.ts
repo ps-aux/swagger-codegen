@@ -42,6 +42,10 @@ const attributeModel = (p: SwaggerDefinitionProperty,
         attr.type.type = defFromRef(p.$ref)
     }
 
+    if (basicType === 'array') {
+        attr.type.type = defFromRef(p.items.$ref)
+    }
+
     const extra = extractExtraProps(p)
 
     if (basicType === 'ref') {

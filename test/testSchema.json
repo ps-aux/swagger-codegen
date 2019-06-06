@@ -124,6 +124,12 @@
           "x-foo": "extra",
           "x-bar": true,
           "x-baz": 123
+        },
+        "withArray": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Foo"
+          }
         }
       },
       "title": "Foo"

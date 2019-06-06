@@ -75,6 +75,14 @@ export const Foo = {
       },
       name: 'withExtra',
       id: 'Foo.withExtra'
+    },
+    withArray: {
+      type: {
+        name: 'array',
+        type: 'Foo'
+      },
+      name: 'withArray',
+      id: 'Foo.withArray'
     }
   },
   filter: {
@@ -111,5 +119,5 @@ export const Foo = {
       }
     }
   },
-  checksum: 'a17e5254f2cc75e0ab8bea9d402eecda'
+  checksum: '33950673c4d285174d6e5e56022301c8'
 };
