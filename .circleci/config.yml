@@ -26,15 +26,15 @@ jobs:
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
-#      - run:
-#          name: Publish
-#          command: |
-#            git config user.email "ps-aux@ci.com"
-#            git config user.name "ps-aux-ci"
-#            export BUILD_NO=${CIRCLE_BUILD_NUM}
-#            version=$(npm run -s get-version)
-#            npm version ${version} --allow-same-version
-#            npm run pub
+      - run:
+          name: Publish
+          command: |
+            git config user.email "ps-aux@ci.com"
+            git config user.name "ps-aux-ci"
+            export BUILD_NO=${CIRCLE_BUILD_NUM}
+            version=$(npm run -s get-version)
+            npm version ${version} --allow-same-version
+            npm run pub
 
 workflows:
   version: 2
