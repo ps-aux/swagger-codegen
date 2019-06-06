@@ -1,12 +1,13 @@
 {
   "name": "@ps-aux/swagger-codegen",
-  "version": "3.0.0-rc",
+  "version": "4.0.0-rc",
   "main": "index.js",
   "scripts": {
     "build": "rm -rf build && babel --extensions '.ts,.js' src -d build src",
     "pub": "npm publish --access public",
     "test": "jest src",
     "get-version": "scripts/get-version.js",
+    "typecheck": "tsc --noEmit",
     "run-on-api": "node ./build/bin/gen-model-from-swagger.js test/apiSchema.json test/build/run-on-api"
   },
   "repository": {

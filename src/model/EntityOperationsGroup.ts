@@ -1,6 +1,7 @@
-import { objectToArray } from 'src/modelgen/util'
+import { objectToArray } from 'src/util'
+import { SwaggerApiSpec } from 'src/swagger/types'
 
-export const getEntityOperation = (apiSpec: any): EntityOperationsGroup[] =>
+export const getEntityOperation = (apiSpec: SwaggerApiSpec): EntityOperationsGroup[] =>
     objectToArray('path', apiSpec.paths)
         .map(({ path, ...ops }) => ({
             path,

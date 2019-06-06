@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { generateModelFiles } from 'src/modelgen/generateModelFiles'
+import { generateModelFiles } from 'src/model/generateModelFiles'
 import path from 'path'
 import fs from 'fs'
 

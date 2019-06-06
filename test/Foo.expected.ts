@@ -42,13 +42,32 @@ export const Foo = {
       id: 'Foo.status',
       values: ['a', 'b', 'c']
     },
-    withPattern: {
+    withValidations: {
       type: {
         name: 'string'
       },
-      name: 'withPattern',
-      id: 'Foo.withPattern',
-      pattern: /^abc.*$/
+      name: 'withValidations',
+      id: 'Foo.withValidations',
+      validations: [
+        {
+          type: 'pattern',
+          value: /^abc.*$/
+        },
+        {
+          type: 'length',
+          value: {
+            min: 2,
+            max: 5
+          }
+        },
+        {
+          type: 'minMax',
+          value: {
+            min: 123,
+            max: 456
+          }
+        }
+      ]
     },
     withExtra: {
       type: {
@@ -92,5 +111,5 @@ export const Foo = {
       }
     }
   },
-  checksum: '8a263847ae0eb44b50088164e273892f'
+  checksum: 'a17e5254f2cc75e0ab8bea9d402eecda'
 };

@@ -1,4 +1,4 @@
-import { extractExtraProps } from 'src/modelgen/extractExtraProps'
+import { extractExtraProps } from 'src/attribute/extractExtraProps'
 
 it('works', () => {
 
