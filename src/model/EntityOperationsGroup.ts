@@ -1,5 +1,5 @@
 import { objectToArray } from 'src/util'
-import { SwaggerApiSpec } from 'types'
+import { SwaggerApiSpec } from 'src/swagger/types'
 
 export const getEntityOperation = (apiSpec: SwaggerApiSpec): EntityOperationsGroup[] =>
     objectToArray('path', apiSpec.paths)

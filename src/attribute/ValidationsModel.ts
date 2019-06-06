@@ -1,4 +1,5 @@
-import { Attribute, SwaggerDefinitionProperty, ValidationRule } from 'types'
+import { Attribute, ValidationRule } from 'types'
+import { SwaggerDefinitionProperty } from 'src/swagger/types'
 
 export const calcValidationRules = (
     attr: Attribute,

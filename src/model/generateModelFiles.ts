@@ -5,9 +5,10 @@ import { createFilterModel } from 'src/filter/FilterModel'
 import { EntityOperationsGroup, findEntityOperations, getEntityOperation } from 'src/model/EntityOperationsGroup'
 import { createAttributesModel } from 'src/attribute/AttributeModel'
 import { CodeFormatter, FormatCode } from 'src/code/FormatCode'
-import { Api, Model, SwaggerApiSpec, SwaggerDefinition } from 'types'
+import { Api, Model } from 'types'
 import { printObject } from 'src/code/codePrint'
 import { calcChecksumFromObj } from 'src/checksum'
+import { SwaggerApiSpec, SwaggerDefinition } from 'src/swagger/types'
 
 type Opts = {
     log?: (...a: any) => void

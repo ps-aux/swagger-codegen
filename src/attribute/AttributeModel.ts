@@ -1,9 +1,10 @@
 import { clone } from 'ramda'
 import { arrayToObject, objectToArray } from 'src/util'
 import { detectType } from 'src/attribute/detectType'
-import { Attribute, SwaggerDefinition, SwaggerDefinitionProperty } from 'types'
 import { extractExtraProps } from 'src/attribute/extractExtraProps'
 import { calcValidationRules } from 'src/attribute/ValidationsModel'
+import { Attribute } from 'types'
+import { SwaggerDefinition, SwaggerDefinitionProperty } from 'src/swagger/types'
 
 const defFromRef = ref => ref.split('/')[2]
 
