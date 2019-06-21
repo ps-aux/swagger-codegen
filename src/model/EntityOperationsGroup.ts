@@ -1,4 +1,4 @@
-import 'core-js/fn/array/flat-map'
+import 'core-js/features/array/flat-map'
 import { SwaggerApiSpec, SwaggerDefinition, SwaggerOperation } from 'src/swagger/types'
 import { OperationType } from 'values'
 
