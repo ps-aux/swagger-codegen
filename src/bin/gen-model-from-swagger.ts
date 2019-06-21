@@ -23,3 +23,4 @@ generateModelFiles(sourcePath, targetDir, {
 })
 
 fs.copyFileSync(path.resolve(__dirname, '../..', 'types.d.ts'), path.resolve(targetDir, 'types.d.ts'))
+fs.copyFileSync(path.resolve(__dirname, '../..', 'values.ts'), path.resolve(targetDir, 'values.d.ts'))

@@ -1,4 +1,4 @@
-import { OperationType } from 'values'
+import { OperationType } from './values' // TODO fix warning in Idea
 
 export type BasicType =
     | 'integer'
