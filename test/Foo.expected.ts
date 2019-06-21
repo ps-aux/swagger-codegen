@@ -1,6 +1,7 @@
 export const Foo = {
   entityName: 'Foo',
   path: '/api/foo-path',
+  operations: ['create', 'list-by-page'],
   attr: {
     barId: {
       type: {
@@ -119,5 +120,5 @@ export const Foo = {
       }
     }
   },
-  checksum: '33950673c4d285174d6e5e56022301c8'
+  checksum: 'a622fb2281bcf416b90ff33b8409459f'
 };

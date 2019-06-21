@@ -2,7 +2,7 @@ import fs, { PathLike } from 'fs'
 import path from 'path'
 import { modelToCode } from 'src/model/modelToCode'
 import { createFilterModel } from 'src/filter/FilterModel'
-import { EntityOperationsGroup, findEntityOperations, getEntityOperation } from 'src/model/EntityOperationsGroup'
+import { EntityOperationsGroup, entityOperationsMap } from 'src/model/EntityOperationsGroup'
 import { createAttributesModel } from 'src/attribute/AttributeModel'
 import { CodeFormatter, FormatCode } from 'src/code/FormatCode'
 import { Api, Model } from 'types'
@@ -27,6 +27,8 @@ const createModel = (
     const data = {
         entityName,
         path: opsGroup ? opsGroup.path : null,
+        operations: opsGroup ? opsGroup.operations
+            .map(o => o.type) : [],
         attr: createAttributesModel(def, entityName),
         filter: opsGroup ? filterModel(opsGroup, entityName) : null
     }
@@ -49,7 +51,8 @@ export const generateModelFiles = (sourcePath, targetDir, opts: Opts = {}) => {
     ) as SwaggerApiSpec
 
     const definitions = Object.values(apiSpec.definitions)
-    const allEntityOps = getEntityOperation(apiSpec)
+
+    const opsMap = entityOperationsMap(definitions, apiSpec)
 
     const formatCode = CodeFormatter({
         semicolons: true
@@ -68,12 +71,11 @@ export const generateModelFiles = (sourcePath, targetDir, opts: Opts = {}) => {
             log(`Generating ${entityName} model`)
             const fileName = entityName + '.ts'
             const filePath = path.join(targetDir, fileName)
-            const opsGroup = findEntityOperations(entityName, allEntityOps)
 
             const model = createModel(
                 entityName,
                 def,
-                opsGroup
+                opsMap.get(def)
             )
 
             const code = modelToCode(model, { formatCode })

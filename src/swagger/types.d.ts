@@ -1,3 +1,22 @@
+export type SwaggerParameterType = 'header' | 'body' | 'query'
+
+
+export type SwaggerParameter = {
+    name: string,
+    in: SwaggerParameterType ,
+    required: boolean
+    type: string,
+    enum: any
+}
+
+
+export type SwaggerOperation = {
+    tags: string[],
+    summary: string
+    parameters: SwaggerParameter[]
+}
+
+
 // Swagger spec types
 export type SwaggerApiSpec = {
     info: {
@@ -6,7 +25,11 @@ export type SwaggerApiSpec = {
     }
     basePath: string
     tags: []
-    paths: { [key: string]: any }
+    paths: {
+        [key: string]: {
+            [key: string]: SwaggerOperation
+        }
+    }
     definitions: { [key: string]: SwaggerDefinition }
 }
 

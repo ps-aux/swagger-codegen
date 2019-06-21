@@ -1,6 +1,7 @@
 export const Bar = {
   entityName: 'Bar',
-  path: null,
+  path: '/api/bar-path',
+  operations: ['detail', 'update'],
   attr: {
     number: {
       type: {
@@ -20,5 +21,5 @@ export const Bar = {
     }
   },
   filter: null,
-  checksum: '4eeffbff00a14dc3ebd5ebb6fd697591'
+  checksum: 'c80a84c9c6330f52e667dccaa00d32d2'
 };

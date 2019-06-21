@@ -1,7 +1,8 @@
-import { FilterParam } from 'types'
+import { Filter, FilterParam } from 'types'
 import { detectType } from 'src/attribute/detectType'
 import { arrayToObject, groupBy } from 'src/util'
 import { EntityOperationsGroup } from 'src/model/EntityOperationsGroup'
+import { OperationType } from 'values'
 
 const isCompositeParam = p => p.name.includes('.')
 
@@ -48,10 +49,14 @@ export const createFilterModel = (
     entityName,
     opsGroup: EntityOperationsGroup,
     ignoredParams: string[] = []
-): any => {
-    const getOp = opsGroup.operations.find(o => o.method === 'get')
+): Filter | null => {
+    const listByPage = opsGroup.operations.find(o =>
+        o.type === OperationType.LIST_BY_PAGE)
 
-    const params: FilterParam[] = getOp.parameters
+    if (!listByPage)
+        return null
+
+    const params: FilterParam[] = listByPage.swaggerOp.parameters
         .filter(p => p.in === 'query')
         .map(p => {
             const type = detectType(p)
@@ -83,5 +88,5 @@ export const createFilterModel = (
         paramGroupToParam(name, items, entityName)
     )
 
-    return arrayToObject('name', [...nonComposite, ...fromGroups])
+    return arrayToObject('name', [...nonComposite, ...fromGroups]) as Filter
 }

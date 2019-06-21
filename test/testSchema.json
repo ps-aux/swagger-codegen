@@ -7,19 +7,33 @@
   "basePath": "/",
   "tags": [],
   "paths": {
-    "/api/foo-path": {
+    "/api/bar-path/{id}": {
       "get": {
         "tags": [
-          "Foo"
+          "Bar",
+          "detail"
+        ]
+      },
+      "put": {
+        "tags": [
+          "Bar",
+          "update"
+        ]
+      }
+    },
+    "/api/foo-path": {
+      "post": {
+        "tags": [
+          "Foo",
+          "create"
+        ]
+      },
+      "get": {
+        "tags": [
+          "Foo",
+          "list-by-page"
         ],
         "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "bar",
             "in": "query",

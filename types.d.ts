@@ -1,3 +1,5 @@
+import { OperationType } from 'values'
+
 export type BasicType =
     | 'integer'
     | 'double'
@@ -37,6 +39,7 @@ export type MinMax = {
     max?: number
 }
 
+
 export type ValidationRule = {
     type: ValidationRuleType | string,
     value: RegExp | MinMax
@@ -45,6 +48,7 @@ export type ValidationRule = {
 export interface Model {
     entityName: string
     path: string | null
+    operations: OperationType[]
     attr: { [key: string]: Attribute }
     filter: any // TODO
     checksum: string
@@ -57,6 +61,8 @@ export type FilterParam = {
     required?: boolean
     values?: string[]
 }
+
+export type Filter = { [key: string]: FilterParam }
 
 export type Api = {
     version: string
