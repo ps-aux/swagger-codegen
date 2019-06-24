@@ -1,8 +1,8 @@
-import { Filter, FilterParam } from 'types'
+import { Filter, FilterParam } from 'src/types'
 import { detectType } from 'src/attribute/detectType'
 import { arrayToObject, groupBy } from 'src/util'
 import { EntityOperationsGroup } from 'src/model/EntityOperationsGroup'
-import { OperationType } from 'values'
+import { OperationType } from 'src/values'
 
 const isCompositeParam = p => p.name.includes('.')
 

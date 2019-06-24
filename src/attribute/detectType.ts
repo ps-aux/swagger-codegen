@@ -1,4 +1,4 @@
-import { BasicType } from 'types'
+import { BasicType } from 'src/types'
 
 
 export const detectType = (val: any): BasicType => {

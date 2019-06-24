@@ -2,7 +2,6 @@
 import { generateModelFiles } from 'src/model/generateModelFiles'
 import path from 'path'
 import fs from 'fs'
-
 const args = process.argv
 
 const sourcePath = args[2]
@@ -22,5 +21,5 @@ generateModelFiles(sourcePath, targetDir, {
     log: console.log
 })
 
-fs.copyFileSync(path.resolve(__dirname, '../..', 'types.d.ts'), path.resolve(targetDir, 'types.d.ts'))
-fs.copyFileSync(path.resolve(__dirname, '../..', 'values.ts'), path.resolve(targetDir, 'values.d.ts'))
+fs.copyFileSync(path.resolve(__dirname, '../../src', 'types.d.ts'), path.resolve(targetDir, 'types.d.ts'))
+fs.copyFileSync(path.resolve(__dirname, '../../src', 'values.ts'), path.resolve(targetDir, 'values.d.ts'))

@@ -1,6 +1,6 @@
 import 'core-js/features/array/flat-map'
 import { SwaggerApiSpec, SwaggerDefinition, SwaggerOperation } from 'src/swagger/types'
-import { OperationType } from 'values'
+import { OperationType } from 'src/values'
 
 const beforeId = /(.*)\/\{id\}/
 
