@@ -48,7 +48,7 @@ export type ValidationRule = {
 export interface Model {
     entityName: string
     path: string | null
-    operations: OperationType[]
+    operations: string[]
     attr: { [key: string]: Attribute }
     filter: any // TODO
     checksum: string
