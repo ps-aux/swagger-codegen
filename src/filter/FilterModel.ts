@@ -1,5 +1,5 @@
 import { Filter, FilterParam } from 'src/types'
-import { detectType } from 'src/attribute/detectType'
+import { detectBasicType } from 'src/attribute/detectBasicType'
 import { arrayToObject, groupBy } from 'src/util'
 import { EntityOperationsGroup } from 'src/model/EntityOperationsGroup'
 import { OperationType } from 'src/values'
@@ -59,7 +59,7 @@ export const createFilterModel = (
     const params: FilterParam[] = listByPage.swaggerOp.parameters
         .filter(p => p.in === 'query')
         .map(p => {
-            const type = detectType(p)
+            const type = detectBasicType(p)
             const name = p.name
 
             const param: FilterParam = {

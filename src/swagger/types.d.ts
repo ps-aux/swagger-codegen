@@ -40,7 +40,8 @@ export type SwaggerDefinitionProperty = {
     $ref: string,
     enum: string[],
     items: {
-        $ref: string
+        $ref?: string,
+        type?: string
     }
     minimum: number,
     maximum: number,

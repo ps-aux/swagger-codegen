@@ -1,6 +1,6 @@
 import { clone } from 'ramda'
 import { arrayToObject, objectToArray } from 'src/util'
-import { detectType } from 'src/attribute/detectType'
+import { detectBasicType } from 'src/attribute/detectBasicType'
 import { extractExtraProps } from 'src/attribute/extractExtraProps'
 import { calcValidationRules } from 'src/attribute/ValidationsModel'
 import { Attribute } from 'src/types'
@@ -13,16 +13,17 @@ type MyAttribute = Attribute & {
     refDataFor?: string
 }
 
+
 const attributeModel = (p: SwaggerDefinitionProperty,
                         name: string,
                         entityName: string,
                         requiredProps): MyAttribute => {
 
-    const type = detectType(p)
+    const basicType = detectBasicType(p)
 
     const attr = {
         type: {
-            name: type
+            name: basicType
         },
         name,
         id: `${entityName}.${name}`
@@ -30,8 +31,6 @@ const attributeModel = (p: SwaggerDefinitionProperty,
 
     if (requiredProps.includes(name))
         attr.required = true
-
-    const basicType = attr.type.name
 
 
     if (basicType === 'enum') {
@@ -43,8 +42,13 @@ const attributeModel = (p: SwaggerDefinitionProperty,
     }
 
     if (basicType === 'array') {
-        attr.type.type = defFromRef(p.items.$ref)
+        const itemDef = p.items
+        attr.type.type = itemDef.$ref ?
+            defFromRef(itemDef.$ref) :
+            // Is primitive
+            itemDef.type
     }
+
 
     const extra = extractExtraProps(p)
 

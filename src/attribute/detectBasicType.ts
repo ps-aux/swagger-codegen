@@ -1,7 +1,7 @@
 import { BasicType } from 'src/types'
 
 
-export const detectType = (val: any): BasicType => {
+export const detectBasicType = (val: any): BasicType => {
     if (val.enum)
         return 'enum'
     if (val.$ref)

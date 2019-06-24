@@ -144,6 +144,12 @@
           "items": {
             "$ref": "#/definitions/Foo"
           }
+        },
+        "arrayOfPrimitives": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
       "title": "Foo"

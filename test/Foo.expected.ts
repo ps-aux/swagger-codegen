@@ -84,6 +84,14 @@ export const Foo = {
       },
       name: 'withArray',
       id: 'Foo.withArray'
+    },
+    arrayOfPrimitives: {
+      type: {
+        name: 'array',
+        type: 'string'
+      },
+      name: 'arrayOfPrimitives',
+      id: 'Foo.arrayOfPrimitives'
     }
   },
   filter: {
@@ -120,5 +128,5 @@ export const Foo = {
       }
     }
   },
-  checksum: 'a622fb2281bcf416b90ff33b8409459f'
+  checksum: 'b0862e30eb17c9b8f8bd7e75ea06c21a'
 };
