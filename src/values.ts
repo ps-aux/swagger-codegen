@@ -3,7 +3,7 @@ export enum OperationType {
     UPDATE = 'update',
     DELETE = 'delete',
     DETAIL = 'detail',
-    LIST_BY_PAGE = 'list-by-page',
-    LIST_ALL = 'list-all'
+    LIST_BY_PAGE = 'listByPage',
+    LIST_ALL = 'listAll'
 }
 

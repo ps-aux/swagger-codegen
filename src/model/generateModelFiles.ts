@@ -5,18 +5,41 @@ import { createFilterModel } from 'src/filter/FilterModel'
 import { EntityOperationsGroup, entityOperationsMap } from 'src/model/EntityOperationsGroup'
 import { createAttributesModel } from 'src/attribute/AttributeModel'
 import { CodeFormatter, FormatCode } from 'src/code/FormatCode'
-import { Api, Model } from 'src/types'
+import { Api, Model, Operation, Operations } from 'src/types'
 import { printObject } from 'src/code/codePrint'
 import { calcChecksumFromObj } from 'src/checksum'
 import { SwaggerApiSpec, SwaggerDefinition } from 'src/swagger/types'
+import { OperationType } from 'src/values'
 
 type Opts = {
     log?: (...a: any) => void
 }
 
-const filterModel = (opsGroup: EntityOperationsGroup, entityName: string) => {
-    const ignoredParams = ['sort', 'page', 'size']
-    return createFilterModel(entityName, opsGroup, ignoredParams)
+
+const operations = (entityName: string, opsGroup: EntityOperationsGroup): Operations => {
+
+    const operations = {}
+
+    opsGroup.operations.forEach(o => {
+
+        const opModel = {
+            type: o.type
+        } as Operation
+
+        operations[opModel.type] = opModel
+
+        // Both have prefix 'filter' as requsted by frontend team
+        if (opModel.type === OperationType.LIST_ALL) {
+            opModel.params = createFilterModel(entityName, o, [], 'filter')
+        }
+
+        if (opModel.type === OperationType.LIST_BY_PAGE) {
+            opModel.params = createFilterModel(entityName, o, ['sort', 'page', 'size'], 'filter')
+        }
+    })
+
+
+    return operations
 }
 
 const createModel = (
@@ -24,13 +47,13 @@ const createModel = (
     def: SwaggerDefinition,
     opsGroup?: EntityOperationsGroup
 ): Model => {
+
+
     const data = {
         entityName,
         path: opsGroup ? opsGroup.path : null,
-        operations: opsGroup ? opsGroup.operations
-            .map(o => o.type) : [],
         attr: createAttributesModel(def, entityName),
-        filter: opsGroup ? filterModel(opsGroup, entityName) : null
+        operations: opsGroup ? operations(entityName, opsGroup) : undefined
     }
 
     const checksum = calcChecksumFromObj(data)

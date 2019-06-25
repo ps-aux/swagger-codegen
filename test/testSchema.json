@@ -21,6 +21,22 @@
         ]
       }
     },
+    "/api/bar-path": {
+      "get": {
+        "tags": [
+          "Bar",
+          "listAll"
+        ],
+        "parameters": [
+          {
+            "name": "bar",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      }
+    },
     "/api/foo-path": {
       "post": {
         "tags": [
@@ -31,7 +47,7 @@
       "get": {
         "tags": [
           "Foo",
-          "list-by-page"
+          "listByPage"
         ],
         "parameters": [
           {

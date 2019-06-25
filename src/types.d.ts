@@ -43,12 +43,19 @@ export type ValidationRule = {
     value: RegExp | MinMax
 }
 
+
+export type Operation = {
+    type: string, // cannot be an enum
+    params?: Filter
+}
+
+export type Operations = { [key: string]: Operation }
+
 export interface Model {
     entityName: string
     path: string | null
-    operations: string[]
     attr: { [key: string]: Attribute }
-    filter: any // TODO
+    operations?: Operations,
     checksum: string
 }
 

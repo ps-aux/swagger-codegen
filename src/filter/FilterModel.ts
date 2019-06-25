@@ -1,8 +1,7 @@
 import { Filter, FilterParam } from 'src/types'
 import { detectBasicType } from 'src/attribute/detectBasicType'
 import { arrayToObject, groupBy } from 'src/util'
-import { EntityOperationsGroup } from 'src/model/EntityOperationsGroup'
-import { OperationType } from 'src/values'
+import { EntityOperation } from 'src/model/EntityOperationsGroup'
 
 const isCompositeParam = p => p.name.includes('.')
 
@@ -47,23 +46,20 @@ const paramGroupToParam = (name, params, entityName): FilterParam => {
 
 export const createFilterModel = (
     entityName,
-    opsGroup: EntityOperationsGroup,
-    ignoredParams: string[] = []
-): Filter | null => {
-    const listByPage = opsGroup.operations.find(o =>
-        o.type === OperationType.LIST_BY_PAGE)
+    operation: EntityOperation,
+    ignoredParams: string[] = [],
+    paramNameSpace: String
+): Filter | undefined => {
 
-    if (!listByPage)
-        return null
-
-    const params: FilterParam[] = listByPage.swaggerOp.parameters
+    const params: FilterParam[] = operation.swaggerOp.parameters
+    // TODO move string to swagger type defs
         .filter(p => p.in === 'query')
         .map(p => {
             const type = detectBasicType(p)
             const name = p.name
 
             const param: FilterParam = {
-                id: `${entityName}.filter.${name}`,
+                id: `${entityName}.${paramNameSpace}.${name}`,
                 name,
                 type: {
                     name: type

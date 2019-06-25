@@ -1,7 +1,6 @@
 export const Foo = {
   entityName: 'Foo',
   path: '/api/foo-path',
-  operations: ['create', 'list-by-page'],
   attr: {
     barId: {
       type: {
@@ -94,39 +93,47 @@ export const Foo = {
       id: 'Foo.arrayOfPrimitives'
     }
   },
-  filter: {
-    bar: {
-      id: 'Foo.filter.bar',
-      name: 'bar',
-      type: {
-        name: 'string'
-      }
+  operations: {
+    create: {
+      type: 'create'
     },
-    status: {
-      id: 'Foo.filter.status',
-      name: 'status',
-      type: {
-        name: 'enum'
-      },
-      values: ['a', 'b', 'c']
-    },
-    arr: {
-      id: 'Foo.filter.arr',
-      name: 'arr',
-      type: {
-        name: 'array'
-      }
-    },
-    anInterval: {
-      id: 'Foo.filter.anInterval',
-      name: 'anInterval',
-      type: {
-        name: 'interval',
-        type: {
-          name: 'date'
+    listByPage: {
+      type: 'listByPage',
+      params: {
+        bar: {
+          id: 'Foo.filter.bar',
+          name: 'bar',
+          type: {
+            name: 'string'
+          }
+        },
+        status: {
+          id: 'Foo.filter.status',
+          name: 'status',
+          type: {
+            name: 'enum'
+          },
+          values: ['a', 'b', 'c']
+        },
+        arr: {
+          id: 'Foo.filter.arr',
+          name: 'arr',
+          type: {
+            name: 'array'
+          }
+        },
+        anInterval: {
+          id: 'Foo.filter.anInterval',
+          name: 'anInterval',
+          type: {
+            name: 'interval',
+            type: {
+              name: 'date'
+            }
+          }
         }
       }
     }
   },
-  checksum: 'b0862e30eb17c9b8f8bd7e75ea06c21a'
+  checksum: 'affec1d6ceb222cea3971ea7cf31fc6e'
 };

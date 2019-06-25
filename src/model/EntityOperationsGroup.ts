@@ -11,6 +11,16 @@ const removeIdParam = (path: string) => {
     return path.match(beforeId)!![1]
 }
 
+
+const sortOrder = {
+    [OperationType.CREATE]: 0,
+    [OperationType.UPDATE]: 1,
+    [OperationType.DELETE]: 2,
+    [OperationType.DETAIL]: 3,
+    [OperationType.LIST_BY_PAGE]: 4,
+    [OperationType.LIST_ALL]: 5
+}
+
 export const entityOperationsMap = (defs: SwaggerDefinition[],
                                     spec: SwaggerApiSpec): Map<SwaggerDefinition, EntityOperationsGroup> => {
 
@@ -40,10 +50,14 @@ export const entityOperationsMap = (defs: SwaggerDefinition[],
             }))
             .filter(op => op.type) as EntityOperation[]
 
+        // Sort them in predictable order
+        operations.sort((a, b) => sortOrder[a.type] - sortOrder[b.type])
+
         const opsGroup = {
             path: thisOps[0].path,
             operations
         }
+
         m.set(d, opsGroup)
     })
 
