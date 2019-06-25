@@ -166,6 +166,13 @@
           "items": {
             "type": "string"
           }
+        },
+        "arrayOfDates": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "date-time"
+          }
         }
       },
       "title": "Foo"

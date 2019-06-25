@@ -45,8 +45,8 @@ const attributeModel = (p: SwaggerDefinitionProperty,
         const itemDef = p.items
         attr.type.type = itemDef.$ref ?
             defFromRef(itemDef.$ref) :
-            // Is primitive
-            itemDef.type
+            // Is primitive TODO this is not 100 % correct, expect more bugs in the future
+            detectBasicType(itemDef)
     }
 
 

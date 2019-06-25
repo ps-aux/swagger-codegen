@@ -91,6 +91,14 @@ export const Foo = {
       },
       name: 'arrayOfPrimitives',
       id: 'Foo.arrayOfPrimitives'
+    },
+    arrayOfDates: {
+      type: {
+        name: 'array',
+        type: 'date'
+      },
+      name: 'arrayOfDates',
+      id: 'Foo.arrayOfDates'
     }
   },
   operations: {
@@ -135,5 +143,5 @@ export const Foo = {
       }
     }
   },
-  checksum: 'affec1d6ceb222cea3971ea7cf31fc6e'
+  checksum: '63ee1c5eb12c0f60aa1bbb4d3731b3aa'
 };
