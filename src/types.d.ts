@@ -1,4 +1,4 @@
-export type BasicType =
+export type TypeName =
     | 'integer'
     | 'double'
     | 'string'
@@ -11,8 +11,9 @@ export type BasicType =
     | 'array'
 
 export type Type = {
-    name: BasicType | string
+    name: TypeName | string
     type?: Type | string
+    values?: string[] // in case of an array
 }
 
 export type Attribute = {

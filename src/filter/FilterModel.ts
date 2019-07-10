@@ -1,7 +1,7 @@
 import { Filter, FilterParam } from 'src/types'
-import { detectBasicType } from 'src/attribute/detectBasicType'
 import { arrayToObject, groupBy } from 'src/util'
 import { EntityOperation } from 'src/model/EntityOperationsGroup'
+import { createType } from 'src/attribute/AttributeModel'
 
 const isCompositeParam = p => p.name.includes('.')
 
@@ -55,20 +55,19 @@ export const createFilterModel = (
     // TODO move string to swagger type defs
         .filter(p => p.in === 'query')
         .map(p => {
-            const type = detectBasicType(p)
+
+            const type = createType(p, {})
             const name = p.name
 
             const param: FilterParam = {
                 id: `${entityName}.${paramNameSpace}.${name}`,
                 name,
-                type: {
-                    name: type
-                }
+                type
             }
             if (p.required)
                 param.required = true
 
-            if (type === 'enum') param.values = p.enum
+            if (type.name === 'enum') param.type.values = p.enum
 
             return param
         })

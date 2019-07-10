@@ -5,7 +5,9 @@ export const Foo = {
     barId: {
       type: {
         name: 'ref',
-        type: 'Bar'
+        type: {
+          name: 'Bar'
+        }
       },
       name: 'barId',
       id: 'Foo.barId',
@@ -14,7 +16,9 @@ export const Foo = {
     barNonRef: {
       type: {
         name: 'object',
-        type: 'Bar'
+        type: {
+          name: 'Bar'
+        }
       },
       name: 'barNonRef',
       id: 'Foo.barNonRef'
@@ -36,11 +40,11 @@ export const Foo = {
     },
     status: {
       type: {
-        name: 'enum'
+        name: 'enum',
+        values: ['a', 'b', 'c']
       },
       name: 'status',
-      id: 'Foo.status',
-      values: ['a', 'b', 'c']
+      id: 'Foo.status'
     },
     withValidations: {
       type: {
@@ -79,7 +83,12 @@ export const Foo = {
     withArray: {
       type: {
         name: 'array',
-        type: 'Foo'
+        type: {
+          name: 'object',
+          type: {
+            name: 'Foo'
+          }
+        }
       },
       name: 'withArray',
       id: 'Foo.withArray'
@@ -87,7 +96,9 @@ export const Foo = {
     arrayOfPrimitives: {
       type: {
         name: 'array',
-        type: 'string'
+        type: {
+          name: 'string'
+        }
       },
       name: 'arrayOfPrimitives',
       id: 'Foo.arrayOfPrimitives'
@@ -95,7 +106,9 @@ export const Foo = {
     arrayOfDates: {
       type: {
         name: 'array',
-        type: 'date'
+        type: {
+          name: 'date'
+        }
       },
       name: 'arrayOfDates',
       id: 'Foo.arrayOfDates'
@@ -119,15 +132,29 @@ export const Foo = {
           id: 'Foo.filter.status',
           name: 'status',
           type: {
-            name: 'enum'
-          },
-          values: ['a', 'b', 'c']
+            name: 'enum',
+            values: ['a', 'b', 'c']
+          }
         },
         arr: {
           id: 'Foo.filter.arr',
           name: 'arr',
           type: {
-            name: 'array'
+            name: 'array',
+            type: {
+              name: 'string'
+            }
+          }
+        },
+        enumArray: {
+          id: 'Foo.filter.enumArray',
+          name: 'enumArray',
+          type: {
+            name: 'array',
+            type: {
+              name: 'enum',
+              values: ['Value_A', 'Value_B', 'Value_C']
+            }
           }
         },
         anInterval: {
@@ -143,5 +170,5 @@ export const Foo = {
       }
     }
   },
-  checksum: '63ee1c5eb12c0f60aa1bbb4d3731b3aa'
+  checksum: '98ae9f9e9a750d888902508ef1cbe766'
 };
