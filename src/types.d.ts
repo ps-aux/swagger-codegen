@@ -12,7 +12,7 @@ export type TypeName =
 
 export type Type = {
     name: TypeName | string
-    type?: Type | string
+    type?: Type
     values?: string[] // in case of an array
 }
 
