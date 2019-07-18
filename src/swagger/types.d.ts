@@ -52,6 +52,6 @@ export type SwaggerDefinitionProperty = {
 export type SwaggerDefinition = {
     type: string
     title: string
-    required: string[]
-    properties: { [key: string]: SwaggerDefinitionProperty }
+    required?: string[]
+    properties?: { [key: string]: SwaggerDefinitionProperty }
 }

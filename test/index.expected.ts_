@@ -1,7 +1,8 @@
 import { Foo } from './Foo';
 import { Bar } from './Bar';
-export { Foo, Bar };
+import { WithNoProperties } from './WithNoProperties';
+export { Foo, Bar, WithNoProperties };
 export const api = {
   version: '1.2.3'
 };
-export const allModels = [Foo, Bar];
+export const allModels = [Foo, Bar, WithNoProperties];

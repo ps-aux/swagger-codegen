@@ -193,6 +193,10 @@
         }
       },
       "title": "Bar"
+    },
+    "WithNoProperties": {
+      "type": "object",
+      "title": "WithNoProperties"
     }
   }
 }

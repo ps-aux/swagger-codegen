@@ -84,7 +84,7 @@ export const createAttributesModel = (def: SwaggerDefinition,
     def = clone(def)
     const required = def.required || []
 
-    const properties = Object.entries(def.properties)
+    const properties = Object.entries(def.properties || [])
         .map(([name, p]) => attributeModel(p, name, entityName, required))
         // Remove ref data - they are duplicate attributes. The logical attribute is the one with id.
         .filter(attr => !attr.refDataFor)
