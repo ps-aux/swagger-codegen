@@ -161,14 +161,15 @@ export const Foo = {
           id: 'Foo.filter.anInterval',
           name: 'anInterval',
           type: {
-            name: 'interval',
+            name: 'object',
             type: {
-              name: 'date'
+              name: 'DateInterval'
             }
-          }
+          },
+          required: true
         }
       }
     }
   },
-  checksum: '98ae9f9e9a750d888902508ef1cbe766'
+  checksum: '25cf9c5d43615cc14ed639b33820ede3'
 };

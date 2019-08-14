@@ -7,6 +7,8 @@ const args = process.argv
 const sourcePath = args[2]
 const targetDir = args[3]
 
+const customTypeDefDir = args[4]
+
 if (!sourcePath)
     throw new Error('Missing source path')
 
@@ -18,7 +20,8 @@ if (!fs.existsSync(targetDir)) {
     fs.mkdirSync(targetDir)
 }
 generateModelFiles(sourcePath, targetDir, {
-    log: console.log
+    log: console.log,
+    customTypeDefs: [] // TODO load all defs from the dir if specified
 })
 
 fs.copyFileSync(path.resolve(__dirname, '../../src', 'types.d.ts'), path.resolve(targetDir, 'types.d.ts'))

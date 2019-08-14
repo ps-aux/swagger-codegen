@@ -5,7 +5,7 @@ import { createFilterModel } from 'src/filter/FilterModel'
 import { EntityOperationsGroup, entityOperationsMap } from 'src/model/EntityOperationsGroup'
 import { createAttributesModel } from 'src/attribute/AttributeModel'
 import { CodeFormatter, FormatCode } from 'src/code/FormatCode'
-import { Api, Model, Operation, Operations } from 'src/types'
+import { Api, CustomTypeDef, Model, Operation, Operations } from 'src/types'
 import { printObject } from 'src/code/codePrint'
 import { calcChecksumFromObj } from 'src/checksum'
 import { SwaggerApiSpec, SwaggerDefinition } from 'src/swagger/types'
@@ -13,15 +13,17 @@ import { OperationType } from 'src/values'
 
 type Opts = {
     log?: (...a: any) => void
+    customTypeDefs: CustomTypeDef[]
 }
 
-
-const operations = (entityName: string, opsGroup: EntityOperationsGroup): Operations => {
-
+const operations = (
+    entityName: string,
+    opsGroup: EntityOperationsGroup,
+    customTypeDefs: CustomTypeDef[]
+): Operations => {
     const operations = {}
 
     opsGroup.operations.forEach(o => {
-
         const opModel = {
             type: o.type
         } as Operation
@@ -30,14 +32,25 @@ const operations = (entityName: string, opsGroup: EntityOperationsGroup): Operat
 
         // Both have prefix 'filter' as requsted by frontend team
         if (opModel.type === OperationType.LIST_ALL) {
-            opModel.params = createFilterModel(entityName, o, [], 'filter')
+            opModel.params = createFilterModel(
+                entityName,
+                o,
+                [],
+                'filter',
+                customTypeDefs
+            )
         }
 
         if (opModel.type === OperationType.LIST_BY_PAGE) {
-            opModel.params = createFilterModel(entityName, o, ['sort', 'page', 'size'], 'filter')
+            opModel.params = createFilterModel(
+                entityName,
+                o,
+                ['sort', 'page', 'size'],
+                'filter',
+                customTypeDefs
+            )
         }
     })
-
 
     return operations
 }
@@ -45,15 +58,16 @@ const operations = (entityName: string, opsGroup: EntityOperationsGroup): Operat
 const createModel = (
     entityName: string,
     def: SwaggerDefinition,
+    customTypesDefs: CustomTypeDef[],
     opsGroup?: EntityOperationsGroup
 ): Model => {
-
-
     const data = {
         entityName,
         path: opsGroup ? opsGroup.path : null,
         attr: createAttributesModel(def, entityName),
-        operations: opsGroup ? operations(entityName, opsGroup) : undefined
+        operations: opsGroup
+            ? operations(entityName, opsGroup, customTypesDefs)
+            : undefined
     }
 
     const checksum = calcChecksumFromObj(data)
@@ -64,7 +78,13 @@ const createModel = (
     }
 }
 
-export const generateModelFiles = (sourcePath, targetDir, opts: Opts = {}) => {
+export const generateModelFiles = (
+    sourcePath,
+    targetDir,
+    opts: Opts = {
+        customTypeDefs: []
+    }
+) => {
     const { log = () => null } = opts
 
     log('Generating model from ', sourcePath, 'to', targetDir)
@@ -98,6 +118,7 @@ export const generateModelFiles = (sourcePath, targetDir, opts: Opts = {}) => {
             const model = createModel(
                 entityName,
                 def,
+                opts.customTypeDefs,
                 opsMap.get(def)
             )
 
