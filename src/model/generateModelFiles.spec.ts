@@ -1,6 +1,5 @@
 import { generateModelFiles } from 'src/model/generateModelFiles'
 import fs from 'fs'
-import { DateIntervalType } from 'test/types/DateIntervalType'
 
 const schemaDir = __dirname + '/../../test/testSchema.json'
 
@@ -17,7 +16,13 @@ it('model code generated properly', () => {
     if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir)
 
     const customTypeDefs = [
-        DateIntervalType
+        {
+            name: 'DateInterval',
+            struct: {
+                from: 'date',
+                to: 'date'
+            }
+        }
     ]
 
     generateModelFiles(schemaDir, outputDir, {

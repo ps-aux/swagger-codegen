@@ -8,7 +8,7 @@
     "test": "jest src",
     "get-version": "scripts/get-version.js",
     "typecheck": "tsc --noEmit",
-    "run-on-api": "node ./build/bin/gen-model-from-swagger.js test/apiSchema.json test/build/run-on-api"
+    "run-on-api": "node ./build/bin/gen-model-from-swagger.js test/testSchema.json test/build/run-on-api test/customTypeDefs.js"
   },
   "repository": {
     "type": "git"
