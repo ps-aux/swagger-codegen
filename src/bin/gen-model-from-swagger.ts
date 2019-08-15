@@ -20,6 +20,7 @@ const calcCustomTypeDefs = (strPath): CustomTypeDef[] => {
     if (!strPath)
         return []
 
+
     const p = path.resolve(strPath)
 
     const r = require(p.toString())
