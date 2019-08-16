@@ -89,14 +89,14 @@
           {
             "name": "anInterval.from",
             "in": "query",
-            "required": false,
+            "required": true,
             "type": "string",
             "format": "date-time"
           },
           {
             "name": "anInterval.to",
             "in": "query",
-            "required": false,
+            "required": true,
             "type": "string",
             "format": "date-time"
           },

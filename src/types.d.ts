@@ -73,3 +73,9 @@ export type Filter = { [key: string]: FilterParam }
 export type Api = {
     version: string
 }
+
+
+export type CustomTypeDef = {
+    name: string,
+    struct: {}
+}

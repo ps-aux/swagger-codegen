@@ -1,71 +1,92 @@
-import { Filter, FilterParam } from 'src/types'
-import { arrayToObject, groupBy } from 'src/util'
+import { CustomTypeDef, Filter, FilterParam } from 'src/types'
+import { arrayToObject } from 'src/util'
 import { EntityOperation } from 'src/model/EntityOperationsGroup'
 import { createType } from 'src/attribute/AttributeModel'
+import { deflatten } from './deflatten'
+import { isTheSameStruct } from './isTheSameStruct'
 
 const isCompositeParam = p => p.name.includes('.')
 
-const paramGroupToParam = (name, params, entityName): FilterParam => {
-    // for now we support only intervals
-
-    const handleError = reason => {
-        throw new Error(
-            `Unsupported param group, name:'${name}', params: ${JSON.stringify(
-                params
-            )}. ${reason}`
-        )
+const objectName = (
+    struct: {},
+    customTypeDefs: CustomTypeDef[]
+): string | null => {
+    for (let typeDef of customTypeDefs) {
+        const r = isTheSameStruct(typeDef.struct, struct)
+        if (r) return typeDef.name
     }
+    return null
+}
 
-    if (params.length !== 2) handleError('Expecting exactly 2 params')
+const firstNonComposite = (val: any) => {
+    // test if it is param def
+    if (val.id && val.name && val.type) return val
 
-    const from = params.find(p => p.name === `${name}.from`)
-    const to = params.find(p => p.name === `${name}.to`)
+    // Go deeper
+    return firstNonComposite(Object.values(val)[0])
+}
 
-    if (!from || !to) {
-        handleError('Missing either from or to')
-    }
+const compositeParamsToParas = (
+    comParams: FilterParam[],
+    customTypeDefs: CustomTypeDef[],
+    paramNameSpace: string
+): FilterParam[] => {
+    const r = deflatten(comParams.map(x => [x.name, x]))
 
-    if (from.type.name !== to.type.name) handleError('Type of from and to does not match')
+    return Object.entries(r).map(([name, val]) => {
+        const typeName = objectName(val, customTypeDefs)
 
-    if (from.required !== to.required)
-        handleError('Required value of from and to does not match')
+        if (!typeName)
+            throw new Error(
+                `Could not map param group '${name}' to a type.
+                 JSON: ${JSON.stringify(val)}`
+            )
 
-    const res: FilterParam = {
-        id: `${entityName}.filter.${name}`,
-        name,
-        type: {
-            name: 'interval',
-            type: from.type
+        const first = firstNonComposite(val)
+
+        const required = !!first.required
+
+        const r: FilterParam = {
+            id: paramNameSpace + '.' + name,
+            name,
+            type: {
+                name: 'object',
+                type: {
+                    name: typeName
+                }
+            }
         }
-    }
-    if (from.required)
-        res.required = from.required
 
-    return res
+        if (required)
+            r.required = true
+
+        return r
+    })
 }
 
 export const createFilterModel = (
     entityName,
     operation: EntityOperation,
     ignoredParams: string[] = [],
-    paramNameSpace: String
+    paramNameSpace: string,
+    customTypeDefs: CustomTypeDef[]
 ): Filter | undefined => {
+
+    const paramPrefix = `${entityName}.${paramNameSpace}`
 
     const params: FilterParam[] = operation.swaggerOp.parameters
     // TODO move string to swagger type defs
         .filter(p => p.in === 'query')
         .map(p => {
-
             const type = createType(p, {})
             const name = p.name
 
             const param: FilterParam = {
-                id: `${entityName}.${paramNameSpace}.${name}`,
+                id: `${paramPrefix}.${name}`,
                 name,
                 type
             }
-            if (p.required)
-                param.required = true
+            if (p.required) param.required = true
 
             if (type.name === 'enum') param.type.values = p.enum
 
@@ -77,10 +98,10 @@ export const createFilterModel = (
 
     const compositeParams = params.filter(p => isCompositeParam(p))
 
-    const groups = groupBy(i => i.name.split('.')[0], compositeParams)
-
-    const fromGroups = Object.entries(groups).map(([name, items]: any[]) =>
-        paramGroupToParam(name, items, entityName)
+    const fromGroups = compositeParamsToParas(
+        compositeParams,
+        customTypeDefs,
+        paramPrefix
     )
 
     return arrayToObject('name', [...nonComposite, ...fromGroups]) as Filter
