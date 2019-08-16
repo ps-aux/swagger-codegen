@@ -7,7 +7,6 @@ export type TypeName =
     | 'enum'
     | 'object'
     | 'ref'
-    | 'interval'
     | 'array'
 
 export type Type = {
