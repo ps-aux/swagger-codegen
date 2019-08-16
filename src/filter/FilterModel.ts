@@ -103,9 +103,6 @@ export const createFilterModel = (
         customTypeDefs,
         paramPrefix
     )
-    //     Object.entries(groups).map(([name, items]: any[]) =>
-    //     paramGroupToParam(name, items, entityName)
-    // )
 
     return arrayToObject('name', [...nonComposite, ...fromGroups]) as Filter
 }
