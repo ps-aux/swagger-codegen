@@ -2,7 +2,7 @@ import fs, { PathLike } from 'fs'
 import path from 'path'
 import { modelToCode } from 'src/model/modelToCode'
 import { createFilterModel } from 'src/filter/FilterModel'
-import { EntityOperationsGroup, entityOperationsMap } from 'src/model/EntityOperationsGroup'
+import { EntityOperation, entityOperationsMap } from 'src/model/EntityOperation'
 import { createAttributesModel } from 'src/attribute/AttributeModel'
 import { CodeFormatter, FormatCode } from 'src/code/FormatCode'
 import { Api, CustomTypeDef, Model, Operation, Operations } from 'src/types'
@@ -18,16 +18,17 @@ type Opts = {
 
 const operations = (
     entityName: string,
-    opsGroup: EntityOperationsGroup,
+    ops: EntityOperation[],
     customTypeDefs: CustomTypeDef[]
 ): Operations => {
     const operations = {}
 
-    opsGroup.operations.forEach(o => {
+    ops.forEach(o => {
         const opModel = {
             type: o.type
         } as Operation
 
+        opModel.path  = o.path
         operations[opModel.type] = opModel
 
         // Both have prefix 'filter' as requsted by frontend team
@@ -59,14 +60,13 @@ const createModel = (
     entityName: string,
     def: SwaggerDefinition,
     customTypesDefs: CustomTypeDef[],
-    opsGroup?: EntityOperationsGroup
+    ops?: EntityOperation[]
 ): Model => {
     const data = {
         entityName,
-        path: opsGroup ? opsGroup.path : null,
         attr: createAttributesModel(def, entityName),
-        operations: opsGroup
-            ? operations(entityName, opsGroup, customTypesDefs)
+        operations: ops
+            ? operations(entityName, ops, customTypesDefs)
             : undefined
     }
 
