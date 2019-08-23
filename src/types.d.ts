@@ -46,6 +46,7 @@ export type ValidationRule = {
 
 export type Operation = {
     type: string, // cannot be an enum
+    path: string,
     params?: Filter
 }
 
@@ -53,7 +54,6 @@ export type Operations = { [key: string]: Operation }
 
 export interface Model {
     entityName: string
-    path: string | null
     attr: { [key: string]: Attribute }
     operations?: Operations,
     checksum: string

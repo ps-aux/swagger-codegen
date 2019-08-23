@@ -4,6 +4,8 @@ import { OperationType } from 'src/values'
 
 const beforeId = /(.*)\/\{id\}/
 
+// we might use later
+// eslint-ignore
 const removeIdParam = (path: string) => {
     if (!path.includes('{id}'))
         return path
@@ -22,20 +24,20 @@ const sortOrder = {
 }
 
 export const entityOperationsMap = (defs: SwaggerDefinition[],
-                                    spec: SwaggerApiSpec): Map<SwaggerDefinition, EntityOperationsGroup> => {
+                                    spec: SwaggerApiSpec): Map<SwaggerDefinition, EntityOperation[]> => {
 
     const byPath = Object.entries(spec.paths)
         .flatMap(([path, val]) =>
             Object.values(val)
                 .map(val => ({
-                    path: removeIdParam(path),
+                    path,
                     swaggerOp: val
                 }))
         )
 
 
     // TODO why no type inference ?
-    const m = new Map<SwaggerDefinition, EntityOperationsGroup>()
+    const m = new Map<SwaggerDefinition, EntityOperation[]>()
     defs.forEach(d => {
         const thisOps = byPath.filter(
             o => o.swaggerOp.tags.includes(d.title))
@@ -46,19 +48,16 @@ export const entityOperationsMap = (defs: SwaggerDefinition[],
         const operations: EntityOperation[] = thisOps
             .map(so => ({
                 type: getOperationType(so.swaggerOp.tags),
-                swaggerOp: so.swaggerOp
+                path: so.path,
+                swaggerOp: so.swaggerOp,
             }))
             .filter(op => op.type) as EntityOperation[]
 
         // Sort them in predictable order
         operations.sort((a, b) => sortOrder[a.type] - sortOrder[b.type])
 
-        const opsGroup = {
-            path: thisOps[0].path,
-            operations
-        }
 
-        m.set(d, opsGroup)
+        m.set(d, operations)
     })
 
     return m
@@ -75,10 +74,7 @@ const getOperationType = (tags: string[]): OperationType | null => {
 
 export type EntityOperation = {
     type: OperationType,
+    path: string,
     swaggerOp: SwaggerOperation
 }
 
-export type EntityOperationsGroup = {
-    path: string,
-    operations: EntityOperation[]
-}
