@@ -2,6 +2,7 @@
 import { generateModelFiles } from 'src/model/generateModelFiles'
 import path from 'path'
 import fs from 'fs'
+import rimraf from 'rimraf'
 import { CustomTypeDef } from 'src/types'
 
 const args = process.argv
@@ -32,9 +33,9 @@ const calcCustomTypeDefs = (strPath): CustomTypeDef[] => {
 const customTypeDefs = calcCustomTypeDefs(args[4])
 
 
-if (!fs.existsSync(targetDir)) {
-    fs.mkdirSync(targetDir)
-}
+console.log('Clearing dir')
+rimraf.sync(targetDir)
+fs.mkdirSync(targetDir)
 
 generateModelFiles(sourcePath, targetDir, {
     log: console.log,
