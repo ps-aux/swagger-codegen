@@ -20,10 +20,12 @@ export const Bar = {
   },
   operations: {
     detail: {
+      method: 'get',
       type: 'detail',
       path: '/api/bar-path/{id}'
     },
     listAll: {
+      method: 'get',
       type: 'listAll',
       path: '/api/bar-path',
       params: {
@@ -37,9 +39,10 @@ export const Bar = {
       }
     },
     update: {
+      method: 'put',
       type: 'update',
       path: '/api/bar-path/{id}'
     }
   },
-  checksum: '9676cba9f84436fee71f46e6b9bd7050'
+  checksum: '5ebf14dcbfd26f0368145f0326401ab9'
 };

@@ -1,6 +1,7 @@
 import 'core-js/features/array/flat-map'
 import { SwaggerApiSpec, SwaggerDefinition, SwaggerOperation } from 'src/swagger/types'
 import { Endpoint, specEndpoints } from 'src/model/Endpoint'
+import { HttpMethod } from 'src/types'
 
 const entityEndpoints = (defs: SwaggerDefinition[], spec: SwaggerApiSpec) => {
     const allEndpoints = specEndpoints(spec)
@@ -18,6 +19,7 @@ const toEntityOperation = (e: Endpoint): EntityOperation | null => {
     if (!type) return null
 
     return {
+        method: e.method,
         type,
         path: e.path,
         swaggerOp: e.op
@@ -70,6 +72,7 @@ const getOperationType = (tags: string[]): string | null => {
 
 export type EntityOperation = {
     type: string
+    method: HttpMethod
     path: string
     swaggerOp: SwaggerOperation
 }

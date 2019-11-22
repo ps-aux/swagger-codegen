@@ -115,14 +115,17 @@ export const Foo = {
   },
   operations: {
     create: {
+      method: 'post',
       type: 'create',
       path: '/api/foo-path'
     },
     foo: {
+      method: 'put',
       type: 'foo',
       path: '/api/foo-path'
     },
     listByPage: {
+      method: 'get',
       type: 'listByPage',
       path: '/api/foo-path',
       params: {
@@ -176,5 +179,5 @@ export const Foo = {
       }
     }
   },
-  checksum: 'f79ff35314b0fb819a5ee4de65cb1262'
+  checksum: '33bc5137fa7ebeec863fa6a24050458b'
 };

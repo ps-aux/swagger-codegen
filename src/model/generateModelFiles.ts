@@ -24,6 +24,7 @@ const operations = (
 
     ops.forEach(o => {
         const opModel = {
+            method: o.method,
             type: o.type
         } as Operation
 
