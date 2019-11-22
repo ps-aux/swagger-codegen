@@ -1,80 +1,80 @@
 import 'core-js/features/array/flat-map'
 import { SwaggerApiSpec, SwaggerDefinition, SwaggerOperation } from 'src/swagger/types'
 import { OperationType } from 'src/values'
+import { Endpoint, specEndpoints } from 'src/model/Endpoint'
 
-const beforeId = /(.*)\/\{id\}/
-
-// we might use later
-// eslint-ignore
-const removeIdParam = (path: string) => {
-    if (!path.includes('{id}'))
-        return path
-
-    return path.match(beforeId)!![1]
+const entityEndpoints = (defs: SwaggerDefinition[], spec: SwaggerApiSpec) => {
+    const allEndpoints = specEndpoints(spec)
+    return new Map(
+        defs.map(d => {
+            const endpoints = allEndpoints.filter(e => e.tags.includes(d.title))
+            return [d, endpoints] as [SwaggerDefinition, Endpoint[]]
+        })
+    )
 }
 
+const toEntityOperation = (e: Endpoint): EntityOperation | null => {
+    const type = getOperationType(e.tags)
 
-const sortOrder = {
-    [OperationType.CREATE]: 0,
-    [OperationType.UPDATE]: 1,
-    [OperationType.DELETE]: 2,
-    [OperationType.DETAIL]: 3,
-    [OperationType.LIST_BY_PAGE]: 4,
-    [OperationType.LIST_ALL]: 5
+    if (!type) return null
+
+    return {
+        type,
+        path: e.path,
+        swaggerOp: e.op
+    }
 }
 
-export const entityOperationsMap = (defs: SwaggerDefinition[],
-                                    spec: SwaggerApiSpec): Map<SwaggerDefinition, EntityOperation[]> => {
+export const entityOperationsMap = (
+    defs: SwaggerDefinition[],
+    spec: SwaggerApiSpec
+): Map<SwaggerDefinition, EntityOperation[]> => {
+    const endpointmap: Map<SwaggerDefinition, Endpoint[]> = entityEndpoints(
+        defs,
+        spec
+    )
 
-    const byPath = Object.entries(spec.paths)
-        .flatMap(([path, val]) =>
-            Object.values(val)
-                .map(val => ({
-                    path,
-                    swaggerOp: val
-                }))
-        )
+    return new Map(
+        Array.from(endpointmap.entries()).map(([d, endpts]) => {
+            const operations = endpts
+                .map(toEntityOperation)
+                .filter(op => op != null) as EntityOperation[]
 
+            operations.sort((a, b) => a.type.localeCompare(b.type))
 
-    // TODO why no type inference ?
-    const m = new Map<SwaggerDefinition, EntityOperation[]>()
-    defs.forEach(d => {
-        const thisOps = byPath.filter(
-            o => o.swaggerOp.tags.includes(d.title))
-
-        if (thisOps.length < 1)
-            return
-
-        const operations: EntityOperation[] = thisOps
-            .map(so => ({
-                type: getOperationType(so.swaggerOp.tags),
-                path: so.path,
-                swaggerOp: so.swaggerOp,
-            }))
-            .filter(op => op.type) as EntityOperation[]
-
-        // Sort them in predictable order
-        operations.sort((a, b) => sortOrder[a.type] - sortOrder[b.type])
-
-
-        m.set(d, operations)
-    })
-
-    return m
+            return [d, operations]
+        })
+    )
 }
 
-const getOperationType = (tags: string[]): OperationType | null => {
+const opPrefix = 'operation'
+
+/**
+ * Type is detected if tags contain either one of supported OperationType or 'operation.<name>'
+ */
+const getOperationType = (tags: string[]): string | null => {
     for (let t of tags) {
-        if (Object.values(OperationType).includes(t))
-            return t as OperationType
+        if (Object.values(OperationType).includes(t)) return t
     }
 
-    return null
+    const startExpr = `${opPrefix}.`
+
+    const prefixed = tags.filter(t => t.startsWith(startExpr))
+
+    if (prefixed.length === 0) return null
+
+    if (prefixed.length > 1)
+        throw new Error(
+            `Multiple tags with '${opPrefix}' prefix. Cannot determine operation name`
+        )
+
+    const opTag = prefixed[0]
+
+    return opTag.split(startExpr)[1]!
 }
 
 export type EntityOperation = {
-    type: OperationType,
-    path: string,
+    type: string
+    path: string
     swaggerOp: SwaggerOperation
 }
-

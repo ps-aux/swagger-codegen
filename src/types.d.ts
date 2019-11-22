@@ -78,3 +78,6 @@ export type CustomTypeDef = {
     name: string,
     struct: {}
 }
+
+
+export type HttpMethod = 'get' | 'put' | 'post' | 'delete'

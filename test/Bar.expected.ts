@@ -19,10 +19,6 @@ export const Bar = {
     }
   },
   operations: {
-    update: {
-      type: 'update',
-      path: '/api/bar-path/{id}'
-    },
     detail: {
       type: 'detail',
       path: '/api/bar-path/{id}'
@@ -39,7 +35,11 @@ export const Bar = {
           }
         }
       }
+    },
+    update: {
+      type: 'update',
+      path: '/api/bar-path/{id}'
     }
   },
-  checksum: '4489b211a356f78377f8e52e1cd51c40'
+  checksum: '9676cba9f84436fee71f46e6b9bd7050'
 };

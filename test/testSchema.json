@@ -44,6 +44,12 @@
           "create"
         ]
       },
+      "put": {
+        "tags": [
+          "Foo",
+          "operation.foo"
+        ]
+      },
       "get": {
         "tags": [
           "Foo",

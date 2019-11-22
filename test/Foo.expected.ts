@@ -118,6 +118,10 @@ export const Foo = {
       type: 'create',
       path: '/api/foo-path'
     },
+    foo: {
+      type: 'foo',
+      path: '/api/foo-path'
+    },
     listByPage: {
       type: 'listByPage',
       path: '/api/foo-path',
@@ -172,5 +176,5 @@ export const Foo = {
       }
     }
   },
-  checksum: '113a6f219a04669f43d602f791c1fab6'
+  checksum: 'f79ff35314b0fb819a5ee4de65cb1262'
 };
