@@ -1,6 +1,6 @@
 {
   "name": "@ps-aux/swagger-codegen",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "main": "index.js",
   "scripts": {
     "build": "rm -rf build && babel --extensions '.ts,.js' src -d build src",
@@ -15,7 +15,8 @@
   },
   "files": [
     "build",
-    "src/types.d.ts"
+    "src/types.d.ts",
+    "src/values.ts"
   ],
   "bin": {
     "download-api-spec": "./build/bin/download-api-spec.js",
