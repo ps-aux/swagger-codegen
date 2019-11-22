@@ -1,6 +1,5 @@
 import 'core-js/features/array/flat-map'
 import { SwaggerApiSpec, SwaggerDefinition, SwaggerOperation } from 'src/swagger/types'
-import { OperationType } from 'src/values'
 import { Endpoint, specEndpoints } from 'src/model/Endpoint'
 
 const entityEndpoints = (defs: SwaggerDefinition[], spec: SwaggerApiSpec) => {
@@ -53,10 +52,6 @@ const opPrefix = 'operation'
  * Type is detected if tags contain either one of supported OperationType or 'operation.<name>'
  */
 const getOperationType = (tags: string[]): string | null => {
-    for (let t of tags) {
-        if (Object.values(OperationType).includes(t)) return t
-    }
-
     const startExpr = `${opPrefix}.`
 
     const prefixed = tags.filter(t => t.startsWith(startExpr))

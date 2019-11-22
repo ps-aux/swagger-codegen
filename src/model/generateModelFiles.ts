@@ -9,7 +9,6 @@ import { Api, CustomTypeDef, Model, Operation, Operations } from 'src/types'
 import { printObject } from 'src/code/codePrint'
 import { calcChecksumFromObj } from 'src/checksum'
 import { SwaggerApiSpec, SwaggerDefinition } from 'src/swagger/types'
-import { OperationType } from 'src/values'
 
 type Opts = {
     log?: (...a: any) => void
@@ -32,7 +31,7 @@ const operations = (
         operations[opModel.type] = opModel
 
         // Both have prefix 'filter' as requsted by frontend team
-        if (opModel.type === OperationType.LIST_ALL) {
+        if (opModel.type === 'listAll') {
             opModel.params = createFilterModel(
                 entityName,
                 o,
@@ -42,7 +41,7 @@ const operations = (
             )
         }
 
-        if (opModel.type === OperationType.LIST_BY_PAGE) {
+        if (opModel.type === 'listByPage') {
             opModel.params = createFilterModel(
                 entityName,
                 o,

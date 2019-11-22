@@ -11,13 +11,13 @@
       "get": {
         "tags": [
           "Bar",
-          "detail"
+          "operation.detail"
         ]
       },
       "put": {
         "tags": [
           "Bar",
-          "update"
+          "operation.update"
         ]
       }
     },
@@ -25,7 +25,7 @@
       "get": {
         "tags": [
           "Bar",
-          "listAll"
+          "operation.listAll"
         ],
         "parameters": [
           {
@@ -41,7 +41,7 @@
       "post": {
         "tags": [
           "Foo",
-          "create"
+          "operation.create"
         ]
       },
       "put": {
@@ -53,7 +53,7 @@
       "get": {
         "tags": [
           "Foo",
-          "listByPage"
+          "operation.listByPage"
         ],
         "parameters": [
           {
