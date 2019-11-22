@@ -46,7 +46,7 @@ export type ValidationRule = {
 
 export type Operation = {
     type: string, // cannot be an enum
-    method: HttpMethod,
+    method: string,
     path: string,
     params?: Filter
 }
