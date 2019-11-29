@@ -20,6 +20,7 @@
     "src/types.d.ts",
     "src/values.ts"
   ],
+  "typings": "src/types.d.ts",
   "bin": {
     "download-api-spec": "./build/bin/download-api-spec.js",
     "gen-model-from-swagger": "./build/bin/gen-model-from-swagger.js"
