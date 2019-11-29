@@ -3,6 +3,7 @@ HELP.md
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 node_modules
+lib
 
 .~lock.*
 ### STS ###

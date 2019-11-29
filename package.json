@@ -6,7 +6,7 @@
     "build": "rm -rf lib && babel --extensions '.ts,.js' src -d lib src",
     "pub": "npm publish --access public",
     "test": "jest src",
-    "run-on-api": "node ./build/bin/gen-model-from-swagger.js test/testSchema.json test/build/run-on-api test/customTypeDefs.js",
+    "run-on-api": "node ./lib/bin/gen-model-from-swagger.js test/testSchema.json test/lib/run-on-api test/customTypeDefs.js",
     "typecheck": "tsc --noEmit",
     "format": "prettier \"**/*.{js,ts,tsx}\" --write",
     "lint": "eslint '**/*.{js,ts,tsx}' --fix",
@@ -22,8 +22,8 @@
   ],
   "typings": "src/types.d.ts",
   "bin": {
-    "download-api-spec": "./build/bin/download-api-spec.js",
-    "gen-model-from-swagger": "./build/bin/gen-model-from-swagger.js"
+    "download-api-spec": "./lib/bin/download-api-spec.js",
+    "gen-model-from-swagger": "./lib/bin/gen-model-from-swagger.js"
   },
   "author": "",
   "license": "ISC",
