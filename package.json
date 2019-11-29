@@ -1,20 +1,22 @@
 {
   "name": "@ps-aux/swagger-codegen",
-  "version": "9.1.1",
+  "version": "9.1.2-rc",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf build && babel --extensions '.ts,.js' src -d build src",
+    "build": "rm -rf lib && babel --extensions '.ts,.js' src -d lib src",
     "pub": "npm publish --access public",
     "test": "jest src",
-    "get-version": "scripts/get-version.js",
+    "run-on-api": "node ./build/bin/gen-model-from-swagger.js test/testSchema.json test/build/run-on-api test/customTypeDefs.js",
     "typecheck": "tsc --noEmit",
-    "run-on-api": "node ./build/bin/gen-model-from-swagger.js test/testSchema.json test/build/run-on-api test/customTypeDefs.js"
+    "format": "prettier \"**/*.{js,ts,tsx}\" --write",
+    "lint": "eslint '**/*.{js,ts,tsx}' --fix",
+    "update-deps": "ncu --upgrade"
   },
   "repository": {
     "type": "git"
   },
   "files": [
-    "build",
+    "lib",
     "src/types.d.ts",
     "src/values.ts"
   ],
@@ -26,37 +28,62 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.0",
-    "core-js": "^3.1.4",
-    "flat": "^4.1.0",
+    "core-js": "^3.4.5",
+    "flat": "^5.0.0",
     "prettier": "^1.17.1",
     "ramda": "^0.26.1",
     "rimraf": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.4.5",
-    "@babel/node": "^7.4.5",
-    "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/preset-env": "^7.4.5",
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/node": "^7.7.4",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
     "@babel/preset-stage-2": "^7.0.0",
-    "@babel/preset-typescript": "^7.1.0",
+    "@babel/preset-typescript": "^7.7.4",
     "@types/axios": "^0.14.0",
-    "@types/jest": "^24.0.13",
-    "@types/joi": "^14.3.3",
-    "@types/node": "^11.13.12",
-    "@types/ramda": "^0.26.9",
-    "babel-jest": "^24.5.0",
-    "babel-plugin-module-resolver": "^3.1.1",
+    "@types/jest": "^24.0.23",
+    "@types/joi": "^14.3.4",
+    "@types/node": "^12.12.14",
+    "@types/ramda": "^0.26.36",
+    "babel-jest": "^24.9.0",
+    "babel-plugin-module-resolver": "^3.2.0",
     "deep-diff": "^1.0.2",
-    "dotenv": "^7.0.0",
-    "jest": "^24.5.0",
+    "dotenv": "^8.2.0",
+    "jest": "^24.9.0",
     "jest-expect-message": "^1.0.2",
-    "jest-extended": "^0.11.1",
+    "jest-extended": "^0.11.2",
     "lodash": "^4.17.15",
     "shelljs": "^0.8.3",
-    "ts-jest": "^24.0.1",
-    "typescript": "^3.4.1"
+    "@typescript-eslint/eslint-plugin": "^2.9.0",
+    "@typescript-eslint/parser": "^2.9.0",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.7.1",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "husky": "^3.1.0",
+    "lint-staged": "^9.5.0",
+    "npm-check-updates": "^3.2.2",
+    "prettier": "^1.19.1",
+    "ts-jest": "^24.2.0",
+    "typescript": "^3.7.2"
   },
-  "description": ""
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "./**/*.{js,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ]
+  }
 }

@@ -1,6 +1,5 @@
 const regex = /(x-)(.*)/
 
-
 export type ExtraProp = 'readOnly' | 'detailOnly' | 'ref' | 'refDataFor'
 
 // TODO add ExtraProp to type system
@@ -15,8 +14,5 @@ export const extractExtraProps = (p: any): { [key: string]: any } => {
             res[newName] = p[origProp]
         })
 
-
     return res
 }
-
-

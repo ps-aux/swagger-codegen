@@ -1,7 +1,6 @@
 import { calcChecksumFromObj } from 'src/checksum'
 
-const { clone } = require('ramda')
-
+import { clone } from 'ramda'
 
 export const purifySpec = spec => {
     const res = {
@@ -16,7 +15,7 @@ export const purifySpec = spec => {
 
     // Remove default param value as it is per env
     Object.entries(res.paths).forEach(([k, v]) => {
-        Object.entries(v).forEach(([k, v]) => {
+        Object.entries(v as object).forEach(([k, v]) => {
             const params = v.parameters
 
             const authParam = params.find(p => p.name === 'Authorization')
@@ -27,6 +26,4 @@ export const purifySpec = spec => {
     res.checksum = calcChecksumFromObj(res)
 
     return res
-
 }
-
