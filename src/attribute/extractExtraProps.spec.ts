@@ -1,7 +1,6 @@
 import { extractExtraProps } from 'src/attribute/extractExtraProps'
 
 it('works', () => {
-
     const res = extractExtraProps({
         'x-foo': 'a',
         'x-bar': 123,
@@ -16,5 +15,4 @@ it('works', () => {
         baz: true,
         refDataFor: 'bar'
     })
-
 })

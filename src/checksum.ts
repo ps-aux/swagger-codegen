@@ -1,12 +1,12 @@
 import crypto from 'crypto'
 
-export const calcChecksum = (str:string) =>
+export const calcChecksum = (str: string) =>
     crypto
         .createHash('md5')
         .update(str)
         .digest('hex')
 
-export const calcChecksumFromObj = (obj:{}) =>
+export const calcChecksumFromObj = (obj: {}) =>
     crypto
         .createHash('md5')
         .update(JSON.stringify(obj))

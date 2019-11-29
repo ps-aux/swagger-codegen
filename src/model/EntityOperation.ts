@@ -1,5 +1,9 @@
 import 'core-js/features/array/flat-map'
-import { SwaggerApiSpec, SwaggerDefinition, SwaggerOperation } from 'src/swagger/types'
+import {
+    SwaggerApiSpec,
+    SwaggerDefinition,
+    SwaggerOperation
+} from 'src/swagger/types'
 import { Endpoint, specEndpoints } from 'src/model/Endpoint'
 import { HttpMethod } from 'src/types'
 

@@ -27,27 +27,22 @@ export type Attribute = {
     validations?: ValidationRule[]
 }
 
-export type ValidationRuleType =
-    | 'pattern'
-    | 'length'
-    | 'minMax'
+export type ValidationRuleType = 'pattern' | 'length' | 'minMax'
 
 export type MinMax = {
-    min?: number,
+    min?: number
     max?: number
 }
 
-
 export type ValidationRule = {
-    type: ValidationRuleType | string,
+    type: ValidationRuleType | string
     value: RegExp | MinMax
 }
 
-
 export type Operation = {
-    type: string, // cannot be an enum
-    method: string,
-    path: string,
+    type: string // cannot be an enum
+    method: string
+    path: string
     params?: Filter
 }
 
@@ -56,7 +51,7 @@ export type Operations = { [key: string]: Operation }
 export interface Model {
     entityName: string
     attr: { [key: string]: Attribute }
-    operations?: Operations,
+    operations?: Operations
     checksum: string
 }
 
@@ -74,11 +69,9 @@ export type Api = {
     version: string
 }
 
-
 export type CustomTypeDef = {
-    name: string,
+    name: string
     struct: {}
 }
-
 
 export type HttpMethod = 'get' | 'put' | 'post' | 'delete'

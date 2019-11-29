@@ -28,7 +28,7 @@ const operations = (
             type: o.type
         } as Operation
 
-        opModel.path  = o.path
+        opModel.path = o.path
         operations[opModel.type] = opModel
 
         // Both have prefix 'filter' as requsted by frontend team

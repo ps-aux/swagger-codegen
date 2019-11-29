@@ -1,20 +1,18 @@
 export type SwaggerParameterType = 'header' | 'body' | 'query'
 
-export type SwaggerParameter  = SwaggerTypeInfoBearer & {
-    name: string,
-    in: SwaggerParameterType ,
+export type SwaggerParameter = SwaggerTypeInfoBearer & {
+    name: string
+    in: SwaggerParameterType
     required: boolean
-    type: string,
+    type: string
     enum: any
 }
 
-
 export type SwaggerOperation = {
-    tags: string[],
+    tags: string[]
     summary: string
     parameters: SwaggerParameter[]
 }
-
 
 // Swagger spec types
 export type SwaggerApiSpec = {
@@ -33,25 +31,24 @@ export type SwaggerApiSpec = {
 }
 
 export type SwaggerTypeInfoBearer = {
-    type: string,
-    enum?: any,
-    $ref?: string,
-    format?: string,
-    items: SwaggerTypeInfoBearer,
+    type: string
+    enum?: any
+    $ref?: string
+    format?: string
+    items: SwaggerTypeInfoBearer
 }
 
-
 export type SwaggerDefinitionProperty = {
-    type: string,
-    pattern: string,
+    type: string
+    pattern: string
     required: string
-    $ref: string,
-    enum: string[],
-    format: string,
-    items: SwaggerTypeInfoBearer,
-    minimum: number,
-    maximum: number,
-    minLength: number,
+    $ref: string
+    enum: string[]
+    format: string
+    items: SwaggerTypeInfoBearer
+    minimum: number
+    maximum: number
+    minLength: number
     maxLength: number
 }
 

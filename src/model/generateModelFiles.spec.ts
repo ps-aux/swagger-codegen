@@ -1,6 +1,7 @@
 import { generateModelFiles } from 'src/model/generateModelFiles'
 import fs from 'fs'
 
+// eslint-disable-next-line no-path-concat
 const schemaDir = __dirname + '/../../test/testSchema.json'
 
 const testDir = './test'

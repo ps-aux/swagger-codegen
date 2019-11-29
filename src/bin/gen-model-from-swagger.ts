@@ -10,20 +10,16 @@ const args = process.argv
 const sourcePath = args[2]
 const targetDir = args[3]
 
-if (!sourcePath)
-    throw new Error('Missing source path')
+if (!sourcePath) throw new Error('Missing source path')
 
-if (!targetDir)
-    throw new Error('Missing target dir')
-
+if (!targetDir) throw new Error('Missing target dir')
 
 const calcCustomTypeDefs = (strPath): CustomTypeDef[] => {
-    if (!strPath)
-        return []
-
+    if (!strPath) return []
 
     const p = path.resolve(strPath)
 
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const r = require(p.toString())
 
     console.log('Using custom type defs', r)
@@ -31,7 +27,6 @@ const calcCustomTypeDefs = (strPath): CustomTypeDef[] => {
 }
 
 const customTypeDefs = calcCustomTypeDefs(args[4])
-
 
 console.log('Clearing dir')
 rimraf.sync(targetDir)
@@ -42,6 +37,11 @@ generateModelFiles(sourcePath, targetDir, {
     customTypeDefs
 })
 
-
-fs.copyFileSync(path.resolve(__dirname, '../../src', 'types.d.ts'), path.resolve(targetDir, 'types.d.ts'))
-fs.copyFileSync(path.resolve(__dirname, '../../src', 'values.ts'), path.resolve(targetDir, 'values.d.ts'))
+fs.copyFileSync(
+    path.resolve(__dirname, '../../src', 'types.d.ts'),
+    path.resolve(targetDir, 'types.d.ts')
+)
+fs.copyFileSync(
+    path.resolve(__dirname, '../../src', 'values.ts'),
+    path.resolve(targetDir, 'values.d.ts')
+)

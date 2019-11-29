@@ -11,7 +11,7 @@ const objectName = (
     struct: {},
     customTypeDefs: CustomTypeDef[]
 ): string | null => {
-    for (let typeDef of customTypeDefs) {
+    for (const typeDef of customTypeDefs) {
         const r = isTheSameStruct(typeDef.struct, struct)
         if (r) return typeDef.name
     }
@@ -57,8 +57,7 @@ const compositeParamsToParas = (
             }
         }
 
-        if (required)
-            r.required = true
+        if (required) r.required = true
 
         return r
     })
@@ -71,11 +70,10 @@ export const createFilterModel = (
     paramNameSpace: string,
     customTypeDefs: CustomTypeDef[]
 ): Filter | undefined => {
-
     const paramPrefix = `${entityName}.${paramNameSpace}`
 
     const params: FilterParam[] = operation.swaggerOp.parameters
-    // TODO move string to swagger type defs
+        // TODO move string to swagger type defs
         .filter(p => p.in === 'query')
         .map(p => {
             const type = createType(p, {})

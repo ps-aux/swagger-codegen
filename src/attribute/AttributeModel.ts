@@ -3,7 +3,11 @@ import { arrayToObject } from 'src/util'
 import { extractExtraProps } from 'src/attribute/extractExtraProps'
 import { calcValidationRules } from 'src/attribute/ValidationsModel'
 import { Attribute, Type, TypeName } from 'src/types'
-import { SwaggerDefinition, SwaggerDefinitionProperty, SwaggerTypeInfoBearer } from 'src/swagger/types'
+import {
+    SwaggerDefinition,
+    SwaggerDefinitionProperty,
+    SwaggerTypeInfoBearer
+} from 'src/swagger/types'
 
 const defFromRef = ref => ref.split('/')[2]
 
@@ -17,26 +21,19 @@ const compositeTypes = ['object', 'array', 'ref']
 const isCompositeType = type => compositeTypes.includes(type)
 
 const detectTypeName = (p: SwaggerTypeInfoBearer, extra: any): TypeName => {
-    if (p.enum)
-        return 'enum'
-    if (p.$ref)
-        return 'object'
-    if (extra.ref)
-        return 'ref'
-    if (p.format === 'date-time')
-        return 'date'
-    if (p.format === 'double')
-        return 'double'
-    if (p.type === 'boolean')
-        return 'boolean'
-    if (p.type === 'array')
-        return 'array'
-    if (p.type === 'integer')
-        return 'integer'
-    if (p.type === 'string')
-        return 'string'
+    if (p.enum) return 'enum'
+    if (p.$ref) return 'object'
+    if (extra.ref) return 'ref'
+    if (p.format === 'date-time') return 'date'
+    if (p.format === 'double') return 'double'
+    if (p.type === 'boolean') return 'boolean'
+    if (p.type === 'array') return 'array'
+    if (p.type === 'integer') return 'integer'
+    if (p.type === 'string') return 'string'
 
-    throw new Error('Could not determine type for property ' + JSON.stringify(p))
+    throw new Error(
+        'Could not determine type for property ' + JSON.stringify(p)
+    )
 }
 
 export const createType = (p: SwaggerTypeInfoBearer, extra: any): Type => {
@@ -104,7 +101,7 @@ const attributeModel = (
     const attr = {
         type: createType(p, extra),
         name,
-        id: `${entityName}.${name}`,
+        id: `${entityName}.${name}`
     } as MyAttribute
 
     if (requiredProps.includes(name)) attr.required = true
@@ -118,13 +115,21 @@ const attributeModel = (
 
     if (extra.refDataFor) {
         if (attr.type.name !== 'object')
-            throw new Error(`refDataFor in a type which is not 'object'. Type: ${JSON.stringify(attr.type)}`)
+            throw new Error(
+                `refDataFor in a type which is not 'object'. Type: ${JSON.stringify(
+                    attr.type
+                )}`
+            )
         attr.refDataFor = extra.refDataFor
     }
 
     if (extra.refDataPath) {
         if (attr.type.name !== 'ref')
-            throw new Error(`refDataPath in a type which is not 'ref'. Type: ${JSON.stringify(attr.type)}`)
+            throw new Error(
+                `refDataPath in a type which is not 'ref'. Type: ${JSON.stringify(
+                    attr.type
+                )}`
+            )
         attr.refDataPath = extra.refDataPath
     }
 
