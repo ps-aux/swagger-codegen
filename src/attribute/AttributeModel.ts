@@ -2,92 +2,13 @@ import { clone } from 'ramda'
 import { arrayToObject } from 'src/util'
 import { extractExtraProps } from 'src/attribute/extractExtraProps'
 import { calcValidationRules } from 'src/attribute/ValidationsModel'
-import { Attribute, Type, TypeName } from 'src/types'
-import {
-    SwaggerDefinition,
-    SwaggerDefinitionProperty,
-    SwaggerTypeInfoBearer
-} from 'src/swagger/types'
-
-const defFromRef = ref => ref.split('/')[2]
+import { Attribute } from 'src/types'
+import { SwaggerDefinition, SwaggerDefinitionProperty } from 'src/swagger/types'
+import { createType } from 'src/attribute/SwaggerTypeParser'
 
 // Some extra props - superset of Attribute
 type MyAttribute = Attribute & {
     refDataFor?: string
-}
-
-const compositeTypes = ['object', 'array', 'ref']
-
-const isCompositeType = type => compositeTypes.includes(type)
-
-const detectTypeName = (p: SwaggerTypeInfoBearer, extra: any): TypeName => {
-    if (p.enum) return 'enum'
-    if (p.$ref) return 'object'
-    if (extra.ref) return 'ref'
-    if (p.format === 'date-time') return 'date'
-    if (p.format === 'double') return 'double'
-    if (p.type === 'boolean') return 'boolean'
-    if (p.type === 'array') return 'array'
-    if (p.type === 'integer') return 'integer'
-    if (p.type === 'string') return 'string'
-
-    throw new Error(
-        'Could not determine type for property ' + JSON.stringify(p)
-    )
-}
-
-export const createType = (p: SwaggerTypeInfoBearer, extra: any): Type => {
-    const typeName = detectTypeName(p, extra)
-
-    const type: Type = {
-        name: typeName
-    }
-
-    if (typeName === 'enum') {
-        // Kind of a hack ?
-        type.values = p.enum
-    }
-
-    if (isCompositeType(typeName)) {
-        let innerType: Type | null = null
-
-        if (typeName === 'object') {
-            if (!p.$ref) {
-                throw new Error(
-                    `'object' type must have $ref. Invalid input ${JSON.stringify(
-                        p
-                    )}`
-                )
-            }
-            innerType = {
-                name: defFromRef(p.$ref)
-            }
-        }
-
-        if (typeName === 'array') {
-            const itemDef = p.items
-            if (!itemDef) {
-                throw new Error(
-                    `'array' type must have 'items' property. Invalid input ${JSON.stringify(
-                        p
-                    )}`
-                )
-            }
-            innerType = createType(itemDef, {})
-        }
-
-        if (typeName === 'ref') {
-            innerType = {
-                name: extra.ref
-            }
-        }
-
-        if (!innerType)
-            throw new Error(`inner type not detected for ${JSON.stringify(p)}`)
-        type.type = innerType
-    }
-
-    return type
 }
 
 const attributeModel = (
@@ -133,7 +54,7 @@ const attributeModel = (
         attr.refDataPath = extra.refDataPath
     }
 
-    const validationRules = calcValidationRules(attr, p)
+    const validationRules = calcValidationRules(p)
     if (validationRules.length > 0) attr.validations = validationRules
 
     return attr

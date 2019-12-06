@@ -32,7 +32,7 @@ export type SwaggerApiSpec = {
 
 export type SwaggerTypeInfoBearer = {
     type: string
-    enum?: any
+    enum?: string[]
     $ref?: string
     format?: string
     items: SwaggerTypeInfoBearer

@@ -1,12 +1,12 @@
 {
   "name": "@ps-aux/swagger-codegen",
-  "version": "9.1.3-rc",
+  "version": "9.2.0-dev-1",
   "main": "index.js",
   "scripts": {
     "build": "rm -rf lib && babel --extensions '.ts,.js' src -d lib src",
     "pub": "npm publish --access public",
     "test": "jest src",
-    "run-on-api": "node ./lib/bin/gen-model-from-swagger.js test/testSchema.json test/lib/run-on-api test/customTypeDefs.js",
+    "run-on-api": "node ./lib/bin/gen-model-from-swagger.js test/testSchema.json test/build/run-on-api test/customTypeDefs.js",
     "typecheck": "tsc --noEmit",
     "format": "prettier \"**/*.{js,ts,tsx}\" --write",
     "lint": "eslint '**/*.{js,ts,tsx}' --fix",

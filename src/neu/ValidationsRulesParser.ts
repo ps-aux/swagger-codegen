@@ -1,20 +1,20 @@
-import { ValidationRule } from 'src/types'
 import { SwaggerDefinitionProperty } from 'src/swagger/types'
+import { ValidationRule } from 'new-types'
 
-export const calcValidationRules = (
+export const parseValidationRules = (
     prop: SwaggerDefinitionProperty
 ): ValidationRule[] => {
     const res: ValidationRule[] = []
 
     if (prop.pattern) {
         res.push({
-            type: 'pattern',
+            name: 'pattern',
             value: RegExp(prop.pattern)
         })
     }
     if (prop.minLength != null || prop.maxLength != null) {
         res.push({
-            type: 'length',
+            name: 'length',
             value: {
                 min: prop.minLength,
                 max: prop.maxLength
@@ -24,7 +24,7 @@ export const calcValidationRules = (
 
     if (prop.minimum != null || prop.maximum != null) {
         res.push({
-            type: 'minMax',
+            name: 'minMax',
             value: {
                 min: prop.minimum,
                 max: prop.maximum

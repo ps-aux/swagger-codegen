@@ -1,9 +1,9 @@
 import { CustomTypeDef, Filter, FilterParam } from 'src/types'
 import { arrayToObject } from 'src/util'
 import { EntityOperation } from 'src/model/EntityOperation'
-import { createType } from 'src/attribute/AttributeModel'
 import { deflatten } from './deflatten'
 import { isTheSameStruct } from './isTheSameStruct'
+import { createType } from 'src/attribute/SwaggerTypeParser'
 
 const isCompositeParam = p => p.name.includes('.')
 

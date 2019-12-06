@@ -4,6 +4,8 @@ import path from 'path'
 import fs from 'fs'
 import rimraf from 'rimraf'
 import { CustomTypeDef } from 'src/types'
+import { createModels } from 'src/model/createModel'
+import { readApiSpec } from 'src/apispec/readApiSpec'
 
 const args = process.argv
 
@@ -32,10 +34,14 @@ console.log('Clearing dir')
 rimraf.sync(targetDir)
 fs.mkdirSync(targetDir)
 
-generateModelFiles(sourcePath, targetDir, {
-    log: console.log,
-    customTypeDefs
-})
+const log = console.log
+
+log('Generating model from ', sourcePath, 'to', targetDir)
+
+const apiSpec = readApiSpec(sourcePath)
+const models = createModels(apiSpec, customTypeDefs)
+
+generateModelFiles(models, { version: apiSpec.info.version }, targetDir, log)
 
 fs.copyFileSync(
     path.resolve(__dirname, '../../src', 'types.d.ts'),
