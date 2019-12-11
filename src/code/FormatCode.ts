@@ -1,14 +1,11 @@
 import prettier from 'prettier'
-
-type Opts = {
-    semicolons: boolean
-}
+import { CodeFormatOpts } from 'src/types'
 
 export type FormatCode = (code: string) => string
 
-export const CodeFormatter = (opts: Opts): FormatCode => code =>
+export const CodeFormatter = (opts: CodeFormatOpts): FormatCode => code =>
     prettier.format(code, {
         semi: opts.semicolons,
         parser: 'babel',
-        singleQuote: true
+        singleQuote: opts.singleQuote
     })

@@ -1,42 +1,49 @@
-import fs, { PathLike } from 'fs'
-import path from 'path'
-import { modelToCode } from 'src/model/modelToCode'
-import { CodeFormatter, FormatCode } from 'src/code/FormatCode'
-import { Api, Model } from 'src/types'
+import { modelToTypescriptCode } from 'src/model/code/modelToTypescriptCode'
+import { CodeFormatter } from 'src/code/FormatCode'
+import { Api, GenerateModelFiles, Model, ModelFile } from 'src/types'
 import { printObject } from 'src/code/codePrint'
 
-export const generateModelFiles = (
-    models: Model[],
-    apiInfo: {
-        version: string
-    },
-    targetDir,
-    log
+export const generateModelFiles: GenerateModelFiles = (
+    models,
+    apiInfo,
+    opts
 ) => {
-    const formatCode = CodeFormatter({
-        semicolons: true
-    })
+    const log =
+        opts.log ||
+        (() => {
+            return undefined
+        })
 
-    models.forEach(m => {
-        log(`Writing ${m.entityName} model`)
+    const files: ModelFile[] = models.map(m => {
+        log(`Generating ${m.entityName} model`)
 
         const fileName = m.entityName + '.ts'
-        const filePath = path.join(targetDir, fileName)
+        // const filePath = path.join(targetDir, fileName)
 
-        const code = modelToCode(m, { formatCode })
-        fs.writeFileSync(filePath, code)
+        const code = modelToTypescriptCode(m)
+
+        return {
+            content: code,
+            name: fileName
+        }
     })
 
-    log('Generating index file')
-    createIndex(models, path.join(targetDir, 'index.ts'), apiInfo, formatCode)
+    log('Generating index file content')
+
+    files.push({
+        name: 'index.ts',
+        content: createIndex(models, apiInfo)
+    })
+
+    const formatCode = CodeFormatter(opts.codeFormat)
+    files.forEach(f => {
+        f.content = formatCode(f.content)
+    })
+
+    return files
 }
 
-const createIndex = (
-    models: Model[],
-    path: PathLike,
-    apiInfo: Api,
-    formatCode: FormatCode
-) => {
+const createIndex = (models: Model[], apiInfo: Api) => {
     const importStatement = name => `import {${name}} from './${name}'`
 
     const imports = models.map(m => importStatement(m.entityName)).join('\n')
@@ -51,6 +58,5 @@ const createIndex = (
         export const api = ${printObject(apiInfo)}
         export const allModels = ${all}
     `
-
-    fs.writeFileSync(path, formatCode(code))
+    return code
 }

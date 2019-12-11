@@ -2,6 +2,7 @@ import { generateModelFiles } from 'src/model/generateModelFiles'
 import fs from 'fs'
 import { readApiSpec } from 'src/apispec/readApiSpec'
 import { createModels } from 'src/model/createModel'
+import path from 'path'
 
 // eslint-disable-next-line no-path-concat
 const schemaDir = __dirname + '/../../test/testSchema.json'
@@ -31,12 +32,21 @@ it('model code generated properly', () => {
     const apiSpec = readApiSpec(schemaDir)
     const models = createModels(apiSpec, customTypeDefs)
 
-    generateModelFiles(
+    const files = generateModelFiles(
         models,
         { version: apiSpec.info.version },
-        outputDir,
-        () => null
+        {
+            codeFormat: {
+                singleQuote: true,
+                semicolons: true
+            }
+        }
     )
+
+    files.forEach(f => {
+        const p = path.join(outputDir, f.name)
+        fs.writeFileSync(p, f.content)
+    })
 
     expectSameContent(outputDir + '/Foo.ts', testDir + '/Foo.expected.ts')
     expectSameContent(outputDir + '/Bar.ts', testDir + '/Bar.expected.ts')

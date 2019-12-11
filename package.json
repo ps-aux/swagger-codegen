@@ -1,7 +1,7 @@
 {
   "name": "@ps-aux/swagger-codegen",
-  "version": "9.2.0",
-  "main": "index.js",
+  "version": "9.3.0",
+  "main": "lib/index.js",
   "scripts": {
     "build": "rm -rf lib && babel --extensions '.ts,.js' src -d lib src",
     "pub": "npm publish --access public",

@@ -41,7 +41,22 @@ log('Generating model from ', sourcePath, 'to', targetDir)
 const apiSpec = readApiSpec(sourcePath)
 const models = createModels(apiSpec, customTypeDefs)
 
-generateModelFiles(models, { version: apiSpec.info.version }, targetDir, log)
+const files = generateModelFiles(
+    models,
+    { version: apiSpec.info.version },
+    {
+        log,
+        codeFormat: {
+            singleQuote: true,
+            semicolons: true
+        }
+    }
+)
+
+files.forEach(f => {
+    const p = path.join(targetDir, f.name)
+    fs.writeFileSync(p, f.content)
+})
 
 fs.copyFileSync(
     path.resolve(__dirname, '../../src', 'types.d.ts'),

@@ -1,11 +1,12 @@
 import {
     Attribute,
+    CreateModels,
     CustomTypeDef,
     Model,
     Operation,
     Operations
 } from 'src/types'
-import { SwaggerApiSpec, SwaggerDefinition } from 'src/swagger/types'
+import { SwaggerDefinition } from 'src/swagger/types'
 import { EntityOperation, entityOperationsMap } from 'src/model/EntityOperation'
 import { calcChecksumFromObj } from 'src/checksum'
 import { createFilterModel } from 'src/filter/FilterModel'
@@ -93,10 +94,7 @@ const createModel = (
     }
 }
 
-export const createModels = (
-    spec: SwaggerApiSpec,
-    customTypeDefs: CustomTypeDef[]
-): Model[] => {
+export const createModels: CreateModels = (spec, customTypeDefs) => {
     const definitions = Object.values(spec.definitions)
 
     const opsMap = entityOperationsMap(definitions, spec)

@@ -1,3 +1,5 @@
+import { SwaggerApiSpec } from 'src/swagger/types'
+
 export type TypeName =
     | 'integer'
     | 'double'
@@ -75,3 +77,35 @@ export type CustomTypeDef = {
 }
 
 export type HttpMethod = 'get' | 'put' | 'post' | 'delete'
+
+export type CreateModels = (
+    spec: SwaggerApiSpec,
+    customTypeDefs: CustomTypeDef[]
+) => Model[]
+
+export declare const createModels: CreateModels
+
+export type CodeFormatOpts = {
+    semicolons: boolean
+    singleQuote: boolean
+}
+
+export type GenerateModelFilesOpts = {
+    codeFormat: CodeFormatOpts
+    log?: (a: any) => void
+}
+
+export type ModelFile = {
+    content: string
+    name: string
+}
+
+export type GenerateModelFiles = (
+    models: Model[],
+    apiInfo: {
+        version: string
+    },
+    opts: GenerateModelFilesOpts
+) => ModelFile[]
+
+export declare const generateModelFiles: GenerateModelFiles
