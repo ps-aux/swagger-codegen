@@ -35,10 +35,10 @@ it('model code generated properly', () => {
         models,
         { version: apiSpec.info.version },
         outputDir,
-        () => {}
+        () => null
     )
-})
 
-expectSameContent(outputDir + '/Foo.ts', testDir + '/Foo.expected.ts')
-expectSameContent(outputDir + '/Bar.ts', testDir + '/Bar.expected.ts')
-expectSameContent(outputDir + '/index.ts', testDir + '/index.expected.ts_')
+    expectSameContent(outputDir + '/Foo.ts', testDir + '/Foo.expected.ts')
+    expectSameContent(outputDir + '/Bar.ts', testDir + '/Bar.expected.ts')
+    expectSameContent(outputDir + '/index.ts', testDir + '/index.expected.ts_')
+})

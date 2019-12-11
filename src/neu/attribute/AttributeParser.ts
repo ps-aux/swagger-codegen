@@ -1,8 +1,8 @@
 import { SwaggerDefinitionProperty } from 'src/swagger/types'
-import { extractExtraProps } from 'src/attribute/extractExtraProps'
+import { extractExtraProps } from 'src/neu/attribute/extra/extractExtraProps'
 import { Type, ValidationRule } from 'new-types'
-import { createType } from 'src/neu/TypeParser'
-import { parseValidationRules } from 'src/neu/ValidationsRulesParser'
+import { createType } from 'src/neu/attribute/type/TypeParser'
+import { parseValidationRules } from 'src/neu/attribute/validation/ValidationsRulesParser'
 
 export type PropertyParsingResult = {
     type: Type | null
@@ -15,10 +15,11 @@ export const parseSwaggerProperty = (
     prop: SwaggerDefinitionProperty
 ): PropertyParsingResult => {
     const type = createType(prop)
+
     const extra = extractExtraProps(prop)
     const validationRules = parseValidationRules(prop)
 
-    const couldNotParseType = !!type
+    const couldNotParseType = !type
 
     return {
         type,

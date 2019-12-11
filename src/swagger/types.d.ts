@@ -35,21 +35,20 @@ export type SwaggerTypeInfoBearer = {
     enum?: string[]
     $ref?: string
     format?: string
-    items: SwaggerTypeInfoBearer
+    items?: SwaggerTypeInfoBearer
 }
 
 export type SwaggerDefinitionProperty = {
     type: string
-    pattern: string
-    required: string
-    $ref: string
-    enum: string[]
-    format: string
-    items: SwaggerTypeInfoBearer
-    minimum: number
-    maximum: number
-    minLength: number
-    maxLength: number
+    pattern?: string
+    $ref?: string
+    enum?: string[]
+    format?: string
+    items?: SwaggerTypeInfoBearer
+    minimum?: number
+    maximum?: number
+    minLength?: number
+    maxLength?: number
 }
 
 export type SwaggerDefinition = {

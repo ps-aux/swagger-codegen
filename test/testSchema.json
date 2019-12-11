@@ -137,6 +137,11 @@
           "x-ref": "Bar",
           "x-refDataPath": "bar"
         },
+        "nonRefDataId": {
+          "type": "integer",
+          "format": "int64",
+          "x-ref": "Bar"
+        },
         "bar": {
           "$ref": "#/definitions/Bar",
           "x-refDataFor": "barId"
@@ -151,6 +156,14 @@
         "aDate": {
           "type": "string",
           "format": "date-time"
+        },
+        "detailOnly": {
+          "type": "string",
+          "x-detailOnly": "true"
+        },
+        "readOnly": {
+          "type": "string",
+          "x-readOnly": "true"
         },
         "status": {
           "type": "string",

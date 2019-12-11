@@ -1,4 +1,4 @@
-import { extractExtraProps } from 'src/attribute/extractExtraProps'
+import { extractExtraProps } from 'src/neu/attribute/extra/extractExtraProps'
 
 it('works', () => {
     const res = extractExtraProps({

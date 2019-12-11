@@ -1,13 +1,13 @@
-import { SwaggerDefinition } from 'src/swagger/types'
+import { SwaggerDefinition, SwaggerDefinitionProperty } from 'src/swagger/types'
 import { Type, ValidationRule } from 'new-types'
-import { parseSwaggerProperty } from 'src/neu/AttributeParser'
+import { parseSwaggerProperty } from 'src/neu/attribute/AttributeParser'
 
 export type UnparsedModelAttribute = {
     name: string
     validationRules: ValidationRule[]
     extra: { [key: string]: any }
     required: boolean
-    originalDef: SwaggerDefinition
+    originalDef: SwaggerDefinitionProperty
 }
 
 export type ParsedModelAttribute = UnparsedModelAttribute & {
@@ -22,14 +22,12 @@ export type ModelParsingResult = {
 export const parseSwaggerModel = (
     def: SwaggerDefinition
 ): ModelParsingResult => {
-    if (!def.properties) throw new Error('"properties" missing in definition')
-
     const requiredProps = def.required || []
 
     const parsed: ParsedModelAttribute[] = []
     const unparsed: UnparsedModelAttribute[] = []
 
-    Object.entries(def.properties).forEach(([key, val]) => {
+    Object.entries(def.properties || []).forEach(([key, val]) => {
         const name = key
         const p = parseSwaggerProperty(val)
 
@@ -40,7 +38,7 @@ export const parseSwaggerModel = (
             required,
             extra: p.extra,
             validationRules: p.validationRules,
-            originalDef: def
+            originalDef: val
         }
 
         if (p.couldNotParseType) {

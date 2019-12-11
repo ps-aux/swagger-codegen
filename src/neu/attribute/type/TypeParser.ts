@@ -12,6 +12,8 @@ import {
 const tryDetectPrimitiveType = (
     p: SwaggerTypeInfoBearer
 ): PrimitiveType | null => {
+    // Enums are special types for us
+    if (p.enum) return null
     let name: PrimitiveTypeName | null = null
 
     if (p.format === 'date-time') name = 'date'
@@ -52,7 +54,7 @@ const tryDetectHigherOrderType = (
     }
 
     if (p.type === 'array') {
-        const itemDef = p.items
+        const itemDef = p.items!
         const type = createType(itemDef)
 
         if (!type)

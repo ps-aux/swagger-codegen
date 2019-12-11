@@ -1,9 +1,16 @@
-import { CustomTypeDef, Model, Operation, Operations } from 'src/types'
+import {
+    Attribute,
+    CustomTypeDef,
+    Model,
+    Operation,
+    Operations
+} from 'src/types'
 import { SwaggerApiSpec, SwaggerDefinition } from 'src/swagger/types'
 import { EntityOperation, entityOperationsMap } from 'src/model/EntityOperation'
-import { createAttributesModel } from 'src/attribute/AttributeModel'
 import { calcChecksumFromObj } from 'src/checksum'
 import { createFilterModel } from 'src/filter/FilterModel'
+import { parseSwaggerModel } from 'src/neu/ModelParser'
+import { toAttr } from 'src/model/toAttribute'
 
 const operations = (
     entityName: string,
@@ -52,9 +59,27 @@ const createModel = (
     customTypesDefs: CustomTypeDef[],
     ops?: EntityOperation[]
 ): Model => {
+    const p = parseSwaggerModel(def)
+
+    if (p.unparsed.length > 0)
+        throw new Error(
+            `Some attributes could not be parsed:\n ${JSON.stringify(
+                p.unparsed
+            )}`
+        )
+
+    const attrs: { [key: string]: Attribute } = {}
+
+    p.parsed.forEach(pAttr => {
+        // Do not include refData props
+        if (pAttr.extra.refDataFor) return
+        const a = toAttr(pAttr, entityName)
+        attrs[pAttr.name] = a
+    })
+
     const data = {
         entityName,
-        attr: createAttributesModel(def, entityName),
+        attr: attrs,
         operations: ops
             ? operations(entityName, ops, customTypesDefs)
             : undefined
