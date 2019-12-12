@@ -3,8 +3,6 @@ import path from 'path'
 import fs from 'fs'
 
 export const definitionFiles = (): ModelFile[] => {
-    console.log('filename', __filename)
-
     // NOTE this file is in build in lib dir not in src !
     const srcDir = path.resolve(__dirname, '../../../src')
 

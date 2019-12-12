@@ -29,6 +29,7 @@ it('test', () => {
     // console.log('models', files)
     const targetDir = root + '/tst'
 
+    if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir)
     files.forEach(f => {
         const p = path.join(targetDir, f.name)
         fs.writeFileSync(p, f.content)
