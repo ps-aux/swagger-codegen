@@ -1,13 +1,13 @@
 import { SwaggerTypeInfoBearer } from 'src/swagger/types'
 import {
     EnumType,
-    HighOrderType,
+    HigherOrderType,
     ListType,
     ObjectType,
     PrimitiveType,
     PrimitiveTypeName,
     Type
-} from 'new-types'
+} from 'src/neu/model'
 
 const tryDetectPrimitiveType = (
     p: SwaggerTypeInfoBearer
@@ -34,7 +34,7 @@ const defNameFromRef = ref => ref.split('/')[2]
 
 const tryDetectHigherOrderType = (
     p: SwaggerTypeInfoBearer
-): HighOrderType<any> | null => {
+): HigherOrderType<any> | null => {
     if (p.$ref) {
         const t: ObjectType = {
             name: 'object',

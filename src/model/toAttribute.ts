@@ -1,4 +1,4 @@
-import { HighOrderType, Type } from 'new-types'
+import { HigherOrderType, Type } from 'src/neu/model'
 import { Attribute, Type as OldType } from 'src/types'
 import { ParsedModelAttribute } from 'src/neu/ModelParser'
 
@@ -10,7 +10,7 @@ const convertType = (type: Type): OldType => {
             name: type.name
         }
     }
-    const hoType: HighOrderType<any> = type as HighOrderType<any>
+    const hoType: HigherOrderType<any> = type as HigherOrderType<any>
 
     if (hoType.name === 'enum') {
         return {

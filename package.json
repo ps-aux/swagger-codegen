@@ -1,6 +1,6 @@
 {
   "name": "@ps-aux/swagger-codegen",
-  "version": "9.3.0",
+  "version": "9.5.0",
   "main": "lib/index.js",
   "scripts": {
     "build": "rm -rf lib && babel --extensions '.ts,.js' src -d lib src",
@@ -17,8 +17,7 @@
   },
   "files": [
     "lib",
-    "src/types.d.ts",
-    "src/values.ts"
+    "src"
   ],
   "typings": "src/types.d.ts",
   "bin": {

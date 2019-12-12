@@ -1,11 +1,11 @@
-import { generateModelFiles } from 'src/model/generateModelFiles'
+import { generateModelFiles } from 'src/model/files/generateModelFiles'
 import fs from 'fs'
 import { readApiSpec } from 'src/apispec/readApiSpec'
 import { createModels } from 'src/model/createModel'
 import path from 'path'
 
 // eslint-disable-next-line no-path-concat
-const schemaDir = __dirname + '/../../test/testSchema.json'
+const schemaDir = __dirname + '/../../../test/testSchema.json'
 
 const testDir = './test'
 const outputDir = testDir + '/build'

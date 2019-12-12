@@ -1,7 +1,8 @@
 import { modelToTypescriptCode } from 'src/model/code/modelToTypescriptCode'
 import { CodeFormatter } from 'src/code/FormatCode'
-import { Api, GenerateModelFiles, Model, ModelFile } from 'src/types'
-import { printObject } from 'src/code/codePrint'
+import { CodeFormatOpts, GenerateModelFiles, ModelFile } from 'src/types'
+import { indexFileContent } from 'src/model/files/indexFile'
+import { definitionFiles } from 'src/model/files/definitionFiles'
 
 export const generateModelFiles: GenerateModelFiles = (
     models,
@@ -28,35 +29,24 @@ export const generateModelFiles: GenerateModelFiles = (
         }
     })
 
-    log('Generating index file content')
-
     files.push({
         name: 'index.ts',
-        content: createIndex(models, apiInfo)
+        content: indexFileContent(models, apiInfo)
     })
 
-    const formatCode = CodeFormatter(opts.codeFormat)
+    const formatted = formatCode(files, opts.codeFormat)
+
+    // We cannot format ts files for now
+    definitionFiles().forEach(f => formatted.push(f))
+
+    return formatted
+}
+
+const formatCode = (files: ModelFile[], opts: CodeFormatOpts): ModelFile[] => {
+    const formatCode = CodeFormatter(opts)
     files.forEach(f => {
         f.content = formatCode(f.content)
     })
 
     return files
-}
-
-const createIndex = (models: Model[], apiInfo: Api) => {
-    const importStatement = name => `import {${name}} from './${name}'`
-
-    const imports = models.map(m => importStatement(m.entityName)).join('\n')
-
-    const exports = `export {${models.map(m => m.entityName).join(',')}}`
-
-    const all = `[${models.map(m => m.entityName).join(',')}]`
-
-    const code = `
-        ${imports}
-        ${exports}
-        export const api = ${printObject(apiInfo)}
-        export const allModels = ${all}
-    `
-    return code
 }

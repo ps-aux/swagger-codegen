@@ -1,5 +1,5 @@
 import { SwaggerDefinition, SwaggerDefinitionProperty } from 'src/swagger/types'
-import { Type, ValidationRule } from 'new-types'
+import { Type, ValidationRule } from 'src/neu/model'
 import { parseSwaggerProperty } from 'src/neu/attribute/AttributeParser'
 
 export type UnparsedModelAttribute = {

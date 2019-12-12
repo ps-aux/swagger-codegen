@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { generateModelFiles } from 'src/model/generateModelFiles'
+import { generateModelFiles } from 'src/model/files/generateModelFiles'
 import path from 'path'
 import fs from 'fs'
 import rimraf from 'rimraf'
@@ -57,12 +57,3 @@ files.forEach(f => {
     const p = path.join(targetDir, f.name)
     fs.writeFileSync(p, f.content)
 })
-
-fs.copyFileSync(
-    path.resolve(__dirname, '../../src', 'types.d.ts'),
-    path.resolve(targetDir, 'types.d.ts')
-)
-fs.copyFileSync(
-    path.resolve(__dirname, '../../src', 'values.ts'),
-    path.resolve(targetDir, 'values.d.ts')
-)

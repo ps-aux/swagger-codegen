@@ -14,24 +14,24 @@ export type PrimitiveType = {
     name: PrimitiveTypeName
 }
 
-export type HighOrderType<T> = {
+export type HigherOrderType<T> = {
     name: string
     of: T
 }
 
-export type ObjectType = HighOrderType<string> & {
+export type ObjectType = HigherOrderType<string> & {
     name: 'object'
 }
 
-export type ListType<T extends Type> = HighOrderType<T> & {
+export type ListType<T extends Type> = HigherOrderType<T> & {
     name: 'list'
 }
 
-export type EnumType<T> = HighOrderType<T[]> & {
+export type EnumType<T> = HigherOrderType<T[]> & {
     name: 'enum'
 }
 
-export type Type = PrimitiveType | HighOrderType<any>
+export type Type = PrimitiveType | HigherOrderType<any>
 
 export type ValidationRule = {
     name: string
@@ -43,5 +43,5 @@ export type Attribute = {
     id: string
     type: Type
     required: boolean
-    validationRules?: ValidationRule[]
+    validationRules: ValidationRule[]
 }

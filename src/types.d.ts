@@ -1,71 +1,39 @@
-import { SwaggerApiSpec } from 'src/swagger/types'
+import { SwaggerApiSpec } from './swagger/types'
+import { Model } from './model'
+import {
+    Model as _Model2,
+    Attribute as _Attribute2,
+    Type as _Type2,
+    ValidationRule as _ValidationRule2
+} from './/neu/model'
 
-export type TypeName =
-    | 'integer'
-    | 'double'
-    | 'string'
-    | 'boolean'
-    | 'date'
-    | 'enum'
-    | 'object'
-    | 'ref'
-    | 'array'
+export {
+    ListType,
+    EnumType,
+    PrimitiveTypeName,
+    PrimitiveType,
+    HigherOrderType,
+    ObjectType
+} from './neu/model'
 
-export type Type = {
-    name: TypeName | string
-    type?: Type
-    values?: string[] // in case of an array
-}
+export {
+    TypeName,
+    Type,
+    ValidationRule,
+    Attribute,
+    Model,
+    Operation,
+    FilterParam,
+    Filter,
+    MinMax,
+    Operations,
+    ValidationRuleType
+} from './model'
 
-export type Attribute = {
-    name: string
-    id: string
-    type: Type
-    required?: boolean
-    values?: string[]
-    readOnly?: boolean
-    detailOnly?: boolean
-    refDataPath?: string
-    validations?: ValidationRule[]
-}
-
-export type ValidationRuleType = 'pattern' | 'length' | 'minMax'
-
-export type MinMax = {
-    min?: number
-    max?: number
-}
-
-export type ValidationRule = {
-    type: ValidationRuleType | string
-    value: RegExp | MinMax
-}
-
-export type Operation = {
-    type: string // cannot be an enum
-    method: string
-    path: string
-    params?: Filter
-}
-
-export type Operations = { [key: string]: Operation }
-
-export interface Model {
-    entityName: string
-    attr: { [key: string]: Attribute }
-    operations?: Operations
-    checksum: string
-}
-
-export type FilterParam = {
-    name: string
-    id: string
-    type: Type
-    required?: boolean
-    values?: string[]
-}
-
-export type Filter = { [key: string]: FilterParam }
+export type Model2 = _Model2
+export type Attribute2 = _Attribute2
+export type Type2 = _Type2
+export type ValidationRule2 = _ValidationRule2
 
 export type Api = {
     version: string
@@ -109,3 +77,23 @@ export type GenerateModelFiles = (
 ) => ModelFile[]
 
 export declare const generateModelFiles: GenerateModelFiles
+
+// 2nd version
+
+export type CreateModels2 = (spec: SwaggerApiSpec) => Model2[]
+
+export type CreateModelFilesOpts = {
+    format: CodeFormatOpts
+    removeDefaults: boolean
+}
+
+export type CreateModelFiles = (
+    models: Model2[],
+    apiInfo: {
+        version: string
+    },
+    opts: CreateModelFilesOpts
+) => ModelFile[]
+
+export declare const createModels2: CreateModels2
+export declare const createModelFiles: CreateModelFiles
