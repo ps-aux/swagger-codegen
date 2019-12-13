@@ -44,4 +44,5 @@ export type Attribute = {
     type: Type
     required: boolean
     validationRules: ValidationRule[]
+    extra: { [key: string]: any }
 }

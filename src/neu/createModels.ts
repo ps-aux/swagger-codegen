@@ -7,7 +7,8 @@ const toAttr = (p: ParsedModelAttribute, entityName: string): Attribute => ({
     id: `${entityName}.${p.name}`,
     type: p.type,
     required: p.required,
-    validationRules: p.validationRules
+    validationRules: p.validationRules,
+    extra: p.extra
 })
 
 export const createModels: CreateModels2 = apiSpec => {

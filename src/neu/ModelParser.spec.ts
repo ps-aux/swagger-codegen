@@ -9,6 +9,7 @@ const def = {
     required: ['number', 'unknown'],
     properties: {
         number: {
+            'x-foo': 'bar',
             type: 'integer',
             format: 'int64'
         },
@@ -34,7 +35,9 @@ it('works', () => {
             },
             required: true,
             validationRules: [],
-            extra: {},
+            extra: {
+                foo: 'bar'
+            },
             originalDef: def.properties.number
         } as ParsedModelAttribute,
         {
