@@ -11,7 +11,8 @@ export type PrimitiveTypeName =
     | 'date'
 
 export type PrimitiveType = {
-    name: PrimitiveTypeName
+    // Hack for https://stackoverflow.com/questions/59714310/typescript-string-union-type-inferences-problem-in-composite-types
+    name: PrimitiveTypeName | string
 }
 
 export type HigherOrderType<T> = {
