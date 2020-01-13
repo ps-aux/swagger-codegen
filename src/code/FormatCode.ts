@@ -6,6 +6,6 @@ export type FormatCode = (code: string) => string
 export const CodeFormatter = (opts: CodeFormatOpts): FormatCode => code =>
     prettier.format(code, {
         semi: opts.semicolons,
-        parser: 'babel',
+        parser: 'typescript',
         singleQuote: opts.singleQuote
     })
