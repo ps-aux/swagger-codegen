@@ -14,8 +14,8 @@ export const specEndpoints = (spec: SwaggerApiSpec): Endpoint[] => {
             Object.entries(val).map(([method, op]) => ({
                 path,
                 method: method as HttpMethod,
-                tags: op.tags,
-                op: op
+                tags: op!.tags,
+                op: op!
             }))
     )
 

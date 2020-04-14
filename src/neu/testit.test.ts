@@ -21,7 +21,6 @@ it('test', () => {
         removeDefaults: true
     })
 
-    // console.log('models', files)
     const targetDir = root + '/tst'
 
     if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir)
