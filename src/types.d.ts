@@ -1,8 +1,9 @@
 import { SwaggerApiSpec } from './swagger/types'
 import { Model } from './model'
 import {
-    Model as _Model2,
     Attribute as _Attribute2,
+    Model as _Model2,
+    OpsTree,
     Type as _Type2,
     ValidationRule as _ValidationRule2
 } from './/neu/model'
@@ -13,7 +14,8 @@ export {
     PrimitiveTypeName,
     PrimitiveType,
     HigherOrderType,
-    ObjectType
+    ObjectType,
+    ApiOperation
 } from './neu/model'
 
 export {
@@ -80,7 +82,12 @@ export declare const generateModelFiles: GenerateModelFiles
 
 // 2nd version
 
-export type CreateModels2 = (spec: SwaggerApiSpec) => Model2[]
+export type CreateModels2 = (
+    spec: SwaggerApiSpec
+) => {
+    models: Model2[]
+    ops: OpsTree
+}
 
 export type CreateModelFilesOpts = {
     format: CodeFormatOpts
@@ -92,6 +99,7 @@ export type CreateModelFiles = (
     apiInfo: {
         version: string
     },
+    opsTree: OpsTree,
     opts: CreateModelFilesOpts
 ) => ModelFile[]
 

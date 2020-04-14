@@ -11,12 +11,14 @@
       "get": {
         "tags": [
           "Bar",
+          "opGroup.Bar",
           "operation.detail"
         ]
       },
       "put": {
         "tags": [
           "Bar",
+          "opGroup.Bar",
           "operation.update"
         ]
       }
@@ -25,6 +27,7 @@
       "get": {
         "tags": [
           "Bar",
+          "opGroup.Bar",
           "operation.listAll"
         ],
         "parameters": [
@@ -41,6 +44,7 @@
       "post": {
         "tags": [
           "Foo",
+          "opGroup.Foo",
           "operation.create"
         ]
       },
@@ -53,6 +57,7 @@
       "get": {
         "tags": [
           "Foo",
+          "opGroup.listByPage",
           "operation.listByPage"
         ],
         "parameters": [

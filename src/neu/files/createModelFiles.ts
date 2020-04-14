@@ -3,8 +3,14 @@ import { modelToTypescriptCode } from 'src/neu/code/modelToTypescriptCode'
 import { CodeFormatter } from 'src/code/FormatCode'
 import { indexFileContent } from 'src/neu/files/indexFile'
 import { definitionFiles } from 'src/neu/files/definitionFiles'
+import { opsTreeToTypescriptCode } from 'src/neu/ops/opsTreeToTypescriptCode'
 
-export const createModelFiles: CreateModelFiles = (models, api, opts) => {
+export const createModelFiles: CreateModelFiles = (
+    models,
+    api,
+    opsTree,
+    opts
+) => {
     const files = models.map(m => {
         const code = modelToTypescriptCode(m, opts.removeDefaults)
 
@@ -17,6 +23,10 @@ export const createModelFiles: CreateModelFiles = (models, api, opts) => {
     files.push({
         name: 'index.ts',
         content: indexFileContent(models, api)
+    })
+    files.push({
+        name: 'apiOps.ts',
+        content: opsTreeToTypescriptCode(opsTree)
     })
 
     const formatted = formatCode(files, opts.format)

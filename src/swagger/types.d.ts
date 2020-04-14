@@ -14,6 +14,14 @@ export type SwaggerOperation = {
     parameters: SwaggerParameter[]
 }
 
+export type SwaggerHttpMethod = 'get' | 'post' | 'delete' | 'put'
+
+// TODO why is the val possible undefined according to TS ?
+export type SwaggerPath = { [key in SwaggerHttpMethod]?: SwaggerOperation }
+export type SwaggerPaths = {
+    [key: string]: SwaggerPath
+}
+
 // Swagger spec types
 export type SwaggerApiSpec = {
     info: {
@@ -22,11 +30,7 @@ export type SwaggerApiSpec = {
     }
     basePath: string
     tags: []
-    paths: {
-        [key: string]: {
-            [key: string]: SwaggerOperation
-        }
-    }
+    paths: SwaggerPaths
     definitions: { [key: string]: SwaggerDefinition }
 }
 

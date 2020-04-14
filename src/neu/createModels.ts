@@ -1,6 +1,7 @@
 import { ParsedModelAttribute, parseSwaggerModel } from 'src/neu/ModelParser'
 import { Attribute, Model } from 'src/neu/model'
 import { CreateModels2 } from 'src/types'
+import { createOpsTree } from 'src/neu/ops/createOpsTree'
 
 const toAttr = (p: ParsedModelAttribute, entityName: string): Attribute => ({
     name: p.name,
@@ -34,5 +35,5 @@ export const createModels: CreateModels2 = apiSpec => {
         }
     )
 
-    return models
+    return { models, ops: createOpsTree(apiSpec.paths) }
 }
