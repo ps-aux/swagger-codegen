@@ -11,20 +11,15 @@ it('test', () => {
     const schemaDir = root + '/test/testSchema.json'
 
     const apiSpec = readApiSpec(schemaDir)
-    const models = createModels(apiSpec)
+    const { models, ops } = createModels(apiSpec)
 
-    const files = createModelFiles(
-        models,
-
-        { version: '123' },
-        {
-            format: {
-                semicolons: true,
-                singleQuote: true
-            },
-            removeDefaults: true
-        }
-    )
+    const files = createModelFiles(models, { version: '123' }, ops, {
+        format: {
+            semicolons: true,
+            singleQuote: true
+        },
+        removeDefaults: true
+    })
 
     // console.log('models', files)
     const targetDir = root + '/tst'
