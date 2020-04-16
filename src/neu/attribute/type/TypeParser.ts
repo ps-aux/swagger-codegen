@@ -6,7 +6,7 @@ import {
     ObjectType,
     PrimitiveType,
     PrimitiveTypeName,
-    Type
+    AttrType
 } from 'src/neu/model'
 
 const tryDetectPrimitiveType = (
@@ -65,7 +65,7 @@ const tryDetectHigherOrderType = (
                     JSON.stringify(p)
             )
 
-        const t: ListType<Type> = {
+        const t: ListType<AttrType> = {
             name: 'list',
             of: type
         }
@@ -76,7 +76,7 @@ const tryDetectHigherOrderType = (
     return null
 }
 
-export const createType = (info: SwaggerTypeInfoBearer): Type | null => {
+export const createType = (info: SwaggerTypeInfoBearer): AttrType | null => {
     const primitive = tryDetectPrimitiveType(info)
     if (primitive) return primitive
 

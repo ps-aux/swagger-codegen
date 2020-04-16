@@ -1,8 +1,8 @@
-import { HigherOrderType, Type } from 'src/neu/model'
+import { HigherOrderType, AttrType } from 'src/neu/model'
 import { Attribute, Type as OldType } from 'src/types'
 import { ParsedModelAttribute } from 'src/neu/ModelParser'
 
-const convertType = (type: Type): OldType => {
+const convertType = (type: AttrType): OldType => {
     // @ts-ignore
     if (!type.of) {
         // Primitive type
@@ -20,7 +20,7 @@ const convertType = (type: Type): OldType => {
     } else if (hoType.name === 'list') {
         return {
             name: 'array',
-            type: convertType(hoType.of as Type)
+            type: convertType(hoType.of as AttrType)
         }
     } else if (hoType.name === 'object') {
         return {

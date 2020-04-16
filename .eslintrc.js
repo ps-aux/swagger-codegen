@@ -16,6 +16,7 @@ module.exports = {
         indent: 'off',
         // So we can use comma operator
         'no-sequences': 'off',
+        'no-useless-constructor': 'off',
         '@typescript-eslint/member-delimiter-style': 'off',
         '@typescript-eslint/prefer-interface': 'off',
         '@typescript-eslint/no-use-before-define': 'off',

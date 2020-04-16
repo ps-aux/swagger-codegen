@@ -24,7 +24,7 @@ export type ObjectType = HigherOrderType<string> & {
     name: 'object'
 }
 
-export type ListType<T extends Type> = HigherOrderType<T> & {
+export type ListType<T extends AttrType> = HigherOrderType<T> & {
     name: 'list'
 }
 
@@ -32,7 +32,7 @@ export type EnumType<T> = HigherOrderType<T[]> & {
     name: 'enum'
 }
 
-export type Type = PrimitiveType | HigherOrderType<any>
+export type AttrType = PrimitiveType | HigherOrderType<any>
 
 export type ValidationRule = {
     name: string
@@ -42,7 +42,7 @@ export type ValidationRule = {
 export type Attribute = {
     name: string
     id: string
-    type: Type
+    type: AttrType
     required: boolean
     validationRules: ValidationRule[]
     extra: { [key: string]: any }

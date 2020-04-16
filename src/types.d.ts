@@ -4,7 +4,7 @@ import {
     Attribute as _Attribute2,
     Model as _Model2,
     OpsTree,
-    Type as _Type2,
+    AttrType as _Type2,
     ValidationRule as _ValidationRule2
 } from './/neu/model'
 
