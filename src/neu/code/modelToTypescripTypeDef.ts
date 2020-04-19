@@ -17,15 +17,15 @@ const TsBuildInTypes = {
     object: 'object'
 }
 
-class ImportedType {
-    constructor(public name: string) {}
+type TsTypeName = {
+    name: string
+    imports?: string[]
 }
 
-export type NamedType = string | ImportedType
-
-export type StructureType = { [key: string]: TsType }
-
-export type TsType = NamedType | StructureType
+export type TsType = {
+    name: string
+    optional: boolean
+}
 
 export type TypeDefRes = {
     name: string
@@ -35,29 +35,57 @@ export type TypeDefRes = {
 
 const arrayOf = (name: string) => `${name}[]`
 
-const attrTypeToTsType = (attrType: AttrType): TsType => {
-    if (isPrimitiveType(attrType))
-        switch (attrType.name) {
-            case PrimitiveTypes.string:
-                return TsBuildInTypes.string
-            case PrimitiveTypes.boolean:
-                return TsBuildInTypes.boolean
-            case PrimitiveTypes.integer:
-            case PrimitiveTypes.double:
-                return TsBuildInTypes.number
-            case PrimitiveTypes.date:
-                return TsBuildInTypes.date
-        }
-
-    if (isObjectType(attrType)) {
-        return new ImportedType(attrType.of)
+const primitiveTsTypeName = (name: string): string => {
+    switch (name) {
+        case PrimitiveTypes.string:
+            return TsBuildInTypes.string
+        case PrimitiveTypes.boolean:
+            return TsBuildInTypes.boolean
+        case PrimitiveTypes.integer:
+        case PrimitiveTypes.double:
+            return TsBuildInTypes.number
+        case PrimitiveTypes.date:
+            return TsBuildInTypes.date
     }
 
-    if (isEnumType(attrType)) return TsBuildInTypes.string
+    throw new Error(`Could not map primitive type ${name} to TS type`)
+}
 
-    if (isListType(attrType)) return arrayOf(TsBuildInTypes.any)
+const attrTypeToTsType = (attrType: AttrType): TsTypeName => {
+    const name = attrType.name
 
-    return TsBuildInTypes.any
+    // Cannot use returns for some reasons bcs TS guard marks attrType as never after 1st typeguard
+    let r: TsTypeName | null = null
+    if (isPrimitiveType(attrType)) {
+        r = {
+            name: primitiveTsTypeName(name)
+        }
+    }
+
+    if (isObjectType(attrType)) {
+        r = {
+            name: attrType.of,
+            imports: [attrType.of]
+        }
+    }
+
+    // TODO invoke primitive types contructor here, duplicate logic
+    if (isEnumType(attrType))
+        r = {
+            name: TsBuildInTypes.string
+        }
+
+    if (isListType(attrType)) {
+        const itemType = attrTypeToTsType(attrType.of)
+        r = {
+            // TODO this support only one level
+            name: arrayOf(itemType.name),
+            imports: itemType.imports
+        }
+    }
+
+    if (!r) r = { name: TsBuildInTypes.any }
+    return r
     // throw new Error(`Could not map ${attrType} to TS type`)
 }
 
@@ -83,15 +111,12 @@ export const modelToTypescriptTypeDef = (model: Model): TypeDefRes => {
     const attrs = mapObject<Attribute, TsType>(model.attrs, attr => {
         const res = attrTypeToTsType(attr.type)
 
-        // TODO hackity hack
-        let str: string = res.toString()
-        // TODO why idea highlights this ?
-        if (res instanceof ImportedType) {
-            str = res.name
-            imports.add(res.name)
-        }
+        if (res.imports) res.imports.forEach(i => imports.add(i))
 
-        return str
+        return {
+            name: res.name,
+            optional: !attr.required
+        }
     })
     return {
         name: model.name,
@@ -109,7 +134,10 @@ export const typescriptTypeDefToCode = (def: TypeDefRes): Code => {
     ${imports}
     export type ${def.name} = {
         ${Object.entries(def.attrs)
-            .map(([key, type]) => `${key}: ${type}`)
+            .map(([key, type]) => {
+                const optionalSign = type.optional ? '?' : ''
+                return `${key}${optionalSign}: ${type.name}`
+            })
             .join('\n')}
     }`
 }
