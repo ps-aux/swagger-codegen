@@ -19,7 +19,10 @@ it('works', () => {
         name: 'Foo',
         imports: [],
         attrs: {
-            foo: 'string'
+            foo: {
+                name: 'string',
+                optional: true
+            }
         }
     })
 
