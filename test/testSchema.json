@@ -195,7 +195,7 @@
         "withArray": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Foo"
+            "$ref": "#/definitions/Bar"
           }
         },
         "arrayOfPrimitives": {

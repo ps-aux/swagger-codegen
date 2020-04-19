@@ -111,7 +111,7 @@ export const Foo = {
         type: {
           name: 'object',
           type: {
-            name: 'Foo'
+            name: 'Bar'
           }
         }
       },
@@ -205,5 +205,5 @@ export const Foo = {
       }
     }
   },
-  checksum: '5430e603f87f2c69b60f488b6157cfd3'
+  checksum: '17c69aa414d0e2332af330589a8bf558'
 };
