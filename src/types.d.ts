@@ -5,7 +5,8 @@ import {
     Model as _Model2,
     OpsTree,
     AttrType as _Type2,
-    ValidationRule as _ValidationRule2
+    ValidationRule as _ValidationRule2,
+    EnumType
 } from './/neu/model'
 
 export {
@@ -80,14 +81,15 @@ export type GenerateModelFiles = (
 
 export declare const generateModelFiles: GenerateModelFiles
 
-// 2nd version
-
-export type CreateModels2 = (
-    spec: SwaggerApiSpec
-) => {
+export type ModelsParsingResult = {
     models: Model2[]
     ops: OpsTree
+    enums: EnumType<any>[]
 }
+
+// 2nd version
+
+export type CreateModels2 = (spec: SwaggerApiSpec) => ModelsParsingResult
 
 export type CreateModelFilesOpts = {
     format: CodeFormatOpts
@@ -95,11 +97,10 @@ export type CreateModelFilesOpts = {
 }
 
 export type CreateModelFiles = (
-    models: Model2[],
+    parsed: ModelsParsingResult,
     apiInfo: {
         version: string
     },
-    opsTree: OpsTree,
     opts: CreateModelFilesOpts
 ) => ModelFile[]
 

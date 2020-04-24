@@ -30,6 +30,7 @@ export type ListType<T extends AttrType> = HigherOrderType<T> & {
 
 export type EnumType<T> = HigherOrderType<T[]> & {
     name: 'enum'
+    id?: string // Optional for now
 }
 
 export type AttrType = PrimitiveType | HigherOrderType<any>

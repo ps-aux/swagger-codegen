@@ -1,7 +1,9 @@
+import { ExtraProps } from 'src/neu/attribute/extra/ExtraProps'
+import { SwaggerDefinitionProperty } from 'src/swagger/types'
+
 const regex = /(x-)(.*)/
 
-// TODO add ExtraProp to type system
-export const extractExtraProps = (p: any): { [key: string]: any } => {
+export const extractExtraProps = (p: SwaggerDefinitionProperty): ExtraProps => {
     const res = {}
     Object.keys(p)
         .map(k => k.match(regex))

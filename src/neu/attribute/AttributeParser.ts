@@ -14,9 +14,8 @@ export type PropertyParsingResult = {
 export const parseSwaggerProperty = (
     prop: SwaggerDefinitionProperty
 ): PropertyParsingResult => {
-    const type = createType(prop)
-
     const extra = extractExtraProps(prop)
+    const type = createType(prop, extra)
     const validationRules = parseValidationRules(prop)
 
     const couldNotParseType = !type

@@ -1,4 +1,4 @@
-import { Attribute, AttrType, Model } from 'src/neu/model'
+import { Attribute, AttrType, EnumType, Model } from 'src/neu/model'
 import {
     isEnumType,
     isListType,
@@ -7,6 +7,7 @@ import {
     PrimitiveTypes
 } from 'src/neu/model.consts'
 import { Code } from 'src/neu/code/types'
+import { arrayToObject } from 'src/util'
 
 const TsBuildInTypes = {
     string: 'string',
@@ -70,10 +71,13 @@ const attrTypeToTsType = (attrType: AttrType): TsTypeName => {
     }
 
     // TODO invoke primitive types contructor here, duplicate logic
-    if (isEnumType(attrType))
+    if (isEnumType(attrType)) {
+        const name = attrType.id!
         r = {
-            name: TsBuildInTypes.string
+            name: name,
+            imports: [name]
         }
+    }
 
     if (isListType(attrType)) {
         const itemType = attrTypeToTsType(attrType.of)
@@ -103,8 +107,15 @@ const mapObject = <A, B, Obj1 = any>(
     return r
 }
 
-export const modelToTypescriptTypeCode = (model: Model): Code =>
-    typescriptTypeDefToCode(modelToTypescriptTypeDef(model))
+export const modelToTypescriptTypeCode = (
+    model: Model,
+    enums: EnumType<any>[]
+): Code => {
+    const enumsDic = arrayToObject('id', enums)
+    const isEnum = name => !!enumsDic[name]
+
+    return typescriptTypeDefToCode(modelToTypescriptTypeDef(model), isEnum)
+}
 
 export const modelToTypescriptTypeDef = (model: Model): TypeDefRes => {
     const imports = new Set<string>()
@@ -125,9 +136,16 @@ export const modelToTypescriptTypeDef = (model: Model): TypeDefRes => {
     }
 }
 
-export const typescriptTypeDefToCode = (def: TypeDefRes): Code => {
+export const typescriptTypeDefToCode = (
+    def: TypeDefRes,
+    // TODO hack
+    isEnum: (name: string) => boolean
+): Code => {
     const imports = def.imports
-        .map(name => `import {${name}} from './${name}.type'`)
+        .map(name => {
+            if (isEnum(name)) return `import {${name}} from './enums.type'`
+            return `import {${name}} from './${name}.type'`
+        })
         .join('\n')
 
     return `

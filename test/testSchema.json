@@ -172,6 +172,7 @@
         },
         "status": {
           "type": "string",
+          "x-enumId": "Foo$Status",
           "enum": [
             "a",
             "b",

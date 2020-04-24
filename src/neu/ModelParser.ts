@@ -1,6 +1,7 @@
 import { SwaggerDefinition, SwaggerDefinitionProperty } from 'src/swagger/types'
-import { AttrType, ValidationRule } from 'src/neu/model'
+import { AttrType, EnumType, ValidationRule } from 'src/neu/model'
 import { parseSwaggerProperty } from 'src/neu/attribute/AttributeParser'
+import { isEnumType } from 'src/neu/model.consts'
 
 export type UnparsedModelAttribute = {
     name: string
@@ -17,6 +18,7 @@ export type ParsedModelAttribute = UnparsedModelAttribute & {
 export type ModelParsingResult = {
     parsed: ParsedModelAttribute[]
     unparsed: UnparsedModelAttribute[]
+    enums: EnumType<any>[]
 }
 
 export const parseSwaggerModel = (
@@ -27,6 +29,7 @@ export const parseSwaggerModel = (
     const parsed: ParsedModelAttribute[] = []
     const unparsed: UnparsedModelAttribute[] = []
 
+    const enums: EnumType<any>[] = []
     Object.entries(def.properties || []).forEach(([key, val]) => {
         const name = key
         const p = parseSwaggerProperty(val)
@@ -44,12 +47,15 @@ export const parseSwaggerModel = (
         if (p.couldNotParseType) {
             unparsed.push(attr)
         } else {
-            parsed.push({ ...attr, type: p.type! })
+            const type = p.type!
+            parsed.push({ ...attr, type })
+            if (isEnumType(type)) enums.push(type)
         }
     })
 
     return {
         parsed,
-        unparsed
+        unparsed,
+        enums
     }
 }

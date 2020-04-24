@@ -4,16 +4,23 @@ import { CodeFormatter } from 'src/code/FormatCode'
 import { indexFileContent } from 'src/neu/files/indexFile'
 import { definitionFiles } from 'src/neu/files/definitionFiles'
 import { opsTreeToTypescriptCode } from 'src/neu/ops/opsTreeToTypescriptCode'
-import { Model, OpsTree } from 'src/neu/model'
+import { EnumType, Model, OpsTree } from 'src/neu/model'
 import { modelToTypescriptTypeCode } from 'src/neu/code/modelToTypescripTypeDef'
+import {
+    enumsToModelTsCode,
+    enumsToTsTypesCode
+} from 'src/neu/enum/enumTsCodePrinter'
 
-export const createModelFiles: CreateModelFiles = (models, api, ops, opts) => {
+export const createModelFiles: CreateModelFiles = (result, api, opts) => {
     const files: ModelFile[] = []
 
-    files.push(...modelFiles(models, opts.removeDefaults))
-    files.push(...tsTypesFiles(models))
+    const { models, enums, ops } = result
+
+    files.push(...modelFiles(models, !!opts.removeDefaults))
+    files.push(...tsTypesFiles(models, enums))
     files.push(indexFile(models, api))
     files.push(apiOpsFile(ops))
+    files.push(...enumFiles(enums))
 
     const formatted = formatCode(files, opts.format)
 
@@ -32,9 +39,9 @@ const modelFiles = (models: Model[], removeDefaults: boolean): ModelFile[] =>
         }
     })
 
-const tsTypesFiles = (models: Model[]): ModelFile[] =>
+const tsTypesFiles = (models: Model[], enums: EnumType<any>[]): ModelFile[] =>
     models.map(m => {
-        const code = modelToTypescriptTypeCode(m)
+        const code = modelToTypescriptTypeCode(m, enums)
 
         return {
             name: m.name + '.type.ts',
@@ -51,6 +58,27 @@ const apiOpsFile = (opsTree: OpsTree) => ({
     name: 'apiOps.ts',
     content: opsTreeToTypescriptCode(opsTree)
 })
+
+const enumFiles = (enums: EnumType<any>[]): ModelFile[] => {
+    enums.forEach(e => {
+        if (!e.id)
+            throw new Error(
+                `Enum ${JSON.stringify(
+                    e
+                )} is missing the id prop. Cannot create code.`
+            )
+    })
+    return [
+        {
+            name: 'enums.model.ts',
+            content: enumsToModelTsCode(enums)
+        },
+        {
+            name: 'enums.type.ts',
+            content: enumsToTsTypesCode(enums)
+        }
+    ]
+}
 
 const formatCode = (files: ModelFile[], opts: CodeFormatOpts): ModelFile[] => {
     const formatCode = CodeFormatter(opts)

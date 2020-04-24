@@ -27,7 +27,7 @@ it('works', () => {
     })
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
-    const code = typescriptTypeDefToCode(res)
+    const code = typescriptTypeDefToCode(res, x => false)
 
     // console.log(code)
 })

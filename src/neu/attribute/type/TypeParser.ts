@@ -8,6 +8,7 @@ import {
     PrimitiveTypeName,
     AttrType
 } from 'src/neu/model'
+import { ExtraProps } from 'src/neu/attribute/extra/ExtraProps'
 
 const tryDetectPrimitiveType = (
     p: SwaggerTypeInfoBearer
@@ -33,7 +34,8 @@ const tryDetectPrimitiveType = (
 const defNameFromRef = ref => ref.split('/')[2]
 
 const tryDetectHigherOrderType = (
-    p: SwaggerTypeInfoBearer
+    p: SwaggerTypeInfoBearer,
+    extra: ExtraProps
 ): HigherOrderType<any> | null => {
     if (p.$ref) {
         const t: ObjectType = {
@@ -47,6 +49,7 @@ const tryDetectHigherOrderType = (
     if (p.enum) {
         const t: EnumType<string> = {
             name: 'enum',
+            id: extra.enumId,
             of: p.enum
         }
 
@@ -55,7 +58,7 @@ const tryDetectHigherOrderType = (
 
     if (p.type === 'array') {
         const itemDef = p.items!
-        const type = createType(itemDef)
+        const type = createType(itemDef, extra)
 
         if (!type)
             throw new Error(
@@ -76,11 +79,14 @@ const tryDetectHigherOrderType = (
     return null
 }
 
-export const createType = (info: SwaggerTypeInfoBearer): AttrType | null => {
+export const createType = (
+    info: SwaggerTypeInfoBearer,
+    extra: ExtraProps
+): AttrType | null => {
     const primitive = tryDetectPrimitiveType(info)
     if (primitive) return primitive
 
-    const higherOrder = tryDetectHigherOrderType(info)
+    const higherOrder = tryDetectHigherOrderType(info, extra)
     if (higherOrder) return higherOrder
 
     return null

@@ -1,4 +1,4 @@
-export const arrayToObject = (nameAttr, props) => {
+export const arrayToObject = (nameAttr, props): any => {
     const res = {}
 
     props.forEach(p => {
