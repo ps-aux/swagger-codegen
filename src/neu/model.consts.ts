@@ -4,7 +4,7 @@ import {
     ListType,
     ObjectType,
     PrimitiveType
-} from 'src/neu/model'
+} from './model'
 
 export const PrimitiveTypes = {
     string: 'string',

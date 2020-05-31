@@ -10,10 +10,18 @@ export const definitionFiles = (): ModelFile[] => {
         .readFileSync(path.resolve(srcDir, 'neu', 'model.d.ts'))
         .toString()
 
+    const constants = fs
+        .readFileSync(path.resolve(srcDir, 'neu', 'model.consts.ts'))
+        .toString()
+
     return [
         {
             name: 'model.d.ts',
             content: types
+        },
+        {
+            name: 'model.consts.ts',
+            content: constants
         }
     ]
 }
