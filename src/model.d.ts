@@ -1,66 +1,61 @@
-export type TypeName =
+export type Entity = {
+    name: string
+    attrs: { [key: string]: Attribute }
+}
+
+export type PrimitiveTypeName =
+    | 'string'
     | 'integer'
     | 'double'
-    | 'string'
     | 'boolean'
     | 'date'
-    | 'enum'
-    | 'object'
-    | 'ref'
-    | 'array'
 
-export type Type = {
-    name: TypeName | string
-    type?: Type
-    values?: string[] // in case of an array
+export type PrimitiveType = {
+    // Hack for https://stackoverflow.com/questions/59714310/typescript-string-union-type-inferences-problem-in-composite-types
+    name: PrimitiveTypeName | string
+}
+
+export type HigherOrderType<T> = {
+    name: string
+    of: T
+}
+
+export type ObjectType = HigherOrderType<string> & {
+    name: 'object'
+}
+
+export type ListType<T extends AttrType> = HigherOrderType<T> & {
+    name: 'list'
+}
+
+export type EnumType<T> = HigherOrderType<T[]> & {
+    name: 'enum'
+    id?: string // Optional for now
+}
+
+export type AttrType = PrimitiveType | HigherOrderType<any>
+
+export type ValidationRule = {
+    name: string
+    value: any
 }
 
 export type Attribute = {
     name: string
     id: string
-    type: Type
-    required?: boolean
-    values?: string[]
-    readOnly?: boolean
-    detailOnly?: boolean
-    refDataPath?: string
-    validations?: ValidationRule[]
+    type: AttrType
+    required: boolean
+    validationRules: ValidationRule[]
+    extra: { [key: string]: any }
 }
 
-export type ValidationRuleType = 'pattern' | 'length' | 'minMax'
+export type HttpMethod = 'get' | 'put' | 'post' | 'delete'
 
-export type MinMax = {
-    min?: number
-    max?: number
-}
-
-export type ValidationRule = {
-    type: ValidationRuleType | string
-    value: RegExp | MinMax
-}
-
-export type Operation = {
-    type: string // cannot be an enum
-    method: string
+export type ApiOperation = {
     path: string
-    params?: Filter
+    method: HttpMethod
 }
 
-export type Operations = { [key: string]: Operation }
-
-export interface Model {
-    entityName: string
-    attr: { [key: string]: Attribute }
-    operations?: Operations
-    checksum: string
+export type OpsTree = {
+    [key: string]: ApiOperation | OpsTree
 }
-
-export type FilterParam = {
-    name: string
-    id: string
-    type: Type
-    required?: boolean
-    values?: string[]
-}
-
-export type Filter = { [key: string]: FilterParam }

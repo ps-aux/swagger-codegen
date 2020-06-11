@@ -3,4 +3,5 @@ lib
 .idea
 node_modules
 test
+src/_old/_test
 tst

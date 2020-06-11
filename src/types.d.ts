@@ -1,13 +1,5 @@
 import { SwaggerApiSpec } from './swagger/types'
-import { Model } from './model'
-import {
-    Attribute as _Attribute2,
-    Model as _Model2,
-    OpsTree,
-    AttrType as _Type2,
-    ValidationRule as _ValidationRule2,
-    EnumType
-} from './/neu/model'
+import { Entity, OpsTree, EnumType } from './model'
 
 export {
     ListType,
@@ -16,45 +8,18 @@ export {
     PrimitiveType,
     HigherOrderType,
     ObjectType,
-    ApiOperation
-} from './neu/model'
-
-export {
-    TypeName,
-    Type,
-    ValidationRule,
+    ApiOperation,
+    Entity,
     Attribute,
-    Model,
-    Operation,
-    FilterParam,
-    Filter,
-    MinMax,
-    Operations,
-    ValidationRuleType
+    AttrType,
+    ValidationRule
 } from './model'
-
-export type Model2 = _Model2
-export type Attribute2 = _Attribute2
-export type Type2 = _Type2
-export type ValidationRule2 = _ValidationRule2
 
 export type Api = {
     version: string
 }
 
-export type CustomTypeDef = {
-    name: string
-    struct: {}
-}
-
 export type HttpMethod = 'get' | 'put' | 'post' | 'delete'
-
-export type CreateModels = (
-    spec: SwaggerApiSpec,
-    customTypeDefs: CustomTypeDef[]
-) => Model[]
-
-export declare const createModels: CreateModels
 
 export type CodeFormatOpts = {
     semicolons: boolean
@@ -71,25 +36,15 @@ export type ModelFile = {
     name: string
 }
 
-export type GenerateModelFiles = (
-    models: Model[],
-    apiInfo: {
-        version: string
-    },
-    opts: GenerateModelFilesOpts
-) => ModelFile[]
-
-export declare const generateModelFiles: GenerateModelFiles
-
 export type ModelsParsingResult = {
-    models: Model2[]
+    models: Entity[]
     ops: OpsTree
     enums: EnumType<any>[]
 }
 
 // 2nd version
 
-export type CreateModels2 = (spec: SwaggerApiSpec) => ModelsParsingResult
+export type CreateModels = (spec: SwaggerApiSpec) => ModelsParsingResult
 
 export type CreateModelFilesOpts = {
     format: CodeFormatOpts
@@ -104,5 +59,5 @@ export type CreateModelFiles = (
     opts: CreateModelFilesOpts
 ) => ModelFile[]
 
-export declare const createModels2: CreateModels2
+export declare const createModels: CreateModels
 export declare const createModelFiles: CreateModelFiles
