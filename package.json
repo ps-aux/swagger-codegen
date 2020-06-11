@@ -1,6 +1,6 @@
 {
   "name": "@ps-aux/swagger-codegen",
-  "version": "14.0.0",
+  "version": "14.0.1",
   "main": "lib/index.js",
   "scripts": {
     "build": "rm -rf lib && babel --extensions '.ts,.js' src -d lib src",
@@ -21,8 +21,6 @@
   ],
   "typings": "src/types.d.ts",
   "bin": {
-    "download-api-spec": "./lib/bin/download-api-spec.js",
-    "gen-model-from-swagger": "./lib/bin/gen-model-from-swagger.js"
   },
   "author": "",
   "license": "ISC",
