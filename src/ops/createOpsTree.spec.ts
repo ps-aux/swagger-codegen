@@ -1,6 +1,6 @@
 import { SwaggerPaths } from 'src/swagger/types'
 import { createOpsTree } from 'src/ops/createOpsTree'
-import { OpsTree } from 'src/model'
+import { OpsTree } from './types'
 
 it('works', () => {
     const input: SwaggerPaths = {

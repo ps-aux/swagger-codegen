@@ -1,7 +1,8 @@
 import { SwaggerDefinition, SwaggerDefinitionProperty } from 'src/swagger/types'
-import { AttrType, EnumType, ValidationRule } from 'src/model'
-import { parseSwaggerProperty } from 'src/model/attribute/AttributeParser'
+import { parseSwaggerProperty } from 'src/attribute/AttributeParser'
 import { isEnumType } from 'src/model.consts'
+import { AttrType, ValidationRule } from '../attribute/types'
+import { EnumType } from '../enum/types'
 
 export type UnparsedModelAttribute = {
     name: string

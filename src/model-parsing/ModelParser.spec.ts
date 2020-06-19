@@ -2,7 +2,7 @@ import {
     ParsedModelAttribute,
     parseSwaggerModel,
     UnparsedModelAttribute
-} from 'src/model/entity/ModelParser'
+} from 'src/model-parsing/ModelParser'
 
 const def = {
     type: 'object',

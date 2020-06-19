@@ -1,8 +1,9 @@
-import { ModelFile } from 'src/types'
 import path from 'path'
 import fs from 'fs'
+import { ModelFile } from './types'
 
-export const definitionFiles = (): ModelFile[] => {
+// TODO currently broken - types should be included from this lib as dev dependency
+export const metaTypingsFiles = (): ModelFile[] => {
     // NOTE this file is in build in lib dir not in src !
     const srcDir = path.resolve(__dirname, '..')
 

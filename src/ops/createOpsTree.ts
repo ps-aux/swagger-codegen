@@ -1,6 +1,6 @@
 import { SwaggerPaths } from 'src/swagger/types'
-import { ApiOperation, OpsTree } from 'src/model'
 import { Entry, unflatten } from 'src/util/flatten'
+import { ApiOperation, OpsTree } from './types'
 
 const getTagVal = (prefix: string, tags: string[]): string | null => {
     const ops = tags.filter(t => t.startsWith(`${prefix}.`))

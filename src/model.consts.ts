@@ -1,10 +1,10 @@
 import {
     AttrType,
-    EnumType,
     ListType,
     ObjectType,
     PrimitiveType
-} from './model'
+} from './attribute/types'
+import { EnumType } from './enum/types'
 
 export const PrimitiveTypes = {
     string: 'string',

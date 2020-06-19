@@ -1,63 +1,10 @@
-import { SwaggerApiSpec } from './swagger/types'
-import { Entity, OpsTree, EnumType } from './model'
+import { CreateModels } from './model-parsing/types'
+import { CreateModelFiles } from './files/types'
 
-export {
-    ListType,
-    EnumType,
-    PrimitiveTypeName,
-    PrimitiveType,
-    HigherOrderType,
-    ObjectType,
-    ApiOperation,
-    Entity,
-    Attribute,
-    AttrType,
-    ValidationRule
-} from './model'
-
-export type Api = {
-    version: string
-}
-
-export type HttpMethod = 'get' | 'put' | 'post' | 'delete'
-
-export type CodeFormatOpts = {
-    semicolons: boolean
-    singleQuote: boolean
-}
-
-export type GenerateModelFilesOpts = {
-    codeFormat: CodeFormatOpts
-    log?: (a: any) => void
-}
-
-export type ModelFile = {
-    content: string
-    name: string
-}
-
-export type ModelsParsingResult = {
-    models: Entity[]
-    ops: OpsTree
-    enums: EnumType<any>[]
-}
-
-// 2nd version
-
-export type CreateModels = (spec: SwaggerApiSpec) => ModelsParsingResult
-
-export type CreateModelFilesOpts = {
-    format: CodeFormatOpts
-    removeDefaults: boolean
-}
-
-export type CreateModelFiles = (
-    parsed: ModelsParsingResult,
-    apiInfo: {
-        version: string
-    },
-    opts: CreateModelFilesOpts
-) => ModelFile[]
+export * from './files/types'
+export * from './model-parsing/types'
+export * from './attribute/types'
 
 export declare const createModels: CreateModels
 export declare const createModelFiles: CreateModelFiles
+export { Entity } from './entity/types'

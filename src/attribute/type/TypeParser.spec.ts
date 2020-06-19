@@ -1,4 +1,4 @@
-import { createType } from 'src/model/attribute/type/TypeParser'
+import { createType } from 'src/attribute/type/TypeParser'
 
 it('works', () => {
     const t = createType(

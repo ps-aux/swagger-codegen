@@ -1,6 +1,6 @@
-import { ModelFile } from 'src/types'
 import path from 'path'
 import fs from 'fs'
+import { ModelFile } from '../../../files/types'
 
 export const definitionFiles = (): ModelFile[] => {
     // NOTE this file is in build in lib dir not in src !

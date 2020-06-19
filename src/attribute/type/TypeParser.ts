@@ -1,14 +1,15 @@
 import { SwaggerTypeInfoBearer } from 'src/swagger/types'
+
+import { ExtraProps } from 'src/attribute/extra/ExtraProps'
 import {
-    EnumType,
+    AttrType,
     HigherOrderType,
     ListType,
     ObjectType,
     PrimitiveType,
-    PrimitiveTypeName,
-    AttrType
-} from 'src/model'
-import { ExtraProps } from 'src/model/attribute/extra/ExtraProps'
+    PrimitiveTypeName
+} from '../types'
+import { EnumType } from '../../enum/types'
 
 const tryDetectPrimitiveType = (
     p: SwaggerTypeInfoBearer

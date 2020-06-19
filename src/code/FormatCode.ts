@@ -1,5 +1,5 @@
 import prettier from 'prettier'
-import { CodeFormatOpts } from 'src/types'
+import { CodeFormatOpts } from './types'
 
 export type FormatCode = (code: string) => string
 

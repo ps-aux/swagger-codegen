@@ -6,7 +6,7 @@ import {
 } from 'src/_old/model/EntityOperation'
 import { calcChecksumFromObj } from 'src/checksum'
 import { createFilterModel } from 'src/_old/filter/FilterModel'
-import { parseSwaggerModel } from 'src/model/entity/ModelParser'
+import { parseSwaggerModel } from 'src/model-parsing/ModelParser'
 import { toAttr } from 'src/_old/model/toAttribute'
 import { CreateModels, CustomTypeDef } from 'src/_old/types'
 

@@ -1,4 +1,3 @@
-import { Attribute, AttrType, EnumType, Entity } from 'src/model'
 import {
     isEnumType,
     isListType,
@@ -8,6 +7,9 @@ import {
 } from 'src/model.consts'
 import { Code } from 'src/code/types'
 import { arrayToObject } from 'src/util'
+import { EnumType } from '../enum/types'
+import { Attribute, AttrType } from '../attribute/types'
+import { Entity } from '../entity/types'
 
 const TsBuildInTypes = {
     string: 'string',

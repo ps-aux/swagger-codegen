@@ -1,6 +1,6 @@
 import { Model } from 'src/_old/model'
-import { Api } from 'src/types'
 import { printObject } from 'src/code/codePrint'
+import { Api } from '../../../files/types'
 
 export const indexFileContent = (models: Model[], apiInfo: Api): string => {
     const importStatement = name => `import {${name}} from './${name}'`

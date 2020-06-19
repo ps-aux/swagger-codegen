@@ -1,5 +1,5 @@
 import { readApiSpec } from 'src/_old/apispec/readApiSpec'
-import { createModels } from 'src/model/entity/createModels'
+import { createModels } from 'src/model-parsing/createModels'
 import path from 'path'
 import fs from 'fs'
 import { createModelFiles } from 'src/files/createModelFiles'

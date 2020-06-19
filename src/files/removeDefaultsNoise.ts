@@ -1,5 +1,6 @@
-import { Attribute, Entity } from 'src/model'
 import { clone } from 'ramda'
+import { Attribute } from '../attribute/types'
+import { Entity } from '../entity/types'
 
 const removeFromAttr = (a: Attribute) => {
     if (a.validationRules.length === 0) delete a.validationRules

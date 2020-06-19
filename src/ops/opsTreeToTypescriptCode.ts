@@ -1,5 +1,5 @@
 import { printObject } from 'src/code/codePrint'
-import { OpsTree } from 'src/model'
+import { OpsTree } from './types'
 
 export const opsTreeToTypescriptCode = (ops: OpsTree) => {
     const objStr = printObject(ops)

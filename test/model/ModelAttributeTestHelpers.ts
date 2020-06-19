@@ -1,4 +1,4 @@
-import { Attribute, AttrType, ValidationRule } from 'src/model'
+import { Attribute } from '../../src/attribute/types'
 
 export const dummyModelAttribute = (name: string): Attribute => ({
     name: name,

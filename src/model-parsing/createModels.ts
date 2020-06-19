@@ -1,10 +1,12 @@
 import {
     ParsedModelAttribute,
     parseSwaggerModel
-} from 'src/model/entity/ModelParser'
-import { Attribute, EnumType, Entity } from 'src/model'
+} from 'src/model-parsing/ModelParser'
 import { createOpsTree } from 'src/ops/createOpsTree'
-import { CreateModels } from 'src/types'
+import { EnumType } from '../enum/types'
+import { Attribute } from '../attribute/types'
+import { CreateModels } from './types'
+import { Entity } from '../entity/types'
 
 const toAttr = (p: ParsedModelAttribute, entityName: string): Attribute => ({
     name: p.name,

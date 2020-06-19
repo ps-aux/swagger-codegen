@@ -1,5 +1,5 @@
 import { SwaggerApiSpec, SwaggerOperation } from 'src/swagger/types'
-import { HttpMethod } from 'src/types'
+import { HttpMethod } from '../../ops/types'
 
 export type Endpoint = {
     path: string

@@ -3,7 +3,7 @@ import {
     modelToTypescriptTypeDef,
     typescriptTypeDefToCode
 } from 'src/code/modelToTypescripTypeDef'
-import { Entity } from 'src/types'
+import { Entity } from '../entity/types'
 
 it('works', () => {
     const model = {

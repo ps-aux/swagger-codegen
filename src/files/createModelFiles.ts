@@ -1,15 +1,17 @@
-import { Api, CodeFormatOpts, CreateModelFiles, ModelFile } from 'src/types'
 import { modelToTypescriptCode } from 'src/code/modelToTypescriptCode'
 import { CodeFormatter } from 'src/code/FormatCode'
 import { indexFileContent } from 'src/files/indexFile'
-import { definitionFiles } from 'src/files/definitionFiles'
 import { opsTreeToTypescriptCode } from 'src/ops/opsTreeToTypescriptCode'
-import { EnumType, Entity, OpsTree } from 'src/model'
 import { modelToTypescriptTypeCode } from 'src/code/modelToTypescripTypeDef'
 import {
     enumsToModelTsCode,
     enumsToTsTypesCode
-} from 'src/model/enum/enumTsCodePrinter'
+} from 'src/enum/enumTsCodePrinter'
+import { CodeFormatOpts } from '../code/types'
+import { EnumType } from '../enum/types'
+import { Api, CreateModelFiles, ModelFile } from './types'
+import { OpsTree } from '../ops/types'
+import { Entity } from '../entity/types'
 
 export const createModelFiles: CreateModelFiles = (result, api, opts) => {
     const files: ModelFile[] = []
@@ -24,8 +26,7 @@ export const createModelFiles: CreateModelFiles = (result, api, opts) => {
 
     const formatted = formatCode(files, opts.format)
 
-    // We cannot format ts files for now
-    definitionFiles().forEach(f => formatted.push(f))
+    // metaTypingsFiles().forEach(f => formatted.push(f))
     return formatted
 }
 

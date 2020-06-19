@@ -1,8 +1,3 @@
-export type Entity = {
-    name: string
-    attrs: { [key: string]: Attribute }
-}
-
 export type PrimitiveTypeName =
     | 'string'
     | 'integer'
@@ -47,15 +42,4 @@ export type Attribute = {
     required: boolean
     validationRules: ValidationRule[]
     extra: { [key: string]: any }
-}
-
-export type HttpMethod = 'get' | 'put' | 'post' | 'delete'
-
-export type ApiOperation = {
-    path: string
-    method: HttpMethod
-}
-
-export type OpsTree = {
-    [key: string]: ApiOperation | OpsTree
 }

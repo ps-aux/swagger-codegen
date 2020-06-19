@@ -1,6 +1,6 @@
-import { EnumType } from 'src/model'
 import { arrayToObject } from 'src/util'
 import { printObject } from 'src/code/codePrint'
+import { EnumType } from './types'
 
 export const enumsToModelTsCode = (enums: EnumType<any>[]): string => {
     const obj = arrayToObject('id', enums)

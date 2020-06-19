@@ -5,7 +5,7 @@ import {
     SwaggerOperation
 } from 'src/swagger/types'
 import { Endpoint, specEndpoints } from 'src/_old/model/Endpoint'
-import { HttpMethod } from 'src/types'
+import { HttpMethod } from '../../ops/types'
 
 const entityEndpoints = (defs: SwaggerDefinition[], spec: SwaggerApiSpec) => {
     const allEndpoints = specEndpoints(spec)

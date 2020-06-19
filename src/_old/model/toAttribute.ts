@@ -1,6 +1,6 @@
-import { HigherOrderType, AttrType } from 'src/model'
 import { Type as OldType, Attribute } from 'src/_old/model'
-import { ParsedModelAttribute } from 'src/model/entity/ModelParser'
+import { AttrType, HigherOrderType } from '../../attribute/types'
+import { ParsedModelAttribute } from '../../model-parsing/ModelParser'
 
 const convertType = (type: AttrType): OldType => {
     // @ts-ignore

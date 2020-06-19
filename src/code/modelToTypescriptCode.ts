@@ -1,7 +1,7 @@
 import { printObject } from 'src/code/codePrint'
-import { Entity } from 'src/model'
 import { removeDefaultsNoise } from 'src/files/removeDefaultsNoise'
 import { Code } from 'src/code/types'
+import { Entity } from '../entity/types'
 
 export const modelToTypescriptCode = (
     model: Entity,
