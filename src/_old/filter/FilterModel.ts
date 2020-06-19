@@ -77,6 +77,7 @@ export const createFilterModel = (
         // TODO move string to swagger type defs
         .filter(p => p.in === 'query')
         .map(p => {
+            // @ts-ignore - inaccurate definition of SwaggerTypeInfoBearer
             const type = createType(p, {})
             const name = p.name
 

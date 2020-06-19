@@ -8,7 +8,32 @@ it('works', () => {
             get: {
                 tags: ['operation.foo', 'opGroup.Foo'],
                 summary: 'wowo',
-                parameters: []
+                parameters: [
+                    {
+                        in: 'body',
+                        name: 'foo',
+                        description: 'any',
+                        required: true,
+                        schema: {
+                            $ref: '#/definitions/MyDef'
+                        }
+                    },
+                    {
+                        name: 'pathParam',
+                        in: 'path',
+                        description: 'any',
+                        required: true,
+                        type: 'integer',
+                        format: 'int64'
+                    },
+                    {
+                        name: 'queryParam',
+                        in: 'query',
+                        description: 'any',
+                        required: true,
+                        type: 'string'
+                    }
+                ]
             }
         },
         'api/x': {
@@ -40,15 +65,40 @@ it('works', () => {
         Foo: {
             foo: {
                 method: 'get',
-                path: 'api/a/{id}/b'
+                path: 'api/a/{id}/b',
+                params: {
+                    body: {
+                        name: 'object',
+                        of: 'MyDef'
+                    },
+                    path: {
+                        pathParam: {
+                            name: 'integer'
+                        }
+                    },
+                    query: {
+                        queryParam: {
+                            name: 'string'
+                        }
+                    }
+                }
             },
-            foo2: { method: 'get', path: 'api/x' }
+            foo2: {
+                method: 'get',
+                path: 'api/x',
+                params: {}
+            }
         },
-        globalFoo: { method: 'post', path: 'api/a' },
+        globalFoo: {
+            method: 'post',
+            path: 'api/a',
+            params: {}
+        },
         Bar: {
             bar: {
                 method: 'post',
-                path: 'api/b'
+                path: 'api/b',
+                params: {}
             }
         }
     }

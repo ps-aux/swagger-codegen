@@ -1,11 +1,16 @@
-export type SwaggerParameterType = 'header' | 'body' | 'query'
+export type SwaggerParameterType = 'header' | 'body' | 'query' | 'path'
 
-export type SwaggerParameter = SwaggerTypeInfoBearer & {
+export type SwaggerParameter = {
     name: string
     in: SwaggerParameterType
     required: boolean
-    type: string
-    enum: any
+    description: string
+    type?: string
+    enum?: any
+    schema?: {
+        $ref: string
+    }
+    format?: string
 }
 
 export type SwaggerOperation = {

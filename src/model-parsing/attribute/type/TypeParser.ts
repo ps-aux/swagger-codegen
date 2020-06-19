@@ -1,21 +1,21 @@
 import { SwaggerTypeInfoBearer } from 'src/swagger/types'
 
-import { ExtraProps } from 'src/attribute/extra/ExtraProps'
 import {
     AttrType,
+    ExtraProps,
     HigherOrderType,
     ListType,
     ObjectType,
     PrimitiveType,
     PrimitiveTypeName
-} from '../types'
-import { EnumType } from '../../enum/types'
+} from '../../../attribute/types'
+import { EnumType } from '../../../enum/types'
+import { defNameFromRef } from './defNameFromRef'
 
-const tryDetectPrimitiveType = (
-    p: SwaggerTypeInfoBearer
-): PrimitiveType | null => {
-    // Enums are special types for us
-    if (p.enum) return null
+export const tryDetectPrimitiveType = (p: {
+    type: string
+    format?: string
+}): PrimitiveType | null => {
     let name: PrimitiveTypeName | null = null
 
     if (p.format === 'date-time') name = 'date'
@@ -31,8 +31,6 @@ const tryDetectPrimitiveType = (
 
     return null
 }
-
-const defNameFromRef = ref => ref.split('/')[2]
 
 const tryDetectHigherOrderType = (
     p: SwaggerTypeInfoBearer,
@@ -84,8 +82,11 @@ export const createType = (
     info: SwaggerTypeInfoBearer,
     extra: ExtraProps
 ): AttrType | null => {
-    const primitive = tryDetectPrimitiveType(info)
-    if (primitive) return primitive
+    // Enum are higher order types
+    if (!info.enum) {
+        const primitive = tryDetectPrimitiveType(info)
+        if (primitive) return primitive
+    }
 
     const higherOrder = tryDetectHigherOrderType(info, extra)
     if (higherOrder) return higherOrder

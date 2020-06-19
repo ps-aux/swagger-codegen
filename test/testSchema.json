@@ -13,13 +13,25 @@
           "Bar",
           "opGroup.Bar",
           "operation.detail"
-        ]
+        ],
+        "parameters": []
       },
       "put": {
         "tags": [
           "Bar",
           "opGroup.Bar",
           "operation.update"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "foo",
+            "description": "any",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/InvoicingDetails"
+            }
+          }
         ]
       }
     },
@@ -46,13 +58,15 @@
           "Foo",
           "opGroup.Foo",
           "operation.create"
-        ]
+        ],
+        "parameters": []
       },
       "put": {
         "tags": [
           "Foo",
           "operation.foo"
-        ]
+        ],
+        "parameters": []
       },
       "get": {
         "tags": [

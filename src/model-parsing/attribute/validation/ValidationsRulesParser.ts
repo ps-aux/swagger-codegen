@@ -1,5 +1,5 @@
 import { SwaggerDefinitionProperty } from 'src/swagger/types'
-import { ValidationRule } from '../types'
+import { ValidationRule } from '../../../attribute/types'
 
 export const parseValidationRules = (
     prop: SwaggerDefinitionProperty

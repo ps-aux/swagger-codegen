@@ -1,6 +1,7 @@
-import { SwaggerPaths } from 'src/swagger/types'
+import { SwaggerOperation, SwaggerPath, SwaggerPaths } from 'src/swagger/types'
 import { Entry, unflatten } from 'src/util/flatten'
-import { ApiOperation, OpsTree } from './types'
+import { ApiOperation, HttpMethod, OpsTree } from './types'
+import { parseParams } from './parameter/parseParams'
 
 const getTagVal = (prefix: string, tags: string[]): string | null => {
     const ops = tags.filter(t => t.startsWith(`${prefix}.`))
@@ -26,21 +27,44 @@ const getOperationName = (tags: string[]): string | null => {
     return opTag
 }
 
+const toApiOperation = (
+    path: string,
+    method: string,
+    op: SwaggerOperation
+): ApiOperation => {
+    const params = op.parameters
+
+    if (!params) console.log(path, method, op, 'doe snot have params')
+    return {
+        path,
+        method: method as HttpMethod, // TODO handle in typesystem somehow ?,
+        params: parseParams(params)
+    }
+}
+
+const getNamedOperations = (
+    path: string,
+    sp: SwaggerPath
+): [string, ApiOperation][] => {
+    const processed: [string | null, ApiOperation][] = Object.entries(sp).map(
+        ([method, op]) => [
+            getOperationName(op!.tags),
+            toApiOperation(path, method, op!)
+        ]
+    )
+
+    // Filter out unnamed ones
+    // @ts-ignore
+    return processed.filter(([name]) => !!name)
+}
+
 /**
  * TODO prevent overwriting in case of conflicts in path - throw exception instead
  */
 export const createOpsTree = (paths: SwaggerPaths): OpsTree => {
-    const res: [string, ApiOperation][] = Object.entries(paths)
-        .flatMap(([path, ops]) => {
-            return Object.entries(ops).map(
-                ([method, op]) =>
-                    [getOperationName(op!.tags), { method, path }] as [
-                        string,
-                        ApiOperation
-                    ]
-            )
-        })
-        .filter(([name]) => !!name)
+    const res = Object.entries(paths).flatMap(([path, swaggerPath]) =>
+        getNamedOperations(path, swaggerPath)
+    )
 
     const entries: Entry[] = res.map(([name, val]) => [name.split('.'), val])
 

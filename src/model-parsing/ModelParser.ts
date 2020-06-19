@@ -1,5 +1,5 @@
 import { SwaggerDefinition, SwaggerDefinitionProperty } from 'src/swagger/types'
-import { parseSwaggerProperty } from 'src/attribute/AttributeParser'
+import { parseSwaggerProperty } from 'src/model-parsing/attribute/AttributeParser'
 import { isEnumType } from 'src/model.consts'
 import { AttrType, ValidationRule } from '../attribute/types'
 import { EnumType } from '../enum/types'

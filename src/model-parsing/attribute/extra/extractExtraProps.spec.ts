@@ -1,4 +1,4 @@
-import { extractExtraProps } from 'src/attribute/extra/extractExtraProps'
+import { extractExtraProps } from 'src/model-parsing/attribute/extra/extractExtraProps'
 import { SwaggerDefinitionProperty } from 'src/swagger/types'
 
 it('works', () => {

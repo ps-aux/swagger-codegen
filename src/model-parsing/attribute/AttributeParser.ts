@@ -1,8 +1,8 @@
 import { SwaggerDefinitionProperty } from 'src/swagger/types'
-import { extractExtraProps } from 'src/attribute/extra/extractExtraProps'
-import { createType } from 'src/attribute/type/TypeParser'
-import { parseValidationRules } from 'src/attribute/validation/ValidationsRulesParser'
-import { AttrType, ValidationRule } from './types'
+import { extractExtraProps } from 'src/model-parsing/attribute/extra/extractExtraProps'
+import { createType } from 'src/model-parsing/attribute/type/TypeParser'
+import { parseValidationRules } from 'src/model-parsing/attribute/validation/ValidationsRulesParser'
+import { AttrType, ValidationRule } from '../../attribute/types'
 
 export type PropertyParsingResult = {
     type: AttrType | null

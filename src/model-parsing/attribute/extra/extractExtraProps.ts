@@ -1,5 +1,5 @@
-import { ExtraProps } from 'src/attribute/extra/ExtraProps'
 import { SwaggerDefinitionProperty } from 'src/swagger/types'
+import { ExtraProps } from '../../../attribute/types'
 
 const regex = /(x-)(.*)/
 

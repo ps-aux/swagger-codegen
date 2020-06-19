@@ -43,3 +43,4 @@ export type Attribute = {
     validationRules: ValidationRule[]
     extra: { [key: string]: any }
 }
+export type ExtraProps = { [key: string]: any }
