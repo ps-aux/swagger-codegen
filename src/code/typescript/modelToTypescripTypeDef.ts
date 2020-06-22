@@ -7,11 +7,12 @@ import {
 } from 'src/model.consts'
 import { Code } from 'src/code/types'
 import { arrayToObject } from 'src/util'
-import { EnumType } from '../enum/types'
-import { Attribute, AttrType } from '../attribute/types'
-import { Entity } from '../entity/types'
+import { EnumType } from '../../enum/types'
+import { Attribute, AttrType } from '../../attribute/types'
+import { Entity } from '../../entity/types'
+import { mapObject } from './utils'
 
-const TsBuildInTypes = {
+export const TsBuildInTypes = {
     string: 'string',
     boolean: 'boolean',
     number: 'number',
@@ -91,21 +92,6 @@ const attrTypeToTsType = (attrType: AttrType): TsTypeName => {
     }
 
     if (!r) r = { name: TsBuildInTypes.any }
-    return r
-    // throw new Error(`Could not map ${attrType} to TS type`)
-}
-
-const mapObject = <A, B, Obj1 = any>(
-    obj: Obj1,
-    map: (a: A) => B
-): { [key in keyof Obj1]: B } => {
-    const r = {}
-
-    Object.entries(obj).forEach(([key, val]) => {
-        r[key] = map(val)
-    })
-
-    // @ts-ignore
     return r
 }
 

@@ -14,8 +14,8 @@ export const PrimitiveTypes = {
     date: 'date'
 }
 
-export const isPrimitiveType = (type: AttrType): type is PrimitiveType =>
-    type.name in PrimitiveTypes
+export const isPrimitiveType = (obj: any): obj is PrimitiveType =>
+    obj.name in PrimitiveTypes
 
 const ObjectTypeName = 'object'
 

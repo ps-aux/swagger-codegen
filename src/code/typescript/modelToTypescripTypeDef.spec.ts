@@ -2,8 +2,8 @@ import { dummyModelAttribute } from 'test/model/ModelAttributeTestHelpers'
 import {
     modelToTypescriptTypeDef,
     typescriptTypeDefToCode
-} from 'src/code/modelToTypescripTypeDef'
-import { Entity } from '../entity/types'
+} from 'src/code/typescript/modelToTypescripTypeDef'
+import { Entity } from '../../entity/types'
 
 it('works', () => {
     const model = {

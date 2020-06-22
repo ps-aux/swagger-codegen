@@ -1,8 +1,8 @@
-import { modelToTypescriptCode } from 'src/code/modelToTypescriptCode'
+import { modelToTypescriptCode } from 'src/code/typescript/modelToTypescriptCode'
 import { CodeFormatter } from 'src/code/FormatCode'
 import { indexFileContent } from 'src/files/indexFile'
 import { opsTreeToTypescriptCode } from 'src/ops/opsTreeToTypescriptCode'
-import { modelToTypescriptTypeCode } from 'src/code/modelToTypescripTypeDef'
+import { modelToTypescriptTypeCode } from 'src/code/typescript/modelToTypescripTypeDef'
 import {
     enumsToModelTsCode,
     enumsToTsTypesCode
