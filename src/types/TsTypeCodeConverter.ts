@@ -39,7 +39,6 @@ export class TsTypeCodeConverter {
     toCode = (name: string, def: StructureTsType): Code => {
         const refs: TsTypeReference[] = []
         findRefTypes(def, refs, {})
-        console.log('refs', refs, def)
         const imports = this.importsCode(refs)
         return `
         ${imports}
