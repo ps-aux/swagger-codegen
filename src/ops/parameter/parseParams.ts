@@ -1,8 +1,9 @@
 import { OpParameterModel, PrimitiveParamDict } from './types'
 import { SwaggerParameter } from '../../swagger/types'
-import { ObjectType } from '../../types'
+import { AttrType, ObjectType } from '../../types'
 import { defNameFromRef } from '../../model-parsing/attribute/type/defNameFromRef'
 import { tryDetectPrimitiveType } from '../../model-parsing/attribute/type/TypeParser'
+import set from 'lodash/set'
 
 const toObjectType = (bodyParams: SwaggerParameter[]): ObjectType | null => {
     if (bodyParams.length > 1) throw new Error('Body can max  one param')
@@ -54,8 +55,8 @@ const queryParams = (params: SwaggerParameter[]): PrimitiveParamDict | null => {
     const res: PrimitiveParamDict = {}
 
     params.forEach(p => {
-        if (p.name.includes('.'))
-            throw new Error('Only root params (no paths) are supported for now')
+        // if (p.name.includes('.'))
+        //     throw new Error('Only root params (no paths) are supported for now')
         if (p.in !== 'query')
             throw new Error(
                 `Illegal state. Bad param type. ${JSON.stringify(p)}`
@@ -63,16 +64,37 @@ const queryParams = (params: SwaggerParameter[]): PrimitiveParamDict | null => {
 
         if (!p.type) throw new Error('Query param must have specified type')
 
-        const type = tryDetectPrimitiveType({
+        let type: AttrType | null = tryDetectPrimitiveType({
             type: p.type,
             format: p.format
         })
+
+        if (!type) {
+            if (p.type === 'array') {
+                const itemType = tryDetectPrimitiveType({
+                    type: p.items!!.type,
+                    format: p.format
+                })
+
+                if (!itemType)
+                    throw new Error(
+                        `Could not detect item type for ${JSON.stringify(p)}`
+                    )
+
+                type = {
+                    name: 'list',
+                    of: itemType
+                }
+            }
+        }
 
         if (!type)
             throw new Error(
                 `Failed to detect type from query param ${JSON.stringify(p)}`
             )
-        res[p.name] = type
+        // res[p.name] = type
+
+        set(res, p.name, type)
     })
 
     return res

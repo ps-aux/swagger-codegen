@@ -28,7 +28,8 @@
     "flat": "^5.0.0",
     "prettier": "^1.17.1",
     "ramda": "^0.27.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "underscore": "^1.10.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

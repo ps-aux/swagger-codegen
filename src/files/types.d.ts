@@ -10,7 +10,7 @@ export type GenerateModelFilesOpts = {
     log?: (a: any) => void
 }
 
-export type ModelFile = {
+export type CodeFile = {
     content: string
     name: string
 }
@@ -24,4 +24,4 @@ export type CreateModelFiles = (
         format: CodeFormatOpts
         removeDefaults: boolean
     }
-) => ModelFile[]
+) => CodeFile[]

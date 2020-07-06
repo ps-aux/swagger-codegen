@@ -1,24 +1,24 @@
 export type TsPrimitiveType = 'string' | 'boolean' | 'number' | 'Date'
 
-export type TsNativeTypeOption = TsPrimitiveType | 'array'
+export type NativeTsTypeValue = TsPrimitiveType | 'array'
 
-export type TsNativeType = {
+export type NativeTsType = {
     __meta: {
         type: 'ts/native'
         nullable: boolean
-        genericFor?: MyTsType
+        genericFor?: TsType
     }
-    value: TsNativeTypeOption
+    value: NativeTsTypeValue
 }
 
-export type TsStructureTypeValue = { [key: string]: MyTsType }
+export type StructureTsTypeValue = { [key: string]: TsType }
 
-export type TsStructureType = {
+export type StructureTsType = {
     __meta: {
         type: 'ts/structure'
         nullable: boolean
     }
-    value: TsStructureTypeValue
+    value: StructureTsTypeValue
 }
 
 export type TsTypeReference = {
@@ -26,31 +26,31 @@ export type TsTypeReference = {
     name: string
 }
 
-export type TsReferenceType = {
+export type ReferenceTsType = {
     __meta: {
         type: 'ts/reference'
         nullable: boolean
-        genericFor?: MyTsType
+        genericFor?: TsType
     }
     value: TsTypeReference
 }
 
-export type MyTsType = TsNativeType | TsStructureType | TsReferenceType
+export type TsType = NativeTsType | StructureTsType | ReferenceTsType
 
-export const isNativeType = (obj: MyTsType): obj is TsNativeType =>
+export const isNativeType = (obj: TsType): obj is NativeTsType =>
     obj.__meta.type === 'ts/native'
 
-export const isStructureType = (obj: MyTsType): obj is TsStructureType =>
+export const isStructureType = (obj: TsType): obj is StructureTsType =>
     obj.__meta.type === 'ts/structure'
 
-export const isReferenceType = (obj: MyTsType): obj is TsNativeType =>
+export const isReferenceType = (obj: TsType): obj is ReferenceTsType =>
     obj.__meta.type === 'ts/reference'
 
 export const nativeType = (
-    option: TsNativeTypeOption,
+    option: NativeTsTypeValue,
     nullable = false,
-    genericFor?: MyTsType
-): TsNativeType => ({
+    genericFor?: TsType
+): NativeTsType => ({
     __meta: {
         type: 'ts/native',
         nullable,
@@ -60,9 +60,9 @@ export const nativeType = (
 })
 
 export const structureType = (
-    value: TsStructureTypeValue,
+    value: StructureTsTypeValue,
     nullable = false
-): TsStructureType => ({
+): StructureTsType => ({
     __meta: {
         type: 'ts/structure',
         nullable
@@ -73,10 +73,19 @@ export const structureType = (
 export const referenceType = (
     value: TsTypeReference,
     nullable = false
-): TsReferenceType => ({
+): ReferenceTsType => ({
     __meta: {
         type: 'ts/reference',
         nullable
     },
     value
 })
+
+export const TsBuildInTypes = {
+    string: 'string',
+    boolean: 'boolean',
+    number: 'number',
+    date: 'Date',
+    any: 'any',
+    object: 'object'
+}

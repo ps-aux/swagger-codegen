@@ -3,7 +3,7 @@ import { CodeFormatter } from 'src/code/FormatCode'
 import { indexFileContent } from 'src/_old/model/files/indexFile'
 import { definitionFiles } from 'src/_old/model/files/definitionFiles'
 import { GenerateModelFiles } from 'src/_old/types'
-import { ModelFile } from '../../../files/types'
+import { CodeFile } from '../../../files/types'
 import { CodeFormatOpts } from '../../../code/types'
 
 export const generateModelFiles: GenerateModelFiles = (
@@ -17,7 +17,7 @@ export const generateModelFiles: GenerateModelFiles = (
             return undefined
         })
 
-    const files: ModelFile[] = models.map(m => {
+    const files: CodeFile[] = models.map(m => {
         log(`Generating ${m.entityName} model`)
 
         const fileName = m.entityName + '.ts'
@@ -44,7 +44,7 @@ export const generateModelFiles: GenerateModelFiles = (
     return formatted
 }
 
-const formatCode = (files: ModelFile[], opts: CodeFormatOpts): ModelFile[] => {
+const formatCode = (files: CodeFile[], opts: CodeFormatOpts): CodeFile[] => {
     const formatCode = CodeFormatter(opts)
     files.forEach(f => {
         f.content = formatCode(f.content)
