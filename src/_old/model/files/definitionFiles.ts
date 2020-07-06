@@ -1,8 +1,8 @@
 import path from 'path'
 import fs from 'fs'
-import { ModelFile } from '../../../files/types'
+import { CodeFile } from '../../../files/types'
 
-export const definitionFiles = (): ModelFile[] => {
+export const definitionFiles = (): CodeFile[] => {
     // NOTE this file is in build in lib dir not in src !
     const srcDir = path.resolve(__dirname, '../../')
 

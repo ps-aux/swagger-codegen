@@ -1,6 +1,6 @@
 import { SwaggerApiSpec } from 'src/swagger/types'
 import { Model } from 'src/_old/model'
-import { GenerateModelFilesOpts, ModelFile } from '../files/types'
+import { GenerateModelFilesOpts, CodeFile } from '../files/types'
 
 export type GenerateModelFiles = (
     models: Model[],
@@ -8,7 +8,7 @@ export type GenerateModelFiles = (
         version: string
     },
     opts: GenerateModelFilesOpts
-) => ModelFile[]
+) => CodeFile[]
 
 export type CustomTypeDef = {
     name: string

@@ -11,7 +11,7 @@ import {
     Entity,
     CreateModels,
     CreateModelFiles,
-    ModelFile
+    CodeFile
 } from 'src/types'
 
 type Test = {
@@ -35,6 +35,6 @@ type Test = {
     files: {
         CreateModels: CreateModels
         CreateModelFiles: CreateModelFiles
-        ModelFile: ModelFile
+        ModelFile: CodeFile
     }
 }

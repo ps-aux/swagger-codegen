@@ -1,24 +1,24 @@
-import { modelToTypescriptCode } from 'src/code/modelToTypescriptCode'
+import { modelToTypescriptCode } from 'src/code/typescript/modelToTypescriptCode'
 import { CodeFormatter } from 'src/code/FormatCode'
 import { indexFileContent } from 'src/files/indexFile'
 import { opsTreeToTypescriptCode } from 'src/ops/opsTreeToTypescriptCode'
-import { modelToTypescriptTypeCode } from 'src/code/modelToTypescripTypeDef'
 import {
     enumsToModelTsCode,
     enumsToTsTypesCode
 } from 'src/enum/enumTsCodePrinter'
 import { CodeFormatOpts } from '../code/types'
 import { EnumType } from '../enum/types'
-import { Api, CreateModelFiles, ModelFile } from './types'
+import { Api, CreateModelFiles, CodeFile } from './types'
 import { OpsTree } from '../ops/types'
 import { Entity } from '../entity/types'
+import { TsTypeFileCreator } from '../types/TsTypeFileCreator'
 
 export const createModelFiles: CreateModelFiles = (result, api, opts) => {
-    const files: ModelFile[] = []
+    const files: CodeFile[] = []
 
     const { models, enums, ops } = result
 
-    files.push(...modelFiles(models, !!opts.removeDefaults))
+    files.push(...modelFiles(models, opts.removeDefaults))
     files.push(...tsTypesFiles(models, enums))
     files.push(indexFile(models, api))
     files.push(apiOpsFile(ops))
@@ -30,7 +30,7 @@ export const createModelFiles: CreateModelFiles = (result, api, opts) => {
     return formatted
 }
 
-const modelFiles = (models: Entity[], removeDefaults: boolean): ModelFile[] =>
+const modelFiles = (models: Entity[], removeDefaults: boolean): CodeFile[] =>
     models.map(m => {
         const code = modelToTypescriptCode(m, removeDefaults)
 
@@ -40,15 +40,10 @@ const modelFiles = (models: Entity[], removeDefaults: boolean): ModelFile[] =>
         }
     })
 
-const tsTypesFiles = (models: Entity[], enums: EnumType<any>[]): ModelFile[] =>
-    models.map(m => {
-        const code = modelToTypescriptTypeCode(m, enums)
-
-        return {
-            name: m.name + '.type.ts',
-            content: code
-        }
-    })
+const tsTypesFiles = (models: Entity[], enums: EnumType<any>[]): CodeFile[] => {
+    const c = new TsTypeFileCreator(enums)
+    return models.map(c.for)
+}
 
 const indexFile = (models: Entity[], apiInfo: Api) => ({
     name: 'index.ts',
@@ -60,7 +55,7 @@ const apiOpsFile = (opsTree: OpsTree) => ({
     content: opsTreeToTypescriptCode(opsTree)
 })
 
-const enumFiles = (enums: EnumType<any>[]): ModelFile[] => {
+const enumFiles = (enums: EnumType<any>[]): CodeFile[] => {
     enums.forEach(e => {
         if (!e.id)
             throw new Error(
@@ -81,7 +76,7 @@ const enumFiles = (enums: EnumType<any>[]): ModelFile[] => {
     ]
 }
 
-const formatCode = (files: ModelFile[], opts: CodeFormatOpts): ModelFile[] => {
+const formatCode = (files: CodeFile[], opts: CodeFormatOpts): CodeFile[] => {
     const formatCode = CodeFormatter(opts)
     files.forEach(f => {
         f.content = formatCode(f.content)

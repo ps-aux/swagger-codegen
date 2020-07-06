@@ -1,16 +1,21 @@
 export type SwaggerParameterType = 'header' | 'body' | 'query' | 'path'
 
+export type SwaggerParamType = 'array' | 'object' | 'string' | 'integer'
 export type SwaggerParameter = {
     name: string
     in: SwaggerParameterType
     required: boolean
     description: string
-    type?: string
+    // TODO why optional ?
+    type?: SwaggerParamType
     enum?: any
     schema?: {
         $ref: string
     }
     format?: string
+    items?: {
+        type: SwaggerParameterType
+    }
 }
 
 export type SwaggerOperation = {
