@@ -1,7 +1,6 @@
 import { SwaggerOperation, SwaggerPath, SwaggerPaths } from 'src/swagger/types'
 import { Entry, unflatten } from 'src/util/flatten'
 import { ApiOperation, HttpMethod, OpsTree } from './types'
-import { parseParams } from './parameter/parseParams'
 
 const getTagVal = (prefix: string, tags: string[]): string | null => {
     const ops = tags.filter(t => t.startsWith(`${prefix}.`))
@@ -37,8 +36,8 @@ const toApiOperation = (
     if (!params) console.log(path, method, op, 'doe snot have params')
     return {
         path,
-        method: method as HttpMethod, // TODO handle in typesystem somehow ?,
-        params: parseParams(params)
+        method: method as HttpMethod // TODO handle in typesystem somehow ?,
+        // params: parseParams(params)
     }
 }
 

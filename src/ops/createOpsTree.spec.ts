@@ -65,7 +65,8 @@ it('works', () => {
         Foo: {
             foo: {
                 method: 'get',
-                path: 'api/a/{id}/b',
+                path: 'api/a/{id}/b'
+                /*
                 params: {
                     body: {
                         name: 'object',
@@ -82,23 +83,24 @@ it('works', () => {
                         }
                     }
                 }
+*/
             },
             foo2: {
                 method: 'get',
-                path: 'api/x',
-                params: {}
+                path: 'api/x'
+                // params: {}
             }
         },
         globalFoo: {
             method: 'post',
-            path: 'api/a',
-            params: {}
+            path: 'api/a'
+            // params: {}
         },
         Bar: {
             bar: {
                 method: 'post',
-                path: 'api/b',
-                params: {}
+                path: 'api/b'
+                // params: {}
             }
         }
     }

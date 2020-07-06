@@ -2,7 +2,6 @@
 import { generateModelFiles } from 'src/_old/model/files/generateModelFiles'
 import path from 'path'
 import fs from 'fs'
-import rimraf from 'rimraf'
 import { createModels } from 'src/_old/model/createModel'
 import { readApiSpec } from 'src/_old/apispec/readApiSpec'
 import { CustomTypeDef } from 'src/_old/types'
@@ -31,7 +30,9 @@ const calcCustomTypeDefs = (strPath): CustomTypeDef[] => {
 const customTypeDefs = calcCustomTypeDefs(args[4])
 
 console.log('Clearing dir')
-rimraf.sync(targetDir)
+fs.rmdirSync(targetDir, {
+    recursive: true
+})
 fs.mkdirSync(targetDir)
 
 const log = console.log
