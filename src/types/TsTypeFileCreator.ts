@@ -20,7 +20,7 @@ export class TsTypeFileCreator {
         const tsType = this.tsTypeCreator.fromEntity(entity)
 
         return {
-            name: name + '.model.ts',
+            name: name + '.type.ts',
             content: this.codeConverter.toCode(name, tsType)
         }
     }
