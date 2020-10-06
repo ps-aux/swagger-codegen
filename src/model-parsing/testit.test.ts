@@ -1,8 +1,16 @@
-import { readApiSpec } from 'src/_old/apispec/readApiSpec'
 import { createModels } from 'src/model-parsing/createModels'
 import path from 'path'
 import fs from 'fs'
 import { createModelFiles } from 'src/files/createModelFiles'
+import { SwaggerApiSpec } from 'src/swagger/types'
+
+const readApiSpec = (path: string): SwaggerApiSpec => {
+    const apiSpec = JSON.parse(
+        fs.readFileSync(path).toString()
+    ) as SwaggerApiSpec
+
+    return apiSpec
+}
 
 it('test', () => {
     // eslint-disable-next-line no-path-concat
