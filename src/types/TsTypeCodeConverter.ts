@@ -20,15 +20,11 @@ const findRefTypes = (
             refs.push(ref)
             uniqCheck[ref.id] = true
         }
-    }
-
-    if (isStructureType(t)) {
+    } else if (isStructureType(t)) {
         Object.values(t.value).forEach(val =>
             findRefTypes(val, refs, uniqCheck)
         )
-    }
-
-    if (isNativeType(t) && t.value === 'array') {
+    } else if (isNativeType(t) && t.value === 'array') {
         findRefTypes(t.__meta.genericFor!, refs, uniqCheck)
     }
 }

@@ -80,10 +80,17 @@ const attrTypeToTsType = (t: AttrType, optional: boolean): TsType => {
     }
 
     if (isEnumType(t)) {
+        const id = t.id
+        if (!id)
+            throw new Error(
+                `Cannot generate TS type from enum without an id: ${JSON.stringify(
+                    t
+                )}`
+            )
         res = referenceType(
             {
-                id: t.id,
-                name: t.id
+                id: id,
+                name: id
             },
             optional
         )

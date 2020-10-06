@@ -1,5 +1,4 @@
 import {
-    ParsedModelAttribute,
     parseSwaggerModel,
     UnparsedModelAttribute
 } from 'src/model-parsing/ModelParser'
@@ -18,6 +17,18 @@ const def = {
         },
         unknown: {
             type: '--blabla'
+        },
+        enum: {
+            type: 'string',
+            enum: ['Foo', 'Bar'],
+            'x-enumId': 'MyEnum'
+        },
+        enumList: {
+            type: 'array',
+            items: {
+                type: 'string',
+                enum: ['A', 'B']
+            }
         }
     },
     title: 'Bar'
@@ -25,9 +36,7 @@ const def = {
 it('works', () => {
     const res = parseSwaggerModel(def)
 
-    const parsed = res.parsed
-
-    expect(parsed).toMatchObject([
+    expect(res.parsed).toMatchObject([
         {
             name: 'number',
             type: {
@@ -39,7 +48,7 @@ it('works', () => {
                 foo: 'bar'
             },
             originalDef: def.properties.number
-        } as ParsedModelAttribute,
+        },
         {
             name: 'name',
             required: false,
@@ -49,7 +58,29 @@ it('works', () => {
             validationRules: [],
             extra: {},
             originalDef: def.properties.name
-        } as ParsedModelAttribute
+        },
+        {
+            name: 'enum',
+            required: false,
+            extra: { enumId: 'MyEnum' },
+            validationRules: [],
+            type: { name: 'enum', id: 'MyEnum', of: ['Foo', 'Bar'] },
+            originalDef: def.properties.enum
+        },
+        {
+            name: 'enumList',
+            required: false,
+            extra: {},
+            validationRules: [],
+            originalDef: def.properties.enumList,
+            type: {
+                name: 'list',
+                of: {
+                    name: 'enum',
+                    of: ['A', 'B']
+                }
+            }
+        }
     ])
 
     const unparsed = res.unparsed
@@ -62,5 +93,9 @@ it('works', () => {
             extra: {},
             originalDef: def.properties.unknown
         } as UnparsedModelAttribute
+    ])
+
+    expect(res.enums).toMatchObject([
+        { name: 'enum', id: 'MyEnum', of: ['Foo', 'Bar'] }
     ])
 })

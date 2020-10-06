@@ -1,5 +1,5 @@
 import { createModels } from 'src/model-parsing/createModels'
-import path from 'path'
+import Path from 'path'
 import fs from 'fs'
 import { createModelFiles } from 'src/files/createModelFiles'
 import { SwaggerApiSpec } from 'src/swagger/types'
@@ -10,6 +10,19 @@ const readApiSpec = (path: string): SwaggerApiSpec => {
     ) as SwaggerApiSpec
 
     return apiSpec
+}
+
+const expectedDir = Path.resolve(__dirname, '../../test/expected')
+const outputDir = Path.resolve(__dirname, '../../tst')
+
+const expectSameContent = fileName => {
+    const content = fs
+        .readFileSync(Path.resolve(outputDir, fileName))
+        .toString()
+    const expectedContent = fs
+        .readFileSync(Path.resolve(expectedDir, fileName))
+        .toString()
+    expect(content).toEqual(expectedContent)
 }
 
 it('test', () => {
@@ -37,7 +50,19 @@ it('test', () => {
 
     if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir)
     files.forEach(f => {
-        const p = path.join(targetDir, f.name)
+        const p = Path.join(targetDir, f.name)
         fs.writeFileSync(p, f.content)
     })
+
+    // TODO Typecheck files !!
+    expectSameContent('apiOps.ts')
+    expectSameContent('Bar.model.ts')
+    expectSameContent('Bar.type.ts')
+    expectSameContent('enums.model.ts')
+    expectSameContent('enums.type.ts')
+    expectSameContent('Foo.model.ts')
+    expectSameContent('Foo.type.ts')
+    expectSameContent('index.ts')
+    expectSameContent('WithNoProperties.model.ts')
+    expectSameContent('WithNoProperties.type.ts')
 })

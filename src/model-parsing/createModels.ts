@@ -46,7 +46,7 @@ export const createModels: CreateModels = apiSpec => {
 
             if (res.unparsed.length > 0)
                 throw new Error(
-                    'Coudl not parse definition:\n ' + JSON.stringify(def)
+                    'Could not parse definition:\n ' + JSON.stringify(def)
                 )
 
             const attrs: { [key: string]: Attribute } = {}

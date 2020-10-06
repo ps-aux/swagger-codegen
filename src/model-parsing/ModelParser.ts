@@ -44,14 +44,13 @@ export const parseSwaggerModel = (
             validationRules: p.validationRules,
             originalDef: val
         }
-
         if (p.couldNotParseType) {
             unparsed.push(attr)
-        } else {
-            const type = p.type!
-            parsed.push({ ...attr, type })
-            if (isEnumType(type)) enums.push(type)
+            return
         }
+        const type = p.type!
+        parsed.push({ ...attr, type })
+        if (isEnumType(type)) enums.push(type)
     })
 
     return {
