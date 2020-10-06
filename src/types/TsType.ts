@@ -2,6 +2,10 @@ export type TsPrimitiveType = 'string' | 'boolean' | 'number' | 'Date'
 
 export type NativeTsTypeValue = TsPrimitiveType | 'array'
 
+// recursive defs
+// eslint-disable-next-line no-use-before-define
+export type TsType = NativeTsType | StructureTsType | ReferenceTsType
+
 export type NativeTsType = {
     __meta: {
         type: 'ts/native'
@@ -34,8 +38,6 @@ export type ReferenceTsType = {
     }
     value: TsTypeReference
 }
-
-export type TsType = NativeTsType | StructureTsType | ReferenceTsType
 
 export const isNativeType = (obj: TsType): obj is NativeTsType =>
     obj.__meta.type === 'ts/native'

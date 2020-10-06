@@ -14,6 +14,7 @@ import {
     CodeFile
 } from 'src/types'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
 type Test = {
     attribute: {
         Attribute: Attribute

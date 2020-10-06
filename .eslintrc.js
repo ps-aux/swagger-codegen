@@ -27,6 +27,7 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': [2, { args: 'none' }],
         '@typescript-eslint/indent': 'off',
         '@typescript-eslint/ban-ts-ignore': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/explicit-member-accessibility': 'off'
     },
     overrides: [

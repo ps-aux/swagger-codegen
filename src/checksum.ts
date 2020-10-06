@@ -6,7 +6,7 @@ export const calcChecksum = (str: string) =>
         .update(str)
         .digest('hex')
 
-export const calcChecksumFromObj = (obj: {}) =>
+export const calcChecksumFromObj = (obj: Record<string, unknown>) =>
     crypto
         .createHash('md5')
         .update(JSON.stringify(obj))

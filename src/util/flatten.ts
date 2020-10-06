@@ -47,7 +47,7 @@ const ensureNoConflits = (paths: Path[]) => {
     })
 }
 
-export const unflatten = (entries: Entry[]): object => {
+export const unflatten = (entries: Entry[]): Record<string, unknown> => {
     const input = {}
 
     ensureNoConflits(entries.map(e => e[0]))

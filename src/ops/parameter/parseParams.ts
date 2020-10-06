@@ -72,7 +72,7 @@ const queryParams = (params: SwaggerParameter[]): PrimitiveParamDict | null => {
         if (!type) {
             if (p.type === 'array') {
                 const itemType = tryDetectPrimitiveType({
-                    type: p.items!!.type,
+                    type: p.items!.type,
                     format: p.format
                 })
 

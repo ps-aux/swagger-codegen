@@ -15,6 +15,8 @@ export type HigherOrderType<T> = {
     of: T
 }
 
+export type AttrType = PrimitiveType | HigherOrderType<any>
+
 export type ObjectType = HigherOrderType<string> & {
     name: 'object'
 }
@@ -27,8 +29,6 @@ export type EnumType<T> = HigherOrderType<T[]> & {
     name: 'enum'
     id?: string // Optional for now
 }
-
-export type AttrType = PrimitiveType | HigherOrderType<any>
 
 export type ValidationRule = {
     name: string

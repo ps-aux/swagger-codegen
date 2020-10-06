@@ -15,7 +15,8 @@ export const purifySpec = spec => {
 
     // Remove default param value as it is per env
     Object.entries(res.paths).forEach(([k, v]) => {
-        Object.entries(v as object).forEach(([k, v]) => {
+        Object.entries(v as any).forEach(([k, v]) => {
+            // @ts-ignore, TODO
             const params = v.parameters
 
             const authParam = params.find(p => p.name === 'Authorization')
