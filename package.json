@@ -24,7 +24,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "flat": "^5.0.2",
     "prettier": "^1.17.1",
     "ramda": "^0.27.1",
